@@ -12,7 +12,7 @@
 #define GANTT_START 100
 #define LABEL_START 5
 #define GANTT_LABEL_CEILING 100
-#define TIME_UNIT_SIZE 80//multiplicador que modifica a variação de tamanho dos labels
+#define TIME_UNIT_SIZE 50//multiplicador que modifica a variação de tamanho dos labels
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)//, ui(new Ui::WidgetClass)
@@ -56,28 +56,6 @@ Widget::Widget(QWidget *parent)
     int count = 0;
     int x_inicio, x_fim;
 
-    foreach (QList<cTrabalho> line, solu){
-        QLabel *x_label = new QLabel("Máquina "+QString::number(++count),this);
-        x_label->move(LABEL_START,y);
-        x_label->setMinimumHeight(size.height()+12);
-        x_label->show();
-        foreach(cTrabalho trab, line){
-            x_inicio = trab.getInicio().hour()+(trab.getInicio().minute()/60);
-            x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
-            myLabel *label = new myLabel(QString::number(x_fim-x_inicio),this,generateColor(5),(x_fim-x_inicio)*TIME_UNIT_SIZE);
-
-            label->setTamanho(x_fim-x_inicio);
-            label->setToolTip(generateToolTip(10));
-            //label->move(x_inicio+(x_fim*TIME_UNIT_SIZE-x_inicio*TIME_UNIT_SIZE),y);
-            label->move(300,200);
-            label->show();
-            
-            //x+=label->width() + 2;
-        }
-        x = GANTT_START;
-        y += x_label->height() + 2;
-    }
-
 //    foreach (QList<int> line, M_solucao){
 //        QLabel *x_label = new QLabel("Máquina "+QString::number(++count),this);
 //        x_label->move(LABEL_START,y);
@@ -100,6 +78,44 @@ Widget::Widget(QWidget *parent)
 //        x = GANTT_START;
 //        y += x_label->height() + 2;
 //    }
+
+    foreach (QList<cTrabalho> line, solu){
+        QLabel *x_label = new QLabel("Máquina "+QString::number(++count),this);
+        x_label->move(LABEL_START,y);
+        x_label->setMinimumHeight(size.height()+12);
+        x_label->show();
+        foreach(cTrabalho trab, line){
+            x_inicio = trab.getInicio().hour()+(trab.getInicio().minute()/60);
+            x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
+            myLabel *label = new myLabel(QString::number(x_fim-x_inicio),this,generateColor(5),(x_fim-x_inicio)*TIME_UNIT_SIZE);
+
+            //label->setTamanho(x_fim-x_inicio);
+            label->setToolTip(generateToolTip(10));
+            //label->move(x_inicio+(x_fim*TIME_UNIT_SIZE-x_inicio*TIME_UNIT_SIZE),y);
+            label->move(x_inicio*TIME_UNIT_SIZE+8,50);
+            label->show();
+
+            //x+=label->width() + 2;
+        }
+        x = GANTT_START;
+        y += x_label->height() + 2;
+    }
+
+    myLabel *lol = new myLabel("2 horas, inicio 1 hora",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
+    lol->move(8+1*TIME_UNIT_SIZE,10);
+    myLabel *lol1 = new myLabel("2 horas, inicio 3 horas",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
+    //coordenada x = (num*TIME_UNIT_SIZE) = hora de inicio do trabalho, assumindo ponto inicial = 0 horas
+    //             = (8+24*TIME_UNIT_SIZE) = 8 é distancia arbitraria da borda da esquerda, 24 é offset definido pelo trabalho anterior, pode representar um dia.
+    //             = +12 = valor arbitrario em mylabel.cpp
+    lol1->move(8+3*TIME_UNIT_SIZE,10);
+    myLabel *lol2 = new myLabel("3 horas, inicio 5 horas",this,QColor(175,238,238,255),3*TIME_UNIT_SIZE);
+    lol2->move(5*TIME_UNIT_SIZE+8,10);
+    myLabel *lol3 = new myLabel("2 horas, inicio 8 horas",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
+    lol3->move(8*TIME_UNIT_SIZE+8,10);
+    myLabel *lol4 = new myLabel("5 horas, inicio 15 horas",this,QColor(175,238,238,255),5*TIME_UNIT_SIZE);
+    lol4->move(15*TIME_UNIT_SIZE+8,10);
+    //lol->setMinimumHeight(size.height()+12);
+    //lol->show();
 
     QPalette newPalette = palette();
     newPalette.setColor(QPalette::Window, Qt::white);
@@ -161,7 +177,7 @@ if (event->mimeData()->hasFormat("application/x-fridgemagnet")) {
         QPoint offset;
         dataStream >> text >> offset;
 
-        myLabel *label = new myLabel(o_text, this, generateColor(o_text.toInt()), o_text.toInt()*5);
+        myLabel *label = new myLabel(o_text, this, generateColor(o_text.toInt()), o_text.toInt()*TIME_UNIT_SIZE);
         label->setToolTip(generateToolTip(o_text.toInt()));
         label->move(event->pos() - offset);
         label->show();

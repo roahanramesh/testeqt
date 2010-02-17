@@ -12,7 +12,7 @@ myLabel::myLabel(const QString &text, QWidget *parent, QColor color, int tamanho
     QSize size = metric.size(Qt::TextSingleLine, text);
     //QImage image(size.width() + 12, size.height() + 12,
     //             QImage::Format_ARGB32_Premultiplied);
-    QImage image(tamanho+12, size.height() + 12, QImage::Format_ARGB32_Premultiplied);
+    QImage image(tamanho, size.height() + 12, QImage::Format_ARGB32_Premultiplied);
     image.fill(qRgba(0,0,0,0));
 
     QFont font;
