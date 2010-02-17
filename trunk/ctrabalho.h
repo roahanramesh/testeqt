@@ -3,11 +3,12 @@
 
 #include <QTime>
 #include <QString>
+#include <QColor>
 
 class cTrabalho{
     public:
         //cTrabalho(QTime inicio_, QTime fim_, QString coisa);
-        cTrabalho(QTime in, QTime fi, QString coisa);
+        cTrabalho(QTime in, QTime fi, QString coisa, QColor ncor = QColor(0,0,0,255));
         cTrabalho();
 
         //getters e setters
@@ -28,9 +29,13 @@ class cTrabalho{
         QString getPilha(){return pilha;}
         void setPilha(QString p){pilha=p;}
 
+        QColor getCor(){return cor;}
+        void setCor(QColor ncor){cor=ncor;}
+
     private:
         QTime inicio;
         QTime fim;
+        QColor cor;
         QString ordem_producao, produto, acabamento, material_base, qtd_pecas, pilha;
 };
 
