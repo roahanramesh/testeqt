@@ -87,12 +87,12 @@ Widget::Widget(QWidget *parent)
         foreach(cTrabalho trab, line){
             x_inicio = trab.getInicio().hour()+(trab.getInicio().minute()/60);
             x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
-            myLabel *label = new myLabel(QString::number(x_fim-x_inicio),this,generateColor(5),(x_fim-x_inicio)*TIME_UNIT_SIZE);
+            myLabel *label = new myLabel(QString::number(x_fim-x_inicio),this,trab.getCor(),(x_fim-x_inicio)*TIME_UNIT_SIZE);
 
             //label->setTamanho(x_fim-x_inicio);
             label->setToolTip(generateToolTip(10));
             //label->move(x_inicio+(x_fim*TIME_UNIT_SIZE-x_inicio*TIME_UNIT_SIZE),y);
-            label->move(x_inicio*TIME_UNIT_SIZE+8,50);
+            label->move(x_inicio*TIME_UNIT_SIZE+GANTT_START,y);
             label->show();
 
             //x+=label->width() + 2;
