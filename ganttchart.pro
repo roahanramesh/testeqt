@@ -15,3 +15,5 @@ HEADERS += widget.h \
     solucao.h \
     ctrabalho.h
 FORMS += widget.ui
+# Added by user:
+#CONFIG += console

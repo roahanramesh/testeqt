@@ -88,7 +88,8 @@ Widget::Widget(Solucao solucao, QWidget *parent)
         foreach(cTrabalho trab, line){
             x_inicio = trab.getInicio().hour()+(trab.getInicio().minute()/60);
             x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
-            myLabel *label = new myLabel(QString::number(x_fim-x_inicio),this,trab.getCor(),(x_fim-x_inicio)*TIME_UNIT_SIZE);
+            //myLabel *label = new myLabel(QString::number(x_fim-x_inicio),this,trab.getCor(),(x_fim-x_inicio)*TIME_UNIT_SIZE);
+            myLabel *label = new myLabel(QString::number(trab.getTamanho()),this,trab.getCor(),trab.getTamanho()*TIME_UNIT_SIZE);
 
             //label->setTamanho(x_fim-x_inicio);
             label->setToolTip(generateToolTip(10));
@@ -125,7 +126,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
 
     //definicao tamanho da tela
     //setMinimumSize(5000, 400);//qMax(200,y));
-    setMinimumSize(solucao.CalculateX(),400);
+    setMinimumSize(Solucao::CalculateX(solucao),400);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }

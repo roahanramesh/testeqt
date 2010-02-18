@@ -6,7 +6,7 @@
  </data>
  <data>
   <variable>RunConfiguration0-ProFile</variable>
-  <value type="QString" >C:/Users/guenka/Desktop/lie/ganttchart/ganttchart.pro</value>
+  <value type="QString" >C:/Users/guenka/Desktop/lie/gchart/ganttchart.pro</value>
  </data>
  <data>
   <variable>RunConfiguration0-RunConfiguration.name</variable>
@@ -32,17 +32,15 @@
   <variable>buildConfiguration-Debug</variable>
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Debug</value>
-   <value key="QtVersionId" type="int" >0</value>
-   <value key="addQDumper" type="" ></value>
-   <value key="buildDirectory" type="QString" >C:\Users\guenka\Desktop\lie\ganttchart</value>
+   <value key="QtVersionId" type="int" >3</value>
+   <value key="buildDirectory" type="QString" >C:\Users\guenka\Desktop\lie\gchart</value>
   </valuemap>
  </data>
  <data>
   <variable>buildConfiguration-Release</variable>
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Release</value>
-   <value key="QtVersionId" type="int" >0</value>
-   <value key="addQDumper" type="" ></value>
+   <value key="QtVersionId" type="int" >3</value>
   </valuemap>
  </data>
  <data>
@@ -59,6 +57,9 @@
     <value type="QString" >ALLUSERSPROFILE=C:\ProgramData</value>
     <value type="QString" >APPDATA=C:\Users\guenka\AppData\Roaming</value>
     <value type="QString" >BDSCOMMONDIR=C:\Users\Public\Documents\RAD Studio\5.0</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPLOCALE=pt_BR</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPNAME=AdobeDrive</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPVERSION=1.0.0</value>
     <value type="QString" >COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
     <value type="QString" >COMPUTERNAME=WS09</value>
     <value type="QString" >COMSPEC=C:\Windows\system32\cmd.exe</value>
@@ -99,7 +100,7 @@
     <value type="QString" >WINDIR=C:\Windows</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
-    <value type="QString" >C:/Users/guenka/Desktop/lie/ganttchart/ganttchart.pro</value>
+    <value type="QString" >C:/Users/guenka/Desktop/lie/gchart/ganttchart.pro</value>
     <value type="QString" >-spec</value>
     <value type="QString" >win32-g++</value>
     <value type="QString" >-r</value>
@@ -107,7 +108,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString" >C:/Qt/2009.01/qt/bin/qmake.exe</value>
    <value key="abstractProcess.enabled" type="bool" >false</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >C:/Users/guenka/Desktop/lie/ganttchart</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >C:/Users/guenka/Desktop/lie/gchart</value>
    <value key="buildConfiguration" type="int" >10</value>
   </valuemap>
  </data>
@@ -119,6 +120,9 @@
     <value type="QString" >ALLUSERSPROFILE=C:\ProgramData</value>
     <value type="QString" >APPDATA=C:\Users\guenka\AppData\Roaming</value>
     <value type="QString" >BDSCOMMONDIR=C:\Users\Public\Documents\RAD Studio\5.0</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPLOCALE=pt_BR</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPNAME=AdobeDrive</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPVERSION=1.0.0</value>
     <value type="QString" >COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
     <value type="QString" >COMPUTERNAME=WS09</value>
     <value type="QString" >COMSPEC=C:\Windows\system32\cmd.exe</value>
@@ -164,7 +168,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString" >C:/Qt/2009.01/mingw/bin/mingw32-make.exe</value>
    <value key="abstractProcess.enabled" type="bool" >true</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >C:/Users/guenka/Desktop/lie/ganttchart</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >C:/Users/guenka/Desktop/lie/gchart</value>
    <valuelist key="makeargs" type="QVariantList" >
     <value type="QString" >debug</value>
    </valuelist>
@@ -180,56 +184,6 @@
   <variable>buildconfiguration-Debug-cleanstep1</variable>
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Debug</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >ALLUSERSPROFILE=C:\ProgramData</value>
-    <value type="QString" >APPDATA=C:\Users\guenka\AppData\Roaming</value>
-    <value type="QString" >BDSCOMMONDIR=C:\Users\Public\Documents\RAD Studio\5.0</value>
-    <value type="QString" >COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString" >COMPUTERNAME=WS09</value>
-    <value type="QString" >COMSPEC=C:\Windows\system32\cmd.exe</value>
-    <value type="QString" >DFSTRACINGON=FALSE</value>
-    <value type="QString" >FP_NO_HOST_CHECK=NO</value>
-    <value type="QString" >GTK_BASEPATH=C:\PROGRA~1\COMMON~1\GTK\2.0</value>
-    <value type="QString" >HOMEDRIVE=C:</value>
-    <value type="QString" >HOMEPATH=\Users\guenka</value>
-    <value type="QString" >INCLUDE=C:\Program Files\Common Files\GTK\2.0\INCLUDE;C:\Program Files\Common Files\GTK\2.0\INCLUDE\GTK-2.0;C:\Program Files\Common Files\GTK\2.0\INCLUDE\GLIB-2.0;C:\Program Files\Common Files\GTK\2.0\INCLUDE\PANGO-1.0;C:\Program Files\Common Files\GTK\2.0\INCLUDE\CAIRO;C:\Program Files\Common Files\GTK\2.0\INCLUDE\ATK-1.0;C:\Program Files\Common Files\GTK\2.0\INCLUDE\GTKGLEXT-1.0;C:\Program Files\Common Files\GTK\2.0\LIB\GTK-2.0\INCLUDE;C:\Program Files\Common Files\GTK\2.0\LIB\GLIB-2.0\INCLUDE;C:\Program Files\Common Files\GTK\2.0\LIB\GTKGLEXT-1.0\INCLUDE;C:\Program Files\Common Files\GTK\2.0\INCLUDE\LIBGLADE-2.0;C:\Program Files\Common Files\GTK\2.0\INCLUDE\LIBXML2;C:\Program Files\PostgreSQL\8.2\include</value>
-    <value type="QString" >JAVA_HOME=C:\Program Files\Java\jdk1.6.0_01</value>
-    <value type="QString" >LANG=pt_BR</value>
-    <value type="QString" >LIB=C:\Program Files\Common Files\GTK\2.0\LIB;C:\Program Files\PostgreSQL\8.2\lib</value>
-    <value type="QString" >LOCALAPPDATA=C:\Users\guenka\AppData\Local</value>
-    <value type="QString" >LOGONSERVER=\\WS09</value>
-    <value type="QString" >NUMBER_OF_PROCESSORS=2</value>
-    <value type="QString" >OS=Windows_NT</value>
-    <value type="QString" >PATH=C:\Qt\2009.01\mingw\bin;c:\Qt\2009.01\qt\bin;c:\program files\imagemagick-6.4.8-q8;C:\Ruby\bin;C:\PROGRA~1\COMMON~1\GTK\2.0\bin;C:\Program Files\CodeGear\RAD Studio\5.0\bin;C:\Users\Public\Documents\RAD Studio\5.0\Bpl;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Program Files\Intel\DMIX;C:\Program Files\Common Files\Roxio Shared\DLLShared\;C:\Program Files\Common Files\Roxio Shared\10.0\DLLShared\;C:\Qt\QtCreator\mingw\bin;C:\Qt\QtCreator\qt\bin;C:\Qt\psql\include;C:\Qt\psql\lib;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Common Files\GTK\2.0\bin;C:\Program Files\Java\jdk1.6.0_01\bin;C:\Program Files\PostgreSQL\8.2\bin;C:\Program Files\PostgreSQL\8.2\lib</value>
-    <value type="QString" >PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.RB;.RBW</value>
-    <value type="QString" >PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString" >PROCESSOR_IDENTIFIER=x86 Family 6 Model 15 Stepping 13, GenuineIntel</value>
-    <value type="QString" >PROCESSOR_LEVEL=6</value>
-    <value type="QString" >PROCESSOR_REVISION=0f0d</value>
-    <value type="QString" >PROGRAMDATA=C:\ProgramData</value>
-    <value type="QString" >PROGRAMFILES=C:\Program Files</value>
-    <value type="QString" >PUBLIC=C:\Users\Public</value>
-    <value type="QString" >QTDIR=C:/Qt/2009.01/qt</value>
-    <value type="QString" >ROXIOCENTRAL=C:\Program Files\Common Files\Roxio Shared\10.0\Roxio Central36\</value>
-    <value type="QString" >RUBYOPT=-rubygems</value>
-    <value type="QString" >SESSIONNAME=Console</value>
-    <value type="QString" >SYSTEMDRIVE=C:</value>
-    <value type="QString" >SYSTEMROOT=C:\Windows</value>
-    <value type="QString" >TEMP=C:\Users\guenka\AppData\Local\Temp</value>
-    <value type="QString" >TMP=C:\Users\guenka\AppData\Local\Temp</value>
-    <value type="QString" >TRACE_FORMAT_SEARCH_PATH=\\NTREL202.ntdev.corp.microsoft.com\4F18C3A5-CA09-4DBD-B6FC-219FDD4C6BE0\TraceFormat</value>
-    <value type="QString" >USERDOMAIN=WS09</value>
-    <value type="QString" >USERNAME=guenka</value>
-    <value type="QString" >USERPROFILE=C:\Users\guenka</value>
-    <value type="QString" >WINDIR=C:\Windows</value>
-   </valuelist>
-   <valuelist key="abstractProcess.arguments" type="QVariantList" >
-    <value type="QString" >clean</value>
-    <value type="QString" >-w</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString" >C:/Qt/2009.01/mingw/bin/mingw32-make.exe</value>
-   <value key="abstractProcess.enabled" type="bool" >true</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >C:/Users/guenka/Desktop/lie/ganttchart</value>
   </valuemap>
  </data>
  <data>

@@ -40,10 +40,8 @@ class Solucao{
     static QList<QList<cTrabalho> > SolucaoVazia();
 
         /*TODO*/
-    int CalculateX();
-    int CalculateY();
-
-    private:
+    static int CalculateX(Solucao solucao);
+    static int CalculateY();
 
     //variável que define a escala do gráfico
     int escala;
