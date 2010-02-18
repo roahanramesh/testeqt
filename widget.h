@@ -3,6 +3,7 @@
 
 #include <QtGui/QWidget>
 #include <QList>
+#include "solucao.h"
 
 //namespace Ui
 //{
@@ -18,7 +19,7 @@ class Widget : public QWidget
 
 
 public:
-    Widget(QWidget *parent = 0);
+    Widget(Solucao solucao = Solucao::SolucaoVazia(),QWidget *parent = 0);
     //~Widget();
 
 protected:
@@ -29,6 +30,8 @@ protected:
 private:
     QColor generateColor(int tam = 1);
     QString Widget::generateToolTip(int tam = 1);
+
+    int TIME_UNIT_SIZE;
 
 //private:
     //Ui::WidgetClass *ui;

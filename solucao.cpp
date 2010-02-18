@@ -1,10 +1,48 @@
 #include "solucao.h"
 
-solucao::solucao(){
+Solucao::Solucao(){
+    makespan = 1;
+    maior_atraso = 0;
+    num_op_atrasadas = 0;
+    total_atrasos = 0;
+    custo_mao_de_obra = 0;
+    custos_operacionais = 0;
+    total_setup = 0;
+    total_ociosidade = 0;
+    total_folga = 0;
 
+    trabalhos = SolucaoVazia();
+
+    escala = 50;
 }
 
-QList<QList<cTrabalho> > solucao::gerarSolucao(){
+int Solucao::CalculateX(){
+    int largura = 0;
+    foreach(QList<cTrabalho> lista, trabalhos){
+        foreach(cTrabalho trabalho, lista){
+            //largura += (trabalho.getInicioFloat()-trabalho.getFimFloat());
+            largura += (trabalho.getInicio().hour()+(trabalho.getInicio().minute()/60))-(trabalho.getFim().hour()+(trabalho.getFim().minute()/60));
+        }
+    }
+    largura*=escala;
+    largura = 2000;
+    return largura;
+}
+
+int Solucao::CalculateY(){
+    return 400;
+}
+
+QList<QList<cTrabalho> > Solucao::SolucaoVazia(){
+    cTrabalho t(QTime(0,0),QTime(0,0),"",QColor(0,0,0,0));
+    QList<cTrabalho> l;
+    l.append(t);
+    QList<QList<cTrabalho> > s;
+    s.append(l);
+    return s;
+}
+
+QList<QList<cTrabalho> > Solucao::GerarSolucao(){
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
     cTrabalho t1_1(QTime(1,0),QTime(2,20),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,200));

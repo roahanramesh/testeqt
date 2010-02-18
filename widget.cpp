@@ -11,29 +11,30 @@
 //coordenada x onde se inicia o desenho do grafico
 #define GANTT_START 100
 #define LABEL_START 5
-#define GANTT_LABEL_CEILING 100
-#define TIME_UNIT_SIZE 50//multiplicador que modifica a variação de tamanho dos labels
+#define GANTT_LABEL_CEILING 5
+//#define TIME_UNIT_SIZE 50//multiplicador que modifica a variação de tamanho dos labels
 
-Widget::Widget(QWidget *parent)
+Widget::Widget(Solucao solucao, QWidget *parent)
     : QWidget(parent)//, ui(new Ui::WidgetClass)
 {
-    //simulação de solução para gerar o grafico
-    QList<QList<int> > M_solucao;
-    QList<int> L_solucao_1;
-    QList<int> L_solucao_2;
-    QList<int> L_solucao_3;
-    QList<int> L_solucao_4;
-    L_solucao_1 << 5 << 2 << 4;
-    L_solucao_2 << 2 << 5;
-    L_solucao_3 << 7 << 3 << 5 << 6;
-    L_solucao_4 << 2 << 6 << 50 << 100;
-    M_solucao << L_solucao_1 << L_solucao_2 << L_solucao_3 << L_solucao_4;
+//    //simulação de solução para gerar o grafico
+//    QList<QList<int> > M_solucao;
+//    QList<int> L_solucao_1;
+//    QList<int> L_solucao_2;
+//    QList<int> L_solucao_3;
+//    QList<int> L_solucao_4;
+//    L_solucao_1 << 5 << 2 << 4;
+//    L_solucao_2 << 2 << 5;
+//    L_solucao_3 << 7 << 3 << 5 << 6;
+//    L_solucao_4 << 2 << 6 << 50 << 100;
+//    M_solucao << L_solucao_1 << L_solucao_2 << L_solucao_3 << L_solucao_4;
 
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, " ");
 
-    solucao so;
-    QList<QList<cTrabalho> > solu = so.gerarSolucao();
+    QList<QList<cTrabalho> > solu = solucao.GerarSolucao();
+
+    TIME_UNIT_SIZE = solucao.get_escala();
 
     //labels do topo
 //    QLabel *makespan_label = new QLabel("Makespan : n horas", this);
@@ -101,21 +102,19 @@ Widget::Widget(QWidget *parent)
         y += x_label->height() + 2;
     }
 
-    myLabel *lol = new myLabel("2 horas, inicio 1 hora",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
-    lol->move(8+1*TIME_UNIT_SIZE,10);
-    myLabel *lol1 = new myLabel("2 horas, inicio 3 horas",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
-    //coordenada x = (num*TIME_UNIT_SIZE) = hora de inicio do trabalho, assumindo ponto inicial = 0 horas
-    //             = (8+24*TIME_UNIT_SIZE) = 8 é distancia arbitraria da borda da esquerda, 24 é offset definido pelo trabalho anterior, pode representar um dia.
-    //             = +12 = valor arbitrario em mylabel.cpp
-    lol1->move(8+3*TIME_UNIT_SIZE,10);
-    myLabel *lol2 = new myLabel("3 horas, inicio 5 horas",this,QColor(175,238,238,255),3*TIME_UNIT_SIZE);
-    lol2->move(5*TIME_UNIT_SIZE+8,10);
-    myLabel *lol3 = new myLabel("2 horas, inicio 8 horas",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
-    lol3->move(8*TIME_UNIT_SIZE+8,10);
-    myLabel *lol4 = new myLabel("5 horas, inicio 15 horas",this,QColor(175,238,238,255),5*TIME_UNIT_SIZE);
-    lol4->move(15*TIME_UNIT_SIZE+8,10);
-    //lol->setMinimumHeight(size.height()+12);
-    //lol->show();
+//    myLabel *lol = new myLabel("2 horas, inicio 1 hora",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
+//    lol->move(8+1*TIME_UNIT_SIZE,10);
+//    myLabel *lol1 = new myLabel("2 horas, inicio 3 horas",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
+//    //coordenada x = (num*TIME_UNIT_SIZE) = hora de inicio do trabalho, assumindo ponto inicial = 0 horas
+//    //             = (8+24*TIME_UNIT_SIZE) = 8 é distancia arbitraria da borda da esquerda, 24 é offset definido pelo trabalho anterior, pode representar um dia.
+//    //             = +12 = valor arbitrario em mylabel.cpp
+//    lol1->move(8+3*TIME_UNIT_SIZE,10);
+//    myLabel *lol2 = new myLabel("3 horas, inicio 5 horas",this,QColor(175,238,238,255),3*TIME_UNIT_SIZE);
+//    lol2->move(5*TIME_UNIT_SIZE+8,10);
+//    myLabel *lol3 = new myLabel("2 horas, inicio 8 horas",this,QColor(175,238,238,255),2*TIME_UNIT_SIZE);
+//    lol3->move(8*TIME_UNIT_SIZE+8,10);
+//    myLabel *lol4 = new myLabel("5 horas, inicio 15 horas",this,QColor(175,238,238,255),5*TIME_UNIT_SIZE);
+//    lol4->move(15*TIME_UNIT_SIZE+8,10);
 
     QPalette newPalette = palette();
     newPalette.setColor(QPalette::Window, Qt::white);
@@ -125,7 +124,8 @@ Widget::Widget(QWidget *parent)
     //QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     //definicao tamanho da tela
-    setMinimumSize(5000, 400);//qMax(200,y));
+    //setMinimumSize(5000, 400);//qMax(200,y));
+    setMinimumSize(solucao.CalculateX(),400);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }

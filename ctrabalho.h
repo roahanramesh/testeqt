@@ -29,6 +29,9 @@ class cTrabalho{
         QString getPilha(){return pilha;}
         void setPilha(QString p){pilha=p;}
 
+        float getInicioFloat(){return inicio.hour()-(inicio.minute()/60);}
+        float getFimFloat(){return fim.hour()-(inicio.minute()/60);}
+
         QColor getCor(){return cor;}
         void setCor(QColor ncor){cor=ncor;}
 
