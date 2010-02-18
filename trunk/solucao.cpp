@@ -1,4 +1,5 @@
 #include "solucao.h"
+#include <QDebug>
 
 Solucao::Solucao(){
     makespan = 1;
@@ -16,17 +17,20 @@ Solucao::Solucao(){
     escala = 50;
 }
 
-int Solucao::CalculateX(){
-    int largura = 0;
-    foreach(QList<cTrabalho> lista, trabalhos){
-        foreach(cTrabalho trabalho, lista){
-            //largura += (trabalho.getInicioFloat()-trabalho.getFimFloat());
-            largura += (trabalho.getInicio().hour()+(trabalho.getInicio().minute()/60))-(trabalho.getFim().hour()+(trabalho.getFim().minute()/60));
-        }
+int Solucao::CalculateX(Solucao solucao){
+    QList<QList<cTrabalho> > listasolucao = solucao.GerarSolucao();
+    QList<int> listalargura;
+    int tamanho=0;
+    foreach(QList<cTrabalho> trabalhos, listasolucao){
+          tamanho = trabalhos.last().getInicioFloat()*solucao.get_escala()+trabalhos.last().getFimFloat()-trabalhos.last().getInicioFloat()*solucao.get_escala();
+//        foreach(cTrabalho trabalho, trabalhos){
+//            largura += trabalho.getFimFloat()-trabalho.getInicioFloat();
+//        }
+          listalargura.append(tamanho);
+//        largura = 0;
     }
-    largura*=escala;
-    largura = 2000;
-    return largura;
+    qSort(listalargura);
+    return listalargura.last();//*solucao.get_escala();
 }
 
 int Solucao::CalculateY(){
@@ -45,7 +49,7 @@ QList<QList<cTrabalho> > Solucao::SolucaoVazia(){
 QList<QList<cTrabalho> > Solucao::GerarSolucao(){
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
-    cTrabalho t1_1(QTime(1,0),QTime(2,20),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,200));
+    cTrabalho t1_1(QTime(1,0),QTime(2,30),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,200));
     cTrabalho t1_2(QTime(3,30),QTime(5,10),"t1_2",QColor(qrand()%255,qrand()%255,qrand()%255,200));
     cTrabalho t1_3(QTime(6,0),QTime(8,0),"t1_3",QColor(qrand()%255,qrand()%255,qrand()%255,200));
     cTrabalho t1_4(QTime(8,0),QTime(10,0),"t1_4",QColor(qrand()%255,qrand()%255,qrand()%255,200));
