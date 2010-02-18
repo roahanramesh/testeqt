@@ -3,11 +3,12 @@
 
 #include <QWidget>
 #include "widget.h"
+#include "solucao.h"
 
 class layoutWidget : public QWidget
 {
     public:
-        layoutWidget(QWidget *parent = 0);
+        layoutWidget(Solucao so = Solucao::SolucaoVazia(), QWidget *parent = 0);
 };
 
 #endif // LAYOUTWIDGET_H
