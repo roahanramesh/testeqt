@@ -30,7 +30,8 @@ int Solucao::CalculateX(Solucao solucao){
 //        largura = 0;
     }
     qSort(listalargura);
-    return listalargura.last();//*solucao.get_escala();
+    //return listalargura.last();//*solucao.get_escala();
+    return 5000;
 }
 
 int Solucao::CalculateY(){
@@ -59,6 +60,7 @@ QList<QList<cTrabalho> > Solucao::GerarSolucao(){
     cTrabalho t2_1(QTime(6,0), QTime(12,0), "t2_1",QColor(qrand()%255,qrand()%255,qrand()%255,200));
     cTrabalho t2_2(QTime(12,0), QTime(15,0), "t2_2",QColor(qrand()%255,qrand()%255,qrand()%255,200));
     cTrabalho t2_3(QTime(15,0), QTime(18,0), "t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,200));
+    cTrabalho t2_4(QTime(19,0), QTime(22,0), "t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,200));
 
     cTrabalho t3_1(QTime(3,0), QTime(4,0), "t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,200));
     cTrabalho t3_2(QTime(5,0), QTime(6,0), "t3_2",QColor(qrand()%255,qrand()%255,qrand()%255,200));
@@ -76,6 +78,7 @@ QList<QList<cTrabalho> > Solucao::GerarSolucao(){
     l2.append(t2_1);
     l2.append(t2_2);
     l2.append(t2_3);
+    l2.append(t2_4);
 
     QList<cTrabalho> l3;
     l3.append(t3_1);
