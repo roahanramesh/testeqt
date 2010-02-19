@@ -28,7 +28,6 @@ protected:
     void dropEvent(QDropEvent *event);
 
 private:
-    QColor generateColor(int tam = 1);
     QString Widget::generateToolTip(int tam = 1);
 
     int TIME_UNIT_SIZE;
