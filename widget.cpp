@@ -7,6 +7,7 @@
 #include "solucao.h"
 #include "ctrabalho.h"
 #include <iostream>
+#include <QDebug>
 
 //coordenada x onde se inicia o desenho do grafico
 #define GANTT_START 100
@@ -34,6 +35,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     QList<int> tamanhos_maquina;
     int posicao_ultimo_trabalho = 0;
     int label_pos, label_tamanho;
+    int tamanho_vertical;
 
     foreach (QList<cTrabalho> line, solu){
         QLabel *x_label = new QLabel("Máquina "+QString::number(++count),this);
@@ -43,24 +45,21 @@ Widget::Widget(Solucao solucao, QWidget *parent)
         foreach(cTrabalho trab, line){
             x_inicio = trab.getInicio().hour()+(trab.getInicio().minute()/60);
             x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
-            //myLabel *label = new myLabel(QString::number(x_fim-x_inicio),this,trab.getCor(),(x_fim-x_inicio)*TIME_UNIT_SIZE);
             label_pos = x_inicio*TIME_UNIT_SIZE+GANTT_START;
             label_tamanho = trab.getTamanho()*TIME_UNIT_SIZE;
             myLabel *label = new myLabel(QString::number(label_pos),this,trab.getCor(),label_tamanho);
+            label->setTamanho(label_tamanho);
             posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho);
-            //(posicao_ultimo_trabalho < x_inicio*TIME_UNIT_SIZE+GANTT_START+trab.getTamanho())?posicao_ultimo_trabalho=x_inicio*TIME_UNIT_SIZE+GANTT_START+trab.getTamanho():posicao_ultimo_trabalho=posicao_ultimo_trabalho;
-            //label->setTamanho(x_fim-x_inicio);
             label->setToolTip(generateToolTip(10));
-            //label->move(x_inicio+(x_fim*TIME_UNIT_SIZE-x_inicio*TIME_UNIT_SIZE),y);
             label->move(x_inicio*TIME_UNIT_SIZE+GANTT_START,y);
             label->show();
-
-            //x+=label->width() + 2;
         }
         tamanhos_maquina.append(posicao_ultimo_trabalho);
         posicao_ultimo_trabalho = 0;
         x = GANTT_START;
         y += x_label->height() + 2;
+
+        tamanho_vertical = x_label->height() + 2;
     }
     qSort(tamanhos_maquina);
 
@@ -71,7 +70,9 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //definicao tamanho da tela
     //setMinimumSize(1000, 400);//qMax(200,y));
     //setMinimumSize(Solucao::CalculateX(solucao),400);
-    setMinimumSize(tamanhos_maquina.last()+100,400);
+    tamanho_vertical = MAX(400,solu.size()*70);
+    qDebug()<<QString::number(solu.size());
+    setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }
@@ -110,6 +111,7 @@ void Widget::dragMoveEvent(QDragMoveEvent *event){
 }
 
 void Widget::dropEvent(QDropEvent *event){
+
 if (event->mimeData()->hasFormat("application/x-fridgemagnet")) {
         const QMimeData *mime = event->mimeData();
 //! [9] //! [10]
@@ -124,6 +126,7 @@ if (event->mimeData()->hasFormat("application/x-fridgemagnet")) {
         dataStream >> text >> offset;
 
         myLabel *label = new myLabel(o_text, this, QColor(120,200,85,200), o_text.toInt()*TIME_UNIT_SIZE);
+        //myLabel *label = new myLabel(o_text, this, QColor(120,200,85,200), event->mimeData()->;
         label->setToolTip(generateToolTip(o_text.toInt()));
         label->move(event->pos() - offset);
         label->show();

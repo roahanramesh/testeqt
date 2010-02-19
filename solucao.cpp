@@ -1,5 +1,4 @@
 #include "solucao.h"
-#include <QDebug>
 
 Solucao::Solucao(){
     makespan = 1;
@@ -14,28 +13,7 @@ Solucao::Solucao(){
 
     trabalhos = SolucaoVazia();
 
-    escala = 50;
-}
-
-int Solucao::CalculateX(Solucao solucao){
-    QList<QList<cTrabalho> > listasolucao = solucao.GerarSolucao();
-    QList<int> listalargura;
-    int tamanho=0;
-    foreach(QList<cTrabalho> trabalhos, listasolucao){
-          tamanho = trabalhos.last().getInicioFloat()*solucao.get_escala()+trabalhos.last().getFimFloat()-trabalhos.last().getInicioFloat()*solucao.get_escala();
-//        foreach(cTrabalho trabalho, trabalhos){
-//            largura += trabalho.getFimFloat()-trabalho.getInicioFloat();
-//        }
-          listalargura.append(tamanho);
-//        largura = 0;
-    }
-    qSort(listalargura);
-    //return listalargura.last();//*solucao.get_escala();
-    return 5000;
-}
-
-int Solucao::CalculateY(){
-    return 400;
+    escala = 20;
 }
 
 QList<QList<cTrabalho> > Solucao::SolucaoVazia(){
