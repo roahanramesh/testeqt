@@ -28,7 +28,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     TIME_UNIT_SIZE = solucao.get_escala();
 
     int x = GANTT_START;
-    int y = 5;
+    int y = 20;
     int count = 0;
     int x_inicio, x_fim;
 
@@ -47,11 +47,13 @@ Widget::Widget(Solucao solucao, QWidget *parent)
             x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
             label_pos = x_inicio*TIME_UNIT_SIZE+GANTT_START;
             label_tamanho = trab.getTamanho()*TIME_UNIT_SIZE;
-            myLabel *label = new myLabel(QString::number(label_pos),this,trab.getCor(),label_tamanho);
-            label->setTamanho(label_tamanho);
-            posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho);
+            //myLabel *label = new myLabel(trab,QString::number(label_pos),this,trab.getCor(),label_tamanho);
+            myLabel *label = new myLabel(QString::number(label_pos),this,trab.getCor(),label_tamanho,trab.getOverhead());
+            qDebug(trab.getOverhead()?"hello":"world");
+            //myLabel *label = new myLabel(trab.,this,trab.getCor(),label_tamanho);
+            posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
             label->setToolTip(generateToolTip(10));
-            label->move(x_inicio*TIME_UNIT_SIZE+GANTT_START,y);
+            label->move(x_inicio*TIME_UNIT_SIZE+GANTT_START,trab.getOverhead()?y+10:y);     //coordenada y = y+10 se label for overhead
             label->show();
         }
         tamanhos_maquina.append(posicao_ultimo_trabalho);
@@ -78,16 +80,13 @@ Widget::Widget(Solucao solucao, QWidget *parent)
 }
 
 void Widget::dragEnterEvent(QDragEnterEvent *event){
-//! [4] //! [5]
     if (event->mimeData()->hasFormat("application/x-fridgemagnet")) {
         if (children().contains(event->source())) {
             event->setDropAction(Qt::MoveAction);
             event->accept();
         } else {
             event->acceptProposedAction();
-//! [5] //! [6]
         }
-//! [6] //! [7]
     } else if (event->mimeData()->hasText()) {
         event->acceptProposedAction();
     } else {
@@ -114,18 +113,22 @@ void Widget::dropEvent(QDropEvent *event){
 
 if (event->mimeData()->hasFormat("application/x-fridgemagnet")) {
         const QMimeData *mime = event->mimeData();
-//! [9] //! [10]
         QByteArray itemData = mime->data("application/x-fridgemagnet");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+
 
         //pegar texto do widget original
         QString o_text = mime->text();
 
+        //cTrabalho trabalho = mime->get_
+
         QString text;
         QPoint offset;
-        dataStream >> text >> offset;
+        int tamanho, r, g, b, alpha;
+        //cTrabalho trab;
+        dataStream >> text >> offset >> tamanho >> r >> g >> b >> alpha;
 
-        myLabel *label = new myLabel(o_text, this, QColor(120,200,85,200), o_text.toInt()*TIME_UNIT_SIZE);
+        myLabel *label = new myLabel(o_text, this, QColor(r,g,b,alpha), tamanho);//*TIME_UNIT_SIZE);
         //myLabel *label = new myLabel(o_text, this, QColor(120,200,85,200), event->mimeData()->;
         label->setToolTip(generateToolTip(o_text.toInt()));
         label->move(event->pos() - offset);
@@ -136,9 +139,7 @@ if (event->mimeData()->hasFormat("application/x-fridgemagnet")) {
             event->accept();
         } else {
             event->acceptProposedAction();
-//! [10] //! [11]
         }
-//! [11] //! [12]
     } else if (event->mimeData()->hasText()) {
         QStringList pieces = event->mimeData()->text().split(QRegExp("\\s+"),
                              QString::SkipEmptyParts);
