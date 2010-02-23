@@ -6,13 +6,25 @@ void myLabel::setTamanho(int t){
 }
 
 //myLabel::myLabel(const QString &text, QWidget *parent,int r, int g, int b, int alpha)
-myLabel::myLabel(const QString &text, QWidget *parent, QColor color, int tamanho)
+//myLabel::myLabel(cTrabalho trab, const QString &text, QWidget *parent, QColor color, int tamanho)
+myLabel::myLabel(const QString &text, QWidget *parent, QColor color, float tamanho, bool overhead)
     : QLabel(parent){
+    this->overhead = overhead;
+    this->tamanho = tamanho;
+    //this->trabalho = trab;
+    this->cor = color;
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, text);
     //QImage image(size.width() + 12, size.height() + 12,
     //             QImage::Format_ARGB32_Premultiplied);
-    QImage image(tamanho, size.height() + 12, QImage::Format_ARGB32_Premultiplied);
+    int height;
+    if(!overhead){
+        height = size.height()+12;        //se trabalho for overhead da maquina, desenhar label menor
+    }else{
+        height = 6;
+    }
+    //QImage image(tamanho, size.height()+12, QImage::Format_ARGB32_Premultiplied);
+    QImage image(tamanho, height, QImage::Format_ARGB32_Premultiplied);
     image.fill(qRgba(0,0,0,0));
 
     QFont font;
@@ -24,7 +36,7 @@ myLabel::myLabel(const QString &text, QWidget *parent, QColor color, int tamanho
     //Cor do background do label
       //painter.setBrush(Qt::green);
       //painter.setBrush(QColor(r,g,b,127));
-    painter.setBrush(color);
+    painter.setBrush(cor);
     //Especificação do desenho do label
     //painter.drawRoundedRect(QRectF(0.5, 0.5, image.width()-1, image.height()-1),
                             //25, 25, Qt::RelativeSize);
@@ -42,9 +54,12 @@ myLabel::myLabel(const QString &text, QWidget *parent, QColor color, int tamanho
 
 void myLabel::mousePressEvent(QMouseEvent *ev)
 {
+    if(this->overhead){         //desabilita ação de drag para labels que representarem overhead de maquina
+        return;
+    }
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-    dataStream << labelText << QPoint(ev->pos() - rect().topLeft());
+    dataStream << labelText << QPoint(ev->pos() - rect().topLeft()) << tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha();
 
     QMimeData *mimeData = new QMimeData;
     //pra que serve mimeData?
@@ -65,6 +80,7 @@ void myLabel::mousePressEvent(QMouseEvent *ev)
     else
         show();
 }
+
 
 QString myLabel::generateString(int num){
     QString str;

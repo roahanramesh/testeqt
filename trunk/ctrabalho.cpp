@@ -1,10 +1,11 @@
 #include "ctrabalho.h"
 
-cTrabalho::cTrabalho(QTime inicio, QTime fim, QString coisa, QColor cor){
+cTrabalho::cTrabalho(QTime inicio, QTime fim, QString coisa, QColor cor, bool overhead){
     this->inicio = inicio;
     this->fim = fim;
     this->cor = cor;
     ordem_producao = acabamento = produto = material_base = qtd_pecas = pilha = coisa;
+    this->overhead = overhead;
 }
 
 float cTrabalho::getTamanho(){

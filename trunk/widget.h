@@ -4,6 +4,7 @@
 #include <QtGui/QWidget>
 #include <QList>
 #include "solucao.h"
+#include "ctrabalho.h"
 
 //namespace Ui
 //{

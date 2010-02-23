@@ -8,7 +8,7 @@
 class cTrabalho{
     public:
         //cTrabalho(QTime inicio_, QTime fim_, QString coisa);
-        cTrabalho(QTime inicio, QTime fim, QString coisa, QColor ncor = QColor(0,0,0,255));
+        cTrabalho(QTime inicio, QTime fim, QString coisa, QColor ncor = QColor(0,0,0,255),bool overhead = false);
         cTrabalho();
 
         //getters e setters
@@ -32,12 +32,15 @@ class cTrabalho{
         float getInicioFloat(){return inicio.hour()+inicio.minute()/60;}
         float getFimFloat(){return fim.hour()+fim.minute()/60;}
 
+        bool getOverhead(){return overhead;}
+        void setOverhead(bool overhead){this->overhead=overhead;}
         float getTamanho();
 
         QColor getCor(){return cor;}
-        void setCor(QColor ncor){cor=ncor;}
+        void setCor(QColor cor){this->cor=cor;}
 
     private:
+        bool overhead;
         QTime inicio;
         QTime fim;
         QColor cor;

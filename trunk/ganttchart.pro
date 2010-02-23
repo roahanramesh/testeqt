@@ -8,12 +8,12 @@ SOURCES += main.cpp \
     mylabel.cpp \
     layoutwidget.cpp \
     solucao.cpp \
-    ctrabalho.cpp
+    ctrabalho.cpp \
+    mydatastream.cpp
 HEADERS += widget.h \
     mylabel.h \
     layoutwidget.h \
     solucao.h \
-    ctrabalho.h
+    ctrabalho.h \
+    mydatastream.h
 FORMS += widget.ui
-# Added by user:
-#CONFIG += console
