@@ -59,7 +59,9 @@ void myLabel::mousePressEvent(QMouseEvent *ev)
     }
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-    dataStream << labelText << QPoint(ev->pos() - rect().topLeft()) << tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha();
+
+    //passar variavel tamanho como float zoa o drop
+    dataStream << labelText << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha();
 
     QMimeData *mimeData = new QMimeData;
     //pra que serve mimeData?
