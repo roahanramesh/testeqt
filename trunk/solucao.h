@@ -36,11 +36,20 @@ class Solucao{
 
     int get_escala(){return escala;}
 
-    static QList<QList<cTrabalho> > GerarSolucao();
-    static QList<QList<cTrabalho> > SolucaoVazia();
-
     QList<QString> getNomeMaquinas(){return nome_maquinas;}
+    void setNomeMaquinas(QList<QString> nome_maquinas){this->nome_maquinas=nome_maquinas;}
 
+    QList<QList<cTrabalho> > getTrabalhos(){return trabalhos;}
+    void setTrabalhos(QList<QList<cTrabalho> > trabalhos){this->trabalhos=trabalhos;}
+
+    int getMaiorNomeMaquina();
+
+    //static QList<QList<cTrabalho> > GerarSolucao();
+    static Solucao GerarSolucao();
+    //static QList<QList<cTrabalho> > SolucaoVazia();
+    static Solucao SolucaoVazia();
+
+    private:
     //variável que define a escala do gráfico
     int escala;
 

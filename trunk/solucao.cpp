@@ -1,5 +1,7 @@
 #include "solucao.h"
 
+#define MAX(a,b) (((a)<(b))?(b):(a))
+
 Solucao::Solucao(){
     makespan = 1;
     maior_atraso = 0;
@@ -11,26 +13,32 @@ Solucao::Solucao(){
     total_ociosidade = 0;
     total_folga = 0;
 
-    trabalhos = SolucaoVazia();
+    QList<QList<cTrabalho> > t;
+    trabalhos = t;
 
-    escala = 40;
+    escala = 60;
 }
 
-QList<QList<cTrabalho> > Solucao::SolucaoVazia(){
+Solucao Solucao::SolucaoVazia(){
     cTrabalho t(QTime(0,0),QTime(0,0),"",QColor(0,0,0,0));
     QList<cTrabalho> l;
     l.append(t);
     QList<QList<cTrabalho> > s;
     s.append(l);
-    return s;
+    Solucao sol;
+    sol.setTrabalhos(s);
+    QList<QString> nome_maquinas;
+    nome_maquinas.append("maquina 1");
+    sol.setNomeMaquinas(nome_maquinas);
+    return sol;
 }
 
-QList<QList<cTrabalho> > Solucao::GerarSolucao(){
+Solucao Solucao::GerarSolucao(){
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
     int alpha = 255;
-    cTrabalho t1_1(QTime(0,0),QTime(1,0),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t1_2(QTime(1,0),QTime(2,0),"t1_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t1_3(QTime(2,0),QTime(3,0),"t1_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_1(QTime(0,0),QTime(1,50),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_2(QTime(3,0),QTime(5,0),"t1_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_3(QTime(6,0),QTime(7,0),"t1_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t1_4(QTime(8,0),QTime(10,0),"t1_4",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t1_5(QTime(15,0),QTime(18,0),"t1_5",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 
@@ -39,11 +47,11 @@ QList<QList<cTrabalho> > Solucao::GerarSolucao(){
     cTrabalho t2_2(QTime(12,0), QTime(15,0), "t2_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t2_3(QTime(15,0), QTime(18,0), "t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t2_4(QTime(19,0), QTime(22,0), "t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-//
-//    cTrabalho overhead(QTime(0,0),QTime(1,0), "Overhead",QColor(0,0,0,255), true);
-//    cTrabalho t3_1(QTime(1,0), QTime(2,0), "t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-//    cTrabalho t3_2(QTime(2,0), QTime(3,0), "t3_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-//    cTrabalho t3_3(QTime(8,0), QTime(10,0), "t3_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+
+    cTrabalho overhead(QTime(0,0),QTime(1,0), "Overhead",QColor(0,0,0,255), true);
+    cTrabalho t3_1(QTime(1,0), QTime(2,0), "t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t3_2(QTime(2,0), QTime(3,0), "t3_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t3_3(QTime(8,0), QTime(10,0), "t3_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 //
 //    cTrabalho t4_1(QTime(3,0), QTime(4,0), "t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 //    QList<cTrabalho> l4;
@@ -86,17 +94,17 @@ QList<QList<cTrabalho> > Solucao::GerarSolucao(){
     l2.append(t2_2);
     l2.append(t2_3);
     l2.append(t2_4);
-//
-//    QList<cTrabalho> l3;
-//    l3.append(overhead);
-//    l3.append(t3_1);
-//    l3.append(t3_2);
-//    l3.append(t3_3);
+
+    QList<cTrabalho> l3;
+    l3.append(overhead);
+    l3.append(t3_1);
+    l3.append(t3_2);
+    l3.append(t3_3);
 
     QList<QList<cTrabalho> > nsolucao;
     nsolucao.append(l1);
     nsolucao.append(l2);
-//    nsolucao.append(l3);
+    nsolucao.append(l3);
 //    nsolucao.append(l4);
 //    nsolucao.append(l5);
 //    nsolucao.append(l6);
@@ -105,5 +113,23 @@ QList<QList<cTrabalho> > Solucao::GerarSolucao(){
 //    nsolucao.append(l9);
 //    nsolucao.append(l10);
 
-    return nsolucao;
+    QList<QString> nome_maquinas;
+    nome_maquinas.append("Máquina de corte");
+    nome_maquinas.append("Máquina de pintura");
+    nome_maquinas.append("Máquina de acabamento");
+
+    Solucao solucao;
+    solucao.setTrabalhos(nsolucao);
+    solucao.setNomeMaquinas(nome_maquinas);
+
+
+    return solucao;
+}
+
+int Solucao::getMaiorNomeMaquina(){
+    int maior = 0;
+    foreach(QString nome, nome_maquinas){
+        maior = MAX(maior,nome.size());
+    }
+    return maior;
 }

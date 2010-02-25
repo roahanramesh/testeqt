@@ -33,7 +33,10 @@ private:
     QString Widget::generateToolTip(int tam = 1);
     Solucao solucao;
     int tamanho_vertical; //definido pelo construtor
-    int TIME_UNIT_SIZE;
+    float TIME_UNIT_SIZE;
+    int escala;
+    //int GANTT_START;
+    int posicao_zero;
 
 //private:
     //Ui::WidgetClass *ui;
