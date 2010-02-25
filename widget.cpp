@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QDebug>
 #include <QPen>
+#include <QFont>
 
 //coordenada x onde se inicia o desenho do grafico
 #define GANTT_START 100
@@ -24,22 +25,30 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, " ");
 
-    QList<QList<cTrabalho> > solu = solucao.GerarSolucao();
-
+    //Solucao solu = solucao.GerarSolucao();
+    //GANTT_START = solucao.getMaiorNomeMaquina();
     TIME_UNIT_SIZE = solucao.get_escala();
+    //GANTT_START = 100;//solucao.getMaiorNomeMaquina();
 
+
+    //float x = GANTT_START;
+    //int x = GANTT_START;
+    //int x = GANTT_START;
     int x = GANTT_START;
     int y = 20;
-    int count = 0;
-    int x_inicio, x_fim;
+    //int count = 0;
+    float x_inicio, x_fim;
 
     QList<int> tamanhos_maquina;
-    int posicao_ultimo_trabalho = 0;
-    int label_pos, label_tamanho;
+    float posicao_ultimo_trabalho = 0.0;
+    float label_pos, label_tamanho;
 
-
-    foreach (QList<cTrabalho> line, solu){
-        QLabel *x_label = new QLabel("Máquina "+QString::number(++count),this);
+    QList<QString> nome_maquinas = solucao.getNomeMaquinas();
+    //variavel pra iterar a lista com o nome das maquinas
+    int indice = 0;
+    foreach (QList<cTrabalho> line, solucao.getTrabalhos()){
+        QLabel *x_label = new QLabel(nome_maquinas.at(indice),this);
+        indice++;
         x_label->move(LABEL_START,y);
         x_label->setMinimumHeight(size.height()+12);
         x_label->show();
@@ -48,16 +57,14 @@ Widget::Widget(Solucao solucao, QWidget *parent)
             x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
             label_pos = x_inicio*TIME_UNIT_SIZE+GANTT_START;
             label_tamanho = trab.getTamanho()*TIME_UNIT_SIZE;
-            QString wat = QString::number(trab.getTamanho());
-            qDebug(wat.toAscii());
             //myLabel *label = new myLabel(trab,QString::number(label_pos),this,trab.getCor(),label_tamanho);
-            myLabel *label = new myLabel(QString::number(label_pos),this,trab.getCor(),label_tamanho,trab.getOverhead());
+            myLabel *label = new myLabel(QString::number(label_pos)+" "+QString::number(label_tamanho),this,trab.getCor(),label_tamanho,trab.getOverhead());
             //qDebug(trab.getOverhead()?"hello":"world");
             //myLabel *label = new myLabel(trab.,this,trab.getCor(),label_tamanho);
             posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
             label->setToolTip(generateToolTip(10));
             label->move(x_inicio*TIME_UNIT_SIZE+GANTT_START,trab.getOverhead()?y+10:y); //coordenada y = y+10 se label for overhead
-
+            qDebug() << " coord x " << QString::number(x_inicio*TIME_UNIT_SIZE+GANTT_START);
             label->setCoordenada(QPoint(x_inicio*TIME_UNIT_SIZE+GANTT_START,trab.getOverhead()?y+10:y));
 
             label->show();
@@ -78,26 +85,28 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //definicao tamanho da tela
     //setMinimumSize(1000, 400);//qMax(200,y));
     //setMinimumSize(Solucao::CalculateX(solucao),400);
-    tamanho_vertical = MAX(400,solu.size()*70);
-    qDebug()<<QString::number(solu.size());
+    tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
+    //qDebug()<<QString::number(solu.size());
     setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }
 
 
-/* TODO - desenhar as retas de forma dinâmica; desenhar labels com o valor das horas; variar de acordo com escala*/
+/*
+ * Desenha background indicador de tempo
+ */
 void Widget::paintEvent(QPaintEvent *event){
-    QPen estilo(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+    QPen label_pen(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+    QPen line_pen(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
     QPainter paint(this);
-    paint.setPen(estilo);
-    int escala = solucao.get_escala();
+    int TIME_UNIT_SIZE = solucao.get_escala();
     for(int x=0; x<25; x++){
-        QString label = "0"+QString::number(x)+":00";
-        QLabel *hora = new QLabel(label,this);
-        hora->move(GANTT_START+x*escala,2);
-        hora->show();
-        paint.drawLine(GANTT_START+x*escala,12,GANTT_START+x*escala,tamanho_vertical);
+        QString txt = QString::number(x)+":00";
+        paint.setPen(label_pen);
+        paint.drawText(QPoint(GANTT_START+x*TIME_UNIT_SIZE,10),txt);
+        paint.setPen(line_pen);
+        paint.drawLine(GANTT_START+x*TIME_UNIT_SIZE,12,GANTT_START+x*TIME_UNIT_SIZE,tamanho_vertical);
     }
 }
 
