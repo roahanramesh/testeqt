@@ -27,10 +27,12 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 private:
     QString Widget::generateToolTip(int tam = 1);
-
+    Solucao solucao;
+    int tamanho_vertical; //definido pelo construtor
     int TIME_UNIT_SIZE;
 
 //private:

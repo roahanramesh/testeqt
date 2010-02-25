@@ -9,6 +9,7 @@ void myLabel::setTamanho(int t){
 //myLabel::myLabel(cTrabalho trab, const QString &text, QWidget *parent, QColor color, int tamanho)
 myLabel::myLabel(const QString &text, QWidget *parent, QColor color, float tamanho, bool overhead)
     : QLabel(parent){
+    this->coordenada = QPoint(0,0);
     this->overhead = overhead;
     this->tamanho = tamanho;
     //this->trabalho = trab;
@@ -54,14 +55,14 @@ myLabel::myLabel(const QString &text, QWidget *parent, QColor color, float taman
 
 void myLabel::mousePressEvent(QMouseEvent *ev)
 {
-    if(this->overhead){         //desabilita ação de drag para labels que representarem overhead de maquina
-        return;
-    }
+//    if(this->overhead){         //desabilita ação de drag para labels que representarem overhead de maquina
+//        //return;
+//    }
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
-    //passar variavel tamanho como float zoa o drop
-    dataStream << labelText << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha();
+    //passar variavel tamanho como float zoa o drop ***FIX***
+    dataStream << labelText << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha() << overhead << coordenada;
 
     QMimeData *mimeData = new QMimeData;
     //pra que serve mimeData?
