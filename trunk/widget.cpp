@@ -8,6 +8,7 @@
 #include "ctrabalho.h"
 #include <iostream>
 #include <QDebug>
+#include <QPen>
 
 //coordenada x onde se inicia o desenho do grafico
 #define GANTT_START 100
@@ -35,7 +36,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     QList<int> tamanhos_maquina;
     int posicao_ultimo_trabalho = 0;
     int label_pos, label_tamanho;
-    int tamanho_vertical;
+
 
     foreach (QList<cTrabalho> line, solu){
         QLabel *x_label = new QLabel("Máquina "+QString::number(++count),this);
@@ -47,13 +48,18 @@ Widget::Widget(Solucao solucao, QWidget *parent)
             x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
             label_pos = x_inicio*TIME_UNIT_SIZE+GANTT_START;
             label_tamanho = trab.getTamanho()*TIME_UNIT_SIZE;
+            QString wat = QString::number(trab.getTamanho());
+            qDebug(wat.toAscii());
             //myLabel *label = new myLabel(trab,QString::number(label_pos),this,trab.getCor(),label_tamanho);
             myLabel *label = new myLabel(QString::number(label_pos),this,trab.getCor(),label_tamanho,trab.getOverhead());
-            qDebug(trab.getOverhead()?"hello":"world");
+            //qDebug(trab.getOverhead()?"hello":"world");
             //myLabel *label = new myLabel(trab.,this,trab.getCor(),label_tamanho);
             posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
             label->setToolTip(generateToolTip(10));
-            label->move(x_inicio*TIME_UNIT_SIZE+GANTT_START,trab.getOverhead()?y+10:y);     //coordenada y = y+10 se label for overhead
+            label->move(x_inicio*TIME_UNIT_SIZE+GANTT_START,trab.getOverhead()?y+10:y); //coordenada y = y+10 se label for overhead
+
+            label->setCoordenada(QPoint(x_inicio*TIME_UNIT_SIZE+GANTT_START,trab.getOverhead()?y+10:y));
+
             label->show();
         }
         tamanhos_maquina.append(posicao_ultimo_trabalho);
@@ -77,6 +83,22 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
+}
+
+
+/* TODO - desenhar as retas de forma dinâmica; desenhar labels com o valor das horas; variar de acordo com escala*/
+void Widget::paintEvent(QPaintEvent *event){
+    QPen estilo(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+    QPainter paint(this);
+    paint.setPen(estilo);
+    int escala = solucao.get_escala();
+    for(int x=0; x<25; x++){
+        QString label = "0"+QString::number(x)+":00";
+        QLabel *hora = new QLabel(label,this);
+        hora->move(GANTT_START+x*escala,2);
+        hora->show();
+        paint.drawLine(GANTT_START+x*escala,12,GANTT_START+x*escala,tamanho_vertical);
+    }
 }
 
 void Widget::dragEnterEvent(QDragEnterEvent *event){
@@ -123,15 +145,23 @@ if (event->mimeData()->hasFormat("application/x-fridgemagnet")) {
         //cTrabalho trabalho = mime->get_
 
         QString text;
-        QPoint offset;
+        QPoint offset, coordenada;
         int tamanho, r, g, b, alpha;
+        bool overhead;
         //cTrabalho trab;
-        dataStream >> text >> offset >> tamanho >> r >> g >> b >> alpha;
+        dataStream >> text >> offset >> tamanho >> r >> g >> b >> alpha >> overhead >> coordenada;
 
-        myLabel *label = new myLabel(o_text, this, QColor(r,g,b,alpha), tamanho);//*TIME_UNIT_SIZE);
+        myLabel *label = new myLabel(o_text, this, QColor(r,g,b,alpha), tamanho, overhead?true:false);//*TIME_UNIT_SIZE);
         //myLabel *label = new myLabel(o_text, this, QColor(120,200,85,200), event->mimeData()->;
         label->setToolTip(generateToolTip(o_text.toInt()));
-        label->move(event->pos() - offset);
+
+        /*restringe drops à coordenada y original, mantendo o label sempre no mesmo nível*/
+        QPoint pos = event->pos() - offset;
+        pos.setY(coordenada.y());
+        if(pos.x()<GANTT_START){ pos.setX(GANTT_START); }
+        label->move(pos);
+        label->setCoordenada(pos);
+        //label->move(event->pos() - offset);
         label->show();
 
         if (children().contains(event->source())) {
