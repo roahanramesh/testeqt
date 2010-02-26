@@ -34,8 +34,8 @@ private:
     Solucao solucao;
     int tamanho_vertical; //definido pelo construtor
     float TIME_UNIT_SIZE;
+    int GANTT_START;
     int escala;
-    //int GANTT_START;
     int posicao_zero;
 
 //private:
