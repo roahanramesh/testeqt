@@ -34,7 +34,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
 
     //int x = GANTT_START*LABEL_START+300;
     int y = 20;
-    int x_inicio, x_fim;
+    float x_inicio, x_fim;
 
     QList<int> tamanhos_maquina;
     int posicao_ultimo_trabalho = 0;
@@ -52,19 +52,28 @@ Widget::Widget(Solucao solucao, QWidget *parent)
         x_label->setMinimumHeight(size.height()+12);
         x_label->show();
         foreach(cTrabalho trab, line){
-            x_inicio = trab.getInicio().hour()+(trab.getInicio().minute()/60);
-            x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
+            //x_inicio = trab.getInicio().hour()+(trab.getInicio().minute()/60);
+            x_inicio = trab.getInicioFloat();
+
+            //qDebug() << "float " << x_inicio;
+            //qDebug() << trab.getTexto() << "x_inicio " << x_inicio << "*time unit size" << x_inicio*TIME_UNIT_SIZE;
+
+            //x_fim = trab.getFim().hour()+(trab.getFim().minute()/60);
+            x_fim = trab.getFimFloat();
+
             label_pos = x_inicio*TIME_UNIT_SIZE+GANTT_START;
             label_tamanho = trab.getTamanho()*TIME_UNIT_SIZE;
             //myLabel *label = new myLabel(trab,QString::number(label_pos),this,trab.getCor(),label_tamanho);
-            myLabel *label = new myLabel(QString::number(label_pos),this,trab.getCor(),label_tamanho,trab.getOverhead());
+            //myLabel *label = new myLabel(QString::number(label_pos),this,trab.getCor(),label_tamanho,trab.getOverhead());
+            myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getOverhead());
             //qDebug(trab.getOverhead()?"hello":"world");
             //myLabel *label = new myLabel(trab.,this,trab.getCor(),label_tamanho);
             posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
-            label->setToolTip(generateToolTip(10));
+            label->setTtip(gerarToolTip(trab));
+            label->setToolTip(label->getTtip());
             label->move(x_inicio*TIME_UNIT_SIZE+GANTT_START,trab.getOverhead()?y+10:y); //coordenada y = y+10 se label for overhead
 
-            label->setCoordenada(QPoint(x_inicio*TIME_UNIT_SIZE+GANTT_START,trab.getOverhead()?y+10:y));
+            label->setCoordenada(QPoint(x_inicio*TIME_UNIT_SIZE+GANTT_START , trab.getOverhead()?y+10:y));
 
             label->show();
         }
@@ -95,14 +104,27 @@ Widget::Widget(Solucao solucao, QWidget *parent)
 /* TODO - desenhar as retas de forma dinâmica; desenhar labels com o valor das horas; variar de acordo com escala*/
 void Widget::paintEvent(QPaintEvent *event){
     QPen pen_linha(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+    QPen pen_meiahora(Qt::lightGray, 0, Qt::DotLine, Qt::SquareCap, Qt::RoundJoin);
     QPen pen_hora(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
     QPainter paint(this);
     int escala = solucao.getEscala();
+    float meiahora = 0;
     for(int x=0; x<25; x++){
         paint.setPen(pen_hora);
         paint.drawText(QPoint(GANTT_START+x*escala,10),QString::number(x)+":00");
         paint.setPen(pen_linha);
         paint.drawLine(GANTT_START+x*escala,15,GANTT_START+x*escala,tamanho_vertical);
+        paint.setPen(pen_meiahora);
+
+        meiahora = ((GANTT_START+x*escala)+(GANTT_START+(x+1)*escala))/2;
+        paint.drawText(QPoint(meiahora,10),":30");
+        paint.drawLine(meiahora,15,meiahora,tamanho_vertical);
+        meiahora /= 2;
+        //meiahora = meiahora>=GANTT_START?meiahora /= 2:GANTT_START;
+        if(meiahora>GANTT_START){
+            paint.drawLine(meiahora,15,meiahora,tamanho_vertical);
+        }
+        //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
 
     }
 }
@@ -146,16 +168,16 @@ void Widget::dropEvent(QDropEvent *event){
 
         QString o_text = mime->text();
 
-        QString text;
+        QString text, tooltip;
         QPoint offset, coordenada;
         int tamanho, r, g, b, alpha;
         bool overhead;
 
-        dataStream >> text >> offset >> tamanho >> r >> g >> b >> alpha >> overhead >> coordenada;
+        dataStream >> text >> tooltip >> offset >> tamanho >> r >> g >> b >> alpha >> overhead >> coordenada;
 
-        myLabel *label = new myLabel(o_text, this, QColor(r,g,b,alpha), tamanho, overhead?true:false);//*TIME_UNIT_SIZE);
+        myLabel *label = new myLabel(o_text,this,tooltip, QColor(r,g,b,alpha), tamanho, overhead?true:false);//*TIME_UNIT_SIZE);
         //myLabel *label = new myLabel(o_text, this, QColor(120,200,85,200), event->mimeData()->;
-        label->setToolTip(generateToolTip(o_text.toInt()));
+        label->setToolTip(tooltip);
 
         /*restringe drops à coordenada y de origem, mantendo o label sempre no mesmo nível*/
         QPoint pos = event->pos() - offset;
@@ -191,6 +213,21 @@ void Widget::dropEvent(QDropEvent *event){
     }
 }
 
-QString Widget::generateToolTip(int tam){
-    return QString("tamanho : " + QString::number(tam) + "\nmais informações");
+QString Widget::gerarToolTip(cTrabalho trabalho){
+    //return QString("tamanho : " + QString::number(tam) + "\nmais informações");
+    QString tooltip;
+    tooltip = trabalho.getTexto() + "\nOrdem de produção: " + trabalho.getOrdemProducao();
+    tooltip += "\nPilha: " + trabalho.getPilha();
+    tooltip += "\nProduto: " + trabalho.getProduto();
+    tooltip += "\nAcabamento: " + trabalho.getAcabamento();
+    tooltip += "\nMaterial Base: " + trabalho.getMaterialBase();
+    tooltip += "\nQtd Peças: " + trabalho.getQtdPecas();
+    tooltip += "\nData inicio: ";
+    tooltip += "xx/xx/xx "+QString::number(trabalho.getInicio().hour());
+    tooltip += ":"+QString::number(trabalho.getInicio().minute());
+    tooltip += "\nData fim: ";
+    tooltip += "yy/yy/yy " + QString::number(trabalho.getFim().hour());
+    tooltip += ":"+QString::number(trabalho.getFim().minute());
+    //tooltip.append(trabalho.getInicio().toString("hh:mm"));
+    return tooltip;
 }

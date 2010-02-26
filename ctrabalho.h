@@ -28,9 +28,11 @@ class cTrabalho{
         void setQtdPecas(QString qtdp){qtd_pecas=qtdp;}
         QString getPilha(){return pilha;}
         void setPilha(QString p){pilha=p;}
+        QString getTexto(){return texto;}
+        void setText(QString texto){this->texto=texto;}
 
-        float getInicioFloat(){return inicio.hour()+inicio.minute()/60;}
-        float getFimFloat(){return fim.hour()+fim.minute()/60;}
+        float getInicioFloat();
+        float getFimFloat();
 
         bool getOverhead(){return overhead;}
         void setOverhead(bool overhead){this->overhead=overhead;}
@@ -44,7 +46,7 @@ class cTrabalho{
         QTime inicio;
         QTime fim;
         QColor cor;
-        QString ordem_producao, produto, acabamento, material_base, qtd_pecas, pilha;
+        QString texto, ordem_producao, produto, acabamento, material_base, qtd_pecas, pilha;
 };
 
 #endif // CTRABALHO_H
