@@ -30,7 +30,7 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 private:
-    QString Widget::generateToolTip(int tam = 1);
+    QString Widget::gerarToolTip(cTrabalho trabalho);
     Solucao solucao;
     int tamanho_vertical; //definido pelo construtor
     float TIME_UNIT_SIZE;

@@ -7,11 +7,12 @@ void myLabel::setTamanho(int t){
 
 //myLabel::myLabel(const QString &text, QWidget *parent,int r, int g, int b, int alpha)
 //myLabel::myLabel(cTrabalho trab, const QString &text, QWidget *parent, QColor color, int tamanho)
-myLabel::myLabel(const QString &text, QWidget *parent, QColor color, float tamanho, bool overhead)
+myLabel::myLabel(const QString &text,QWidget *parent,QString tooltip, QColor color, float tamanho, bool overhead)
     : QLabel(parent){
     this->coordenada = QPoint(0,0);
     this->overhead = overhead;
     this->tamanho = tamanho;
+    this->tooltip = tooltip;
     //this->trabalho = trab;
     this->cor = color;
     QFontMetrics metric(font());
@@ -58,7 +59,7 @@ void myLabel::mousePressEvent(QMouseEvent *ev)
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
     //passar variavel tamanho como float zoa o drop ***FIX***
-    dataStream << labelText << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha() << overhead << coordenada;
+    dataStream << labelText << tooltip << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha() << overhead << coordenada;
 
     QMimeData *mimeData = new QMimeData;
     //pra que serve mimeData?
