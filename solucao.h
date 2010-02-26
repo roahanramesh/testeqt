@@ -5,6 +5,8 @@
 #include <QString>
 #include <QList>
 #include "ctrabalho.h"
+#include <QDebug>
+#include <QFontMetrics>
 
 class Solucao{
     public:
@@ -34,7 +36,7 @@ class Solucao{
     int get_max_y_size(){return max_y_size;}
     void set_max_y_size(int max_y_size){this->max_y_size=max_y_size;}
 
-    int get_escala(){return escala;}
+    int getEscala(){return escala;}
 
     QList<QString> getNomeMaquinas(){return nome_maquinas;}
     void setNomeMaquinas(QList<QString> nome_maquinas){this->nome_maquinas=nome_maquinas;}

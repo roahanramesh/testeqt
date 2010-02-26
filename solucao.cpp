@@ -16,6 +16,9 @@ Solucao::Solucao(){
     QList<QList<cTrabalho> > t;
     trabalhos = t;
 
+    QString l("");
+    nome_maquinas.append(l);
+
     escala = 60;
 }
 
@@ -34,6 +37,16 @@ Solucao Solucao::SolucaoVazia(){
 }
 
 Solucao Solucao::GerarSolucao(){
+
+    QList<QString> nome_maquinas;
+    nome_maquinas.append("Máquina de corte");
+    nome_maquinas.append("Máquina de pintura");
+    nome_maquinas.append("Máquina de acabamento");
+//    nome_maquinas.append("A");
+//    nome_maquinas.append("B");
+//    nome_maquinas.append("C");
+    //qDebug() << "lolwut " << nome_maquinas.size();
+
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
     int alpha = 255;
     cTrabalho t1_1(QTime(0,0),QTime(1,50),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
@@ -113,14 +126,10 @@ Solucao Solucao::GerarSolucao(){
 //    nsolucao.append(l9);
 //    nsolucao.append(l10);
 
-    QList<QString> nome_maquinas;
-    nome_maquinas.append("Máquina de corte");
-    nome_maquinas.append("Máquina de pintura");
-    nome_maquinas.append("Máquina de acabamento");
-
     Solucao solucao;
     solucao.setTrabalhos(nsolucao);
-    solucao.setNomeMaquinas(nome_maquinas);
+    //solucao.setNomeMaquinas(nome_maquinas);
+    solucao.nome_maquinas = nome_maquinas;
 
 
     return solucao;
@@ -128,8 +137,12 @@ Solucao Solucao::GerarSolucao(){
 
 int Solucao::getMaiorNomeMaquina(){
     int maior = 0;
+    QFont myFont;
+    QFontMetrics fmetrics(myFont);
     foreach(QString nome, nome_maquinas){
-        maior = MAX(maior,nome.size());
+        maior = MAX(maior,fmetrics.boundingRect(nome).width());
     }
-    return maior;
+    //qDebug() << "debug "<< maior;
+    //+15 gambiarra pra ficar do tamanho certo
+    return maior+15;
 }

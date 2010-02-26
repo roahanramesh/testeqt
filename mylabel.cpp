@@ -35,13 +35,9 @@ myLabel::myLabel(const QString &text, QWidget *parent, QColor color, float taman
     painter.begin(&image);
     painter.setRenderHint(QPainter::Antialiasing);
     //Cor do background do label
-      //painter.setBrush(Qt::green);
-      //painter.setBrush(QColor(r,g,b,127));
     painter.setBrush(cor);
     //Especificação do desenho do label
-    //painter.drawRoundedRect(QRectF(0.5, 0.5, image.width()-1, image.height()-1),
-                            //25, 25, Qt::RelativeSize);
-    painter.drawRect(0,0,image.width()-1,image.height()-1);
+    painter.drawRect(0,0,image.width(),image.height());
     painter.setFont(font);
     //Cor do texto
     painter.setBrush(Qt::green);

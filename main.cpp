@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 
     Solucao so;
     //QList<QList<cTrabalho> > solu = so.GerarSolucao();
+    so = Solucao::GerarSolucao();
 
     layoutWidget w(so);
     //Widget w;
