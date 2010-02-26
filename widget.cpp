@@ -108,7 +108,9 @@ void Widget::paintEvent(QPaintEvent *event){
     QPen pen_hora(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
     QPainter paint(this);
     int escala = solucao.getEscala();
-    float meiahora = 0;
+    float linha_meiahora = 0;
+    float linha_45min = 0;
+    float linha_15min = 0;
     for(int x=0; x<25; x++){
         paint.setPen(pen_hora);
         paint.drawText(QPoint(GANTT_START+x*escala,10),QString::number(x)+":00");
@@ -116,14 +118,20 @@ void Widget::paintEvent(QPaintEvent *event){
         paint.drawLine(GANTT_START+x*escala,15,GANTT_START+x*escala,tamanho_vertical);
         paint.setPen(pen_meiahora);
 
-        meiahora = ((GANTT_START+x*escala)+(GANTT_START+(x+1)*escala))/2;
-        paint.drawText(QPoint(meiahora,10),":30");
-        paint.drawLine(meiahora,15,meiahora,tamanho_vertical);
-        meiahora /= 2;
-        //meiahora = meiahora>=GANTT_START?meiahora /= 2:GANTT_START;
-        if(meiahora>GANTT_START){
-            paint.drawLine(meiahora,15,meiahora,tamanho_vertical);
-        }
+        linha_meiahora = ((GANTT_START+x*escala)+(GANTT_START+(x+1)*escala))/2;
+        if(escala>=100)
+        paint.drawText(QPoint(linha_meiahora,10),":30");
+        paint.drawLine(linha_meiahora,15,linha_meiahora,tamanho_vertical);
+
+        linha_45min = (linha_meiahora+(GANTT_START+(x+1)*escala))/2;
+        if(escala>=100)
+        paint.drawText(QPoint(linha_45min,10),":45");
+        paint.drawLine(linha_45min,15,linha_45min,tamanho_vertical);
+
+        linha_15min = ((GANTT_START+x*escala)+linha_meiahora)/2;
+        if(escala>=100)
+        paint.drawText(QPoint(linha_15min,10),":15");
+        paint.drawLine(linha_15min,15,linha_15min,tamanho_vertical);
         //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
 
     }
