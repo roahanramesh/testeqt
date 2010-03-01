@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QDebug>
 #include <QPen>
+#include <QFont>
 
 //coordenada x onde se inicia o desenho do grafico
 //#define GANTT_START 100
@@ -70,6 +71,11 @@ Widget::Widget(Solucao solucao, QWidget *parent)
 
             label->setCoordenada(QPoint(x_inicio*escala+posicao_zero , trab.getOverhead()?y+10:y));
 
+            //qDebug() << "data inicio: " << trab.getDataInicio().toString() << "data fim: " << trab.getDataFim().toString();
+            //int wat = trab.getDataInicio().daysTo(trab.getDataFim());
+            qDebug() << QString::number(solucao.getDiasDuracao());
+
+
             label->show();
         }
         tamanhos_maquina.append(posicao_ultimo_trabalho);
@@ -99,16 +105,27 @@ void Widget::paintEvent(QPaintEvent *event){
     QPen pen_linha(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
     QPen pen_meiahora(Qt::lightGray, 0, Qt::DotLine, Qt::SquareCap, Qt::RoundJoin);
     QPen pen_hora(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+    QPen pen_bkp;
+    QFont font_data = QFont();
+    font_data.setPointSize(16);
     QPainter paint(this);
     int escala = solucao.getEscala();
     float linha_meiahora = 0;
     float linha_45min = 0;
     float linha_15min = 0;
-    for(int x=0; x<25; x++){
+    for(int x=0; x<24; x++){
+        if(x==0 || x==12){ //escreve data no topo da linha do tempo
+            paint.setFont(font_data);
+            pen_bkp = paint.pen();
+            paint.setPen(QPen());
+            paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),"01/03");
+            paint.setFont(QFont());
+            paint.setPen(pen_bkp);
+        }
         paint.setPen(pen_hora);
-        paint.drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x)+":00");
+        paint.drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x)+((escala>=25)?":00":""));
         paint.setPen(pen_linha);
-        paint.drawLine(posicao_zero+x*escala,y_teto-5,posicao_zero+x*escala,tamanho_vertical);
+        paint.drawLine(posicao_zero+x*escala , y_teto-5 , posicao_zero+x*escala , tamanho_vertical);
         paint.setPen(pen_meiahora);
 
         linha_meiahora = ((posicao_zero+x*escala)+(posicao_zero+(x+1)*escala))/2;
@@ -126,7 +143,6 @@ void Widget::paintEvent(QPaintEvent *event){
         paint.drawText(QPoint(linha_15min,y_teto-10),":15");
         paint.drawLine(linha_15min,y_teto-5,linha_15min,tamanho_vertical);
         //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
-
     }
 }
 
