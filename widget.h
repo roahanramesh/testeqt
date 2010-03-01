@@ -33,10 +33,9 @@ private:
     QString Widget::gerarToolTip(cTrabalho trabalho);
     Solucao solucao;
     int tamanho_vertical; //definido pelo construtor
-    float TIME_UNIT_SIZE;
-    int GANTT_START;
+    int y_teto; //define distância entre topo do widget e o desenho do gráfico. é relativo às barras
     int escala;
-    int posicao_zero;
+    int posicao_zero; //define posição zero para o grafico de gantt
 
 //private:
     //Ui::WidgetClass *ui;

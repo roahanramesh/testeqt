@@ -3,15 +3,15 @@
 #define MAX(a,b) (((a)<(b))?(b):(a))
 
 Solucao::Solucao(){
-    makespan = 1;
-    maior_atraso = 0;
-    num_op_atrasadas = 0;
-    total_atrasos = 0;
-    custo_mao_de_obra = 0;
-    custos_operacionais = 0;
-    total_setup = 0;
-    total_ociosidade = 0;
-    total_folga = 0;
+    makespan = 1561;
+    maior_atraso = 24875;
+    num_op_atrasadas = 456515;
+    total_atrasos = 12315;
+    custo_mao_de_obra = 1515;
+    custos_operacionais = 11541;
+    total_setup = 65165;
+    total_ociosidade = 651814;
+    total_folga = 78944;
 
     QList<QList<cTrabalho> > t;
     trabalhos = t;

@@ -59,6 +59,9 @@
     <value type="QString" >ALLUSERSPROFILE=C:\ProgramData</value>
     <value type="QString" >APPDATA=C:\Users\guenka\AppData\Roaming</value>
     <value type="QString" >BDSCOMMONDIR=C:\Users\Public\Documents\RAD Studio\5.0</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPLOCALE=pt_BR</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPNAME=AdobeDrive</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPVERSION=1.0.0</value>
     <value type="QString" >COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
     <value type="QString" >COMPUTERNAME=WS09</value>
     <value type="QString" >COMSPEC=C:\Windows\system32\cmd.exe</value>
@@ -119,6 +122,9 @@
     <value type="QString" >ALLUSERSPROFILE=C:\ProgramData</value>
     <value type="QString" >APPDATA=C:\Users\guenka\AppData\Roaming</value>
     <value type="QString" >BDSCOMMONDIR=C:\Users\Public\Documents\RAD Studio\5.0</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPLOCALE=pt_BR</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPNAME=AdobeDrive</value>
+    <value type="QString" >COM.ADOBE.VERSIONCUE.CLIENT.APPVERSION=1.0.0</value>
     <value type="QString" >COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
     <value type="QString" >COMPUTERNAME=WS09</value>
     <value type="QString" >COMSPEC=C:\Windows\system32\cmd.exe</value>
