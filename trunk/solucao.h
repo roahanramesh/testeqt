@@ -55,6 +55,9 @@ class Solucao{
     //retorna a maior duração entre todos os trabalhos, utilizado para definir até onde que se deve desenhar a linha do tempo
     int getDiasDuracao();
 
+    QDate getDataInicio(); //retorna a menor data dentre os trabalhos
+    QDate getDataFinal(); //retorna a maior data dentre os trabalhos
+
     private:
     //variável que define a escala do gráfico
     int escala;
