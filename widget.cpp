@@ -28,13 +28,27 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //solucao = solucao.GerarSolucao();
 
     escala = solucao.getEscala();
+
+    /*
+     *  SNIPPET PRA ESCREVER DATAS NO TOPO DO WIDGET
+     */
+    //data_inicio = solucao.get
+    data_inicio = solucao.getDataInicio();
+    data_fim = solucao.getDataFinal();
+    //qDebug() << data_inicio.toString();
+    this->dias = 1;
+    for(int x=0 ; x<data_inicio.daysTo(data_fim) ; x++){
+        dias++;
+    }
+    //qDebug() << QString::number(dias);
+    //qDebug() << "lol " << wut.toString();
+
     //y_teto = 20;
     //espaço para numero da data
     y_teto = 60;
 
-    //varia medida da coluna dos nomes das maquinas
-    posicao_zero = MAX(solucao.getMaiorNomeMaquina(),50);//*escala;
-    //qDebug() << "waddafack " << GANTT_START << escala;
+    //varia medida da coluna dos nomes das maquinas. valor numérico é a distância mínima
+    posicao_zero = MAX(solucao.getMaiorNomeMaquina(),50);
 
     //int x = GANTT_START*LABEL_START+300;
     int y = y_teto;
@@ -73,7 +87,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
 
             //qDebug() << "data inicio: " << trab.getDataInicio().toString() << "data fim: " << trab.getDataFim().toString();
             //int wat = trab.getDataInicio().daysTo(trab.getDataFim());
-            qDebug() << QString::number(solucao.getDiasDuracao());
+            //qDebug() << QString::number(solucao.getDiasDuracao());
 
 
             label->show();
@@ -94,7 +108,8 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //definicao tamanho da tela
 
     tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
-    setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
+    //setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
+    setMinimumSize(tamanhos_maquina.last()+20000,tamanho_vertical);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }
@@ -109,21 +124,29 @@ void Widget::paintEvent(QPaintEvent *event){
     QFont font_data = QFont();
     font_data.setPointSize(16);
     QPainter paint(this);
+    QDate dia = this->data_inicio;
+    QString texto_dia;
     int escala = solucao.getEscala();
     float linha_meiahora = 0;
     float linha_45min = 0;
     float linha_15min = 0;
-    for(int x=0; x<24; x++){
-        if(x==0 || x==12){ //escreve data no topo da linha do tempo
+
+    for(int y=0 ; y<dias ; y++){
+
+    for(int x=24*y; x<24+(y*24); x++){
+        int x_hora = x-(y*24);
+        //if(x==0 || x==12){ //escreve data no topo da linha do tempo
+        if(x_hora == 0){// || x_hora == 12){
             paint.setFont(font_data);
             pen_bkp = paint.pen();
             paint.setPen(QPen());
-            paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),"01/03");
+            paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
+            dia = dia.addDays(1);
             paint.setFont(QFont());
             paint.setPen(pen_bkp);
         }
         paint.setPen(pen_hora);
-        paint.drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x)+((escala>=25)?":00":""));
+        paint.drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x_hora)+((escala>=25)?":00":""));
         paint.setPen(pen_linha);
         paint.drawLine(posicao_zero+x*escala , y_teto-5 , posicao_zero+x*escala , tamanho_vertical);
         paint.setPen(pen_meiahora);
@@ -143,6 +166,8 @@ void Widget::paintEvent(QPaintEvent *event){
         paint.drawText(QPoint(linha_15min,y_teto-10),":15");
         paint.drawLine(linha_15min,y_teto-5,linha_15min,tamanho_vertical);
         //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
+    }
+
     }
 }
 

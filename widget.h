@@ -5,6 +5,7 @@
 #include <QList>
 #include "solucao.h"
 #include "ctrabalho.h"
+#include <QDate>
 
 //namespace Ui
 //{
@@ -36,6 +37,11 @@ private:
     int y_teto; //define distância entre topo do widget e o desenho do gráfico. é relativo às barras
     int escala;
     int posicao_zero; //define posição zero para o grafico de gantt
+
+    //variáveis utilizadas pra escrever as datas na linha do tempo
+    QDate data_inicio;
+    QDate data_fim;
+    int dias;
 
 //private:
     //Ui::WidgetClass *ui;

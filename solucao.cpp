@@ -1,6 +1,7 @@
 #include "solucao.h"
 
 #define MAX(a,b) (((a)<(b))?(b):(a))
+#define MIN(a,b) (((a)>(b))?(b):(a))
 
 Solucao::Solucao(){
     makespan = 1561;
@@ -51,7 +52,7 @@ Solucao Solucao::GerarSolucao(){
     cTrabalho t1_2(QTime(2,25),QTime(3,48),QDate::currentDate(),QDate::currentDate(),"t1_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t1_3(QTime(6,0),QTime(7,0),QDate::currentDate(),QDate::currentDate(),"t1_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t1_4(QTime(8,0),QTime(10,0),QDate::currentDate(),QDate::currentDate(),"t1_4",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t1_5(QTime(15,0),QTime(18,0),QDate::currentDate(),QDate::currentDate().addDays(40),"t1_5",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_5(QTime(15,0),QTime(18,0),QDate::currentDate(),QDate::currentDate().addDays(3),"t1_5",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 
     cTrabalho t2_0(QTime(0,10), QTime(3,20),QDate::currentDate(),QDate::currentDate(),"t2_0",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t2_1(QTime(6,0), QTime(12,0),QDate::currentDate(),QDate::currentDate(),"t2_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
@@ -137,6 +138,36 @@ int Solucao::getDiasDuracao(){
         maior = MAX(maquina.first().getDataInicio().daysTo(maquina.last().getDataFim()),maior);
     }
     return maior;
+}
+
+QDate Solucao::getDataInicio(){
+    QList<QDate> lista_data;
+    QDate menor_data;
+    foreach(QList<cTrabalho> maquina, trabalhos){
+        foreach(cTrabalho trabalho, maquina){
+            menor_data = MAX(trabalho.getDataInicio(),menor_data);
+        }
+        lista_data.append(menor_data);
+    }
+    foreach(QDate data, lista_data){
+        menor_data = MIN(menor_data,data);
+    }
+    return menor_data;
+}
+
+QDate Solucao::getDataFinal(){
+    QList<QDate> lista_data;
+    QDate maior_data;
+    foreach(QList<cTrabalho> maquina, trabalhos){
+        foreach(cTrabalho trabalho, maquina){
+            maior_data = MAX(trabalho.getDataFim(),maior_data);
+        }
+        lista_data.append(maior_data);
+    }
+    foreach(QDate data, lista_data){
+        maior_data = MAX(maior_data,data);
+    }
+    return maior_data;
 }
 
 int Solucao::getMaiorNomeMaquina(){
