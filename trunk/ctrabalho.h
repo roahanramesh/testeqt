@@ -4,11 +4,12 @@
 #include <QTime>
 #include <QString>
 #include <QColor>
+#include <QDate>
 
 class cTrabalho{
     public:
         //cTrabalho(QTime inicio_, QTime fim_, QString coisa);
-        cTrabalho(QTime inicio, QTime fim, QString coisa, QColor ncor = QColor(0,0,0,255),bool overhead = false);
+        cTrabalho(QTime inicio, QTime fim,QDate d_inicio, QDate d_fim,QString coisa, QColor ncor = QColor(0,0,0,255),bool overhead = false);
         cTrabalho();
 
         //getters e setters
@@ -41,10 +42,17 @@ class cTrabalho{
         QColor getCor(){return cor;}
         void setCor(QColor cor){this->cor=cor;}
 
+        QDate getDataInicio(){return d_inicio;}
+        QDate getDataFim(){return d_fim;}
+        void setDataInicio(QDate d_inicio){this->d_inicio=d_inicio;}
+        void setDataFim(QDate d_fim){this->d_fim=d_fim;}
+
     private:
         bool overhead;
         QTime inicio;
         QTime fim;
+        QDate d_inicio;
+        QDate d_fim;
         QColor cor;
         QString texto, ordem_producao, produto, acabamento, material_base, qtd_pecas, pilha;
 };

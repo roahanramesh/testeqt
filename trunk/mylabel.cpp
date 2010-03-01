@@ -58,7 +58,7 @@ void myLabel::mousePressEvent(QMouseEvent *ev)
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
-    //passar variavel tamanho como float zoa o drop ***FIX***
+    //passar variavel tamanho como float zoa o drop
     dataStream << labelText << tooltip << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha() << overhead << coordenada;
 
     QMimeData *mimeData = new QMimeData;

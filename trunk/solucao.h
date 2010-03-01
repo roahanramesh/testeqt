@@ -7,6 +7,7 @@
 #include "ctrabalho.h"
 #include <QDebug>
 #include <QFontMetrics>
+#include <QDate>
 
 class Solucao{
     public:
@@ -50,6 +51,9 @@ class Solucao{
     static Solucao GerarSolucao();
     //static QList<QList<cTrabalho> > SolucaoVazia();
     static Solucao SolucaoVazia();
+
+    //retorna a maior duração entre todos os trabalhos, utilizado para definir até onde que se deve desenhar a linha do tempo
+    int getDiasDuracao();
 
     private:
     //variável que define a escala do gráfico

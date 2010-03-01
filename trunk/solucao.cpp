@@ -23,7 +23,7 @@ Solucao::Solucao(){
 }
 
 Solucao Solucao::SolucaoVazia(){
-    cTrabalho t(QTime(0,0),QTime(0,0),"",QColor(0,0,0,0));
+    cTrabalho t(QTime(0,0),QTime(0,0),QDate(1500,1,1),QDate(1500,1,1),"",QColor(0,0,0,0));
     QList<cTrabalho> l;
     l.append(t);
     QList<QList<cTrabalho> > s;
@@ -47,22 +47,22 @@ Solucao Solucao::GerarSolucao(){
 
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
     int alpha = 255;
-    cTrabalho t1_1(QTime(0,15),QTime(1,30),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t1_2(QTime(2,25),QTime(3,48),"t1_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t1_3(QTime(6,0),QTime(7,0),"t1_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t1_4(QTime(8,0),QTime(10,0),"t1_4",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t1_5(QTime(15,0),QTime(18,0),"t1_5",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_1(QTime(0,15),QTime(1,30),QDate::currentDate(),QDate::currentDate(),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_2(QTime(2,25),QTime(3,48),QDate::currentDate(),QDate::currentDate(),"t1_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_3(QTime(6,0),QTime(7,0),QDate::currentDate(),QDate::currentDate(),"t1_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_4(QTime(8,0),QTime(10,0),QDate::currentDate(),QDate::currentDate(),"t1_4",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t1_5(QTime(15,0),QTime(18,0),QDate::currentDate(),QDate::currentDate().addDays(40),"t1_5",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 
-    cTrabalho t2_0(QTime(0,10), QTime(3,20), "t2_0",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t2_1(QTime(6,0), QTime(12,0), "t2_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t2_2(QTime(12,0), QTime(15,0), "t2_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t2_3(QTime(15,0), QTime(18,0), "t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t2_4(QTime(19,0), QTime(22,0), "t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t2_0(QTime(0,10), QTime(3,20),QDate::currentDate(),QDate::currentDate(),"t2_0",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t2_1(QTime(6,0), QTime(12,0),QDate::currentDate(),QDate::currentDate(),"t2_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t2_2(QTime(12,0), QTime(15,0),QDate::currentDate(),QDate::currentDate(),"t2_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t2_3(QTime(15,0), QTime(18,0),QDate::currentDate(),QDate::currentDate(),"t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t2_4(QTime(19,0), QTime(22,0),QDate::currentDate(),QDate::currentDate(),"t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 
-    cTrabalho overhead(QTime(0,0),QTime(1,0), "Overhead",QColor(0,0,0,255), true);
-    cTrabalho t3_1(QTime(1,0), QTime(2,0), "t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t3_2(QTime(2,0), QTime(3,0), "t3_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t3_3(QTime(8,0), QTime(10,0), "t3_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho overhead(QTime(0,0),QTime(1,0),QDate::currentDate(),QDate::currentDate(),"Overhead",QColor(0,0,0,255), true);
+    cTrabalho t3_1(QTime(1,0), QTime(2,0),QDate::currentDate(),QDate::currentDate(),"t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t3_2(QTime(2,0), QTime(3,0),QDate::currentDate(),QDate::currentDate(),"t3_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho t3_3(QTime(8,0), QTime(10,0),QDate::currentDate(),QDate::currentDate(),"t3_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 
 //    cTrabalho t4_1(QTime(3,0), QTime(4,0), "t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 //    QList<cTrabalho> l4;
@@ -129,6 +129,14 @@ Solucao Solucao::GerarSolucao(){
     solucao.setNomeMaquinas(nome_maquinas);
 
     return solucao;
+}
+
+int Solucao::getDiasDuracao(){
+    int maior = 0;
+    foreach(QList<cTrabalho> maquina, trabalhos){
+        maior = MAX(maquina.first().getDataInicio().daysTo(maquina.last().getDataFim()),maior);
+    }
+    return maior;
 }
 
 int Solucao::getMaiorNomeMaquina(){
