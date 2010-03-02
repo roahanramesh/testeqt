@@ -5,6 +5,7 @@
 #include <QString>
 #include <QColor>
 #include <QDate>
+#include <QDateTime>
 
 class cTrabalho{
     public:
@@ -13,10 +14,13 @@ class cTrabalho{
         cTrabalho();
 
         //getters e setters
-        QTime getInicio(){return inicio;}
-        void setInicio(QTime init){inicio = init;}
-        QTime getFim(){return fim;}
-        void setFim(QTime f){fim=f;}
+//        QTime getInicio(){return inicio;}
+//        void setInicio(QTime init){inicio = init;}
+//        QTime getFim(){return fim;}
+//        void setFim(QTime f){fim=f;}
+        QDateTime getInicio(){return t_inicio;}
+        QDateTime getFim(){return t_fim;}
+
         QString getOrdemProducao(){return ordem_producao;}
         void setOrdemProducao(QString op){ordem_producao = op;}
         QString getProduto(){return produto;}
@@ -32,8 +36,8 @@ class cTrabalho{
         QString getTexto(){return texto;}
         void setText(QString texto){this->texto=texto;}
 
-        float getInicioFloat();
-        float getFimFloat();
+        float getCoordenadaInicio(QDate solucao_inicio);
+        //float getFimFloat();
 
         bool getOverhead(){return overhead;}
         void setOverhead(bool overhead){this->overhead=overhead;}
@@ -42,17 +46,22 @@ class cTrabalho{
         QColor getCor(){return cor;}
         void setCor(QColor cor){this->cor=cor;}
 
-        QDate getDataInicio(){return d_inicio;}
-        QDate getDataFim(){return d_fim;}
-        void setDataInicio(QDate d_inicio){this->d_inicio=d_inicio;}
-        void setDataFim(QDate d_fim){this->d_fim=d_fim;}
+//        QDate getDataInicio(){return d_inicio;}
+        QDate getDataInicio(){return (QDate)t_inicio.date();}
+//        QDate getDataFim(){return d_fim;}
+        QDate getDataFim(){return (QDate)t_fim.date();}
+//        void setDataInicio(QDate d_inicio){this->d_inicio=d_inicio;}
+//        void setDataFim(QDate d_fim){this->d_fim=d_fim;}
 
     private:
         bool overhead;
-        QTime inicio;
-        QTime fim;
-        QDate d_inicio;
-        QDate d_fim;
+//        QTime inicio;
+//        QTime fim;
+//        QDate d_inicio;
+//        QDate d_fim;
+        //int dia = 0;
+        QDateTime t_inicio;
+        QDateTime t_fim;
         QColor cor;
         QString texto, ordem_producao, produto, acabamento, material_base, qtd_pecas, pilha;
 };
