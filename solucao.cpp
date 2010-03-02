@@ -43,6 +43,7 @@ Solucao Solucao::GerarSolucao(){
     nome_maquinas.append("Máquina de corte");
     nome_maquinas.append("Máquina de pintura");
     nome_maquinas.append("Máquina de acabamento");
+    nome_maquinas.append("Máquina de envernizamento protônico");
 
     //qDebug() << "lolwut " << nome_maquinas.size();
 
@@ -52,22 +53,22 @@ Solucao Solucao::GerarSolucao(){
     cTrabalho t1_2(QTime(2,25),QTime(3,48),QDate::currentDate(),QDate::currentDate(),"t1_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t1_3(QTime(6,0),QTime(7,0),QDate::currentDate(),QDate::currentDate(),"t1_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t1_4(QTime(8,0),QTime(10,0),QDate::currentDate(),QDate::currentDate(),"t1_4",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-    cTrabalho t1_5(QTime(15,0),QTime(18,0),QDate::currentDate(),QDate::currentDate().addDays(3),"t1_5",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-
+    cTrabalho t1_5(QTime(12,0),QTime(15,0),QDate::currentDate(),QDate::currentDate(),"t1_5",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+//
     cTrabalho t2_0(QTime(0,10), QTime(3,20),QDate::currentDate(),QDate::currentDate(),"t2_0",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t2_1(QTime(6,0), QTime(12,0),QDate::currentDate(),QDate::currentDate(),"t2_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t2_2(QTime(12,0), QTime(15,0),QDate::currentDate(),QDate::currentDate(),"t2_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t2_3(QTime(15,0), QTime(18,0),QDate::currentDate(),QDate::currentDate(),"t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t2_4(QTime(19,0), QTime(22,0),QDate::currentDate(),QDate::currentDate(),"t2_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 
-    cTrabalho overhead(QTime(0,0),QTime(1,0),QDate::currentDate(),QDate::currentDate(),"Overhead",QColor(0,0,0,255), true);
-    cTrabalho t3_1(QTime(1,0), QTime(2,0),QDate::currentDate(),QDate::currentDate(),"t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    cTrabalho overhead(QTime(0,20),QTime(1,17),QDate::currentDate(),QDate::currentDate(),"Overhead",QColor(0,0,0,255), true);
+    cTrabalho t3_1(QTime(1,20), QTime(2,0),QDate::currentDate(),QDate::currentDate(),"t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t3_2(QTime(2,0), QTime(3,0),QDate::currentDate(),QDate::currentDate(),"t3_2",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
     cTrabalho t3_3(QTime(8,0), QTime(10,0),QDate::currentDate(),QDate::currentDate(),"t3_3",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 
-//    cTrabalho t4_1(QTime(3,0), QTime(4,0), "t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
-//    QList<cTrabalho> l4;
-//    l4.append(t4_1);
+    cTrabalho t4_1(QTime(1,18), QTime(2,20),QDate::currentDate().addDays(1),QDate::currentDate().addDays(1),"t4_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+    QList<cTrabalho> l4;
+    l4.append(t4_1);
 //
 //    cTrabalho t5_1(QTime(3,0), QTime(4,0), "t3_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
 //    QList<cTrabalho> l5;
@@ -93,6 +94,18 @@ Solucao Solucao::GerarSolucao(){
 //    QList<cTrabalho> l10;
 //    l10.append(t10_1);
 
+//    QList<QString> nome_maquinas;
+//    QList<QList<cTrabalho> > nsolucao;
+//    for(int x=0 ; x<10 ; x++){
+//        QList<cTrabalho> l1;
+//        for(int y=0; y<24 ; y++){
+//            cTrabalho t1_1(QTime(y,0),QTime(y+1,0),QDate::currentDate(),QDate::currentDate(),"t1_1",QColor(qrand()%255,qrand()%255,qrand()%255,alpha));
+//            l1.append(t1_1);
+//        }
+//        nome_maquinas.append("m1");
+//        nsolucao.append(l1);
+//    }
+
     QList<cTrabalho> l1;
     l1.append(t1_1);
     l1.append(t1_2);
@@ -117,7 +130,7 @@ Solucao Solucao::GerarSolucao(){
     nsolucao.append(l1);
     nsolucao.append(l2);
     nsolucao.append(l3);
-//    nsolucao.append(l4);
+    nsolucao.append(l4);
 //    nsolucao.append(l5);
 //    nsolucao.append(l6);
 //    nsolucao.append(l7);
@@ -144,15 +157,44 @@ QDate Solucao::getDataInicio(){
     QList<QDate> lista_data;
     QDate menor_data;
     foreach(QList<cTrabalho> maquina, trabalhos){
+        menor_data = maquina.first().getDataInicio();
         foreach(cTrabalho trabalho, maquina){
-            menor_data = MAX(trabalho.getDataInicio(),menor_data);
+            if(menor_data>trabalho.getDataInicio()){
+                menor_data = trabalho.getDataInicio();
+            }
         }
         lista_data.append(menor_data);
     }
+    menor_data = lista_data.first();
     foreach(QDate data, lista_data){
-        menor_data = MIN(menor_data,data);
+        if(menor_data>data){
+            menor_data = data;
+        }
     }
+//    foreach(QList<cTrabalho> maquina, trabalhos){
+//        foreach(cTrabalho trabalho, maquina){
+//            menor_data = MAX(trabalho.getDataInicio(),menor_data);
+//        }
+//        lista_data.append(menor_data);
+//       // lista_data.append(maquina.first().getDataInicio());
+//    }
+//    foreach(QDate data, lista_data){
+//        //menor_data = MIN(menor_data,data);
+//        if(menor_data>data){
+//            menor_data = data;
+//        }
+//    }
+//    qDebug() << "(solucao.cpp) menor data " << menor_data.toString();
+//    QDate a = QDate(2010,3,3);
+//    QDate b = QDate(2010,3,4);
+//    QDate lol = MIN(b,a);
+//    //QString f = (lol)?"sim":"nao";
+//    qDebug() << "(solucao.cpp) teste " << menor_data.toString();
     return menor_data;
+}
+
+int Solucao::getDiasTrabalho(cTrabalho trabalho){
+    return this->getDataInicio().daysTo(trabalho.getInicio().date());
 }
 
 QDate Solucao::getDataFinal(){

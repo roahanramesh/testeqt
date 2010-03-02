@@ -24,35 +24,23 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, " ");
 
-    //QList<QList<cTrabalho> > solu = solucao.GerarSolucao();
-    //solucao = solucao.GerarSolucao();
-
     escala = solucao.getEscala();
 
-    /*
-     *  SNIPPET PRA ESCREVER DATAS NO TOPO DO WIDGET
-     */
-    //data_inicio = solucao.get
     data_inicio = solucao.getDataInicio();
     data_fim = solucao.getDataFinal();
-    //qDebug() << data_inicio.toString();
     this->dias = 1;
     for(int x=0 ; x<data_inicio.daysTo(data_fim) ; x++){
         dias++;
     }
-    //qDebug() << QString::number(dias);
-    //qDebug() << "lol " << wut.toString();
 
-    //y_teto = 20;
-    //espaço para numero da data
+    //espaço vertical para escrever data
     y_teto = 60;
 
     //varia medida da coluna dos nomes das maquinas. valor numérico é a distância mínima
     posicao_zero = MAX(solucao.getMaiorNomeMaquina(),50);
 
-    //int x = GANTT_START*LABEL_START+300;
     int y = y_teto;
-    float x_inicio, x_fim;
+    float x_inicio;//, x_fim;
 
     QList<int> tamanhos_maquina;
     int posicao_ultimo_trabalho = 0;
@@ -63,18 +51,19 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     QString nome_maquina;
 
     foreach (QList<cTrabalho> line, solucao.getTrabalhos()){
-        //QLabel *x_label = new QLabel("Máquina "+QString::number(++count),this);
         QLabel *x_label = new QLabel(nomes_maquinas.at(iterator_nome_maquinas),this);
         iterator_nome_maquinas++;
         x_label->move(LABEL_START,y);
         x_label->setMinimumHeight(size.height()+12);
         x_label->show();
         foreach(cTrabalho trab, line){
-            x_inicio = trab.getInicioFloat();
-            x_fim = trab.getFimFloat();
+            x_inicio = trab.getCoordenadaInicio(solucao.getDataInicio());
+            //qDebug() << "(widget.cpp) data inicio da solucao: " << solucao.getDataInicio();
+            //x_fim = trab.getFimFloat();
+            qDebug() << "WAT " << QString::number(solucao.getDiasTrabalho(trab)+1);
 
-            label_pos = x_inicio*escala+posicao_zero;
-            label_tamanho = trab.getTamanho()*escala;
+            label_pos = (int)(x_inicio*escala+posicao_zero);
+            label_tamanho = (int)(trab.getTamanho()*escala);
 
             myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getOverhead());
 
@@ -84,11 +73,6 @@ Widget::Widget(Solucao solucao, QWidget *parent)
             label->move(x_inicio*escala+posicao_zero,trab.getOverhead()?y+10:y); //coordenada y = y+10 se label for overhead
 
             label->setCoordenada(QPoint(x_inicio*escala+posicao_zero , trab.getOverhead()?y+10:y));
-
-            //qDebug() << "data inicio: " << trab.getDataInicio().toString() << "data fim: " << trab.getDataFim().toString();
-            //int wat = trab.getDataInicio().daysTo(trab.getDataFim());
-            //qDebug() << QString::number(solucao.getDiasDuracao());
-
 
             label->show();
         }
@@ -108,14 +92,11 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //definicao tamanho da tela
 
     tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
-    //setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
-    setMinimumSize(tamanhos_maquina.last()+20000,tamanho_vertical);
+    setMinimumSize(tamanhos_maquina.last()+5000,tamanho_vertical);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }
 
-
-/* TODO - desenhar as retas de forma dinâmica; desenhar labels com o valor das horas; variar de acordo com escala*/
 void Widget::paintEvent(QPaintEvent *event){
     QPen pen_linha(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
     QPen pen_meiahora(Qt::lightGray, 0, Qt::DotLine, Qt::SquareCap, Qt::RoundJoin);
@@ -136,12 +117,13 @@ void Widget::paintEvent(QPaintEvent *event){
     for(int x=24*y; x<24+(y*24); x++){
         int x_hora = x-(y*24);
         //if(x==0 || x==12){ //escreve data no topo da linha do tempo
-        if(x_hora == 0){// || x_hora == 12){
+        if(x_hora == 0 || x_hora == 12){
             paint.setFont(font_data);
             pen_bkp = paint.pen();
             paint.setPen(QPen());
             paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
-            dia = dia.addDays(1);
+            if(x_hora == 12)
+                dia = dia.addDays(1);
             paint.setFont(QFont());
             paint.setPen(pen_bkp);
         }
@@ -265,11 +247,11 @@ QString Widget::gerarToolTip(cTrabalho trabalho){
     tooltip += "\nMaterial Base: " + trabalho.getMaterialBase();
     tooltip += "\nQtd Peças: " + trabalho.getQtdPecas();
     tooltip += "\nData inicio: ";
-    tooltip += "xx/xx/xx "+QString::number(trabalho.getInicio().hour());
-    tooltip += ":"+QString::number(trabalho.getInicio().minute());
+    tooltip += "xx/xx/xx "+QString::number(trabalho.getInicio().time().hour());
+    tooltip += ":"+QString::number(trabalho.getInicio().time().minute());
     tooltip += "\nData fim: ";
-    tooltip += "yy/yy/yy " + QString::number(trabalho.getFim().hour());
-    tooltip += ":"+QString::number(trabalho.getFim().minute());
+    tooltip += "yy/yy/yy " + QString::number(trabalho.getFim().time().hour());
+    tooltip += ":"+QString::number(trabalho.getFim().time().minute());
     //tooltip.append(trabalho.getInicio().toString("hh:mm"));
     return tooltip;
 }

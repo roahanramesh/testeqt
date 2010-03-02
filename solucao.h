@@ -57,6 +57,7 @@ class Solucao{
 
     QDate getDataInicio(); //retorna a menor data dentre os trabalhos
     QDate getDataFinal(); //retorna a maior data dentre os trabalhos
+    int getDiasTrabalho(cTrabalho trabalho); //retorna offset de dias de um trabalho
 
     private:
     //variável que define a escala do gráfico
