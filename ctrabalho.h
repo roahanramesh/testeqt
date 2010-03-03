@@ -13,11 +13,6 @@ class cTrabalho{
         cTrabalho(QTime inicio, QTime fim,QDate d_inicio, QDate d_fim,QString coisa, QColor ncor = QColor(0,0,0,255),bool overhead = false);
         cTrabalho();
 
-        //getters e setters
-//        QTime getInicio(){return inicio;}
-//        void setInicio(QTime init){inicio = init;}
-//        QTime getFim(){return fim;}
-//        void setFim(QTime f){fim=f;}
         QDateTime getInicio(){return t_inicio;}
         QDateTime getFim(){return t_fim;}
 
@@ -36,7 +31,6 @@ class cTrabalho{
         QString getTexto(){return texto;}
         void setText(QString texto){this->texto=texto;}
 
-        float getCoordenadaInicio(QDate solucao_inicio);
         //float getFimFloat();
 
         bool getOverhead(){return overhead;}
@@ -60,6 +54,8 @@ class cTrabalho{
 //        QDate d_inicio;
 //        QDate d_fim;
         //int dia = 0;
+        float posicao;
+        int maquina;
         QDateTime t_inicio;
         QDateTime t_fim;
         QColor cor;
