@@ -57,10 +57,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
         x_label->setMinimumHeight(size.height()+12);
         x_label->show();
         foreach(cTrabalho trab, line){
-            x_inicio = trab.getCoordenadaInicio(solucao.getDataInicio());
-            //qDebug() << "(widget.cpp) data inicio da solucao: " << solucao.getDataInicio();
-            //x_fim = trab.getFimFloat();
-            qDebug() << "WAT " << QString::number(solucao.getDiasTrabalho(trab)+1);
+            x_inicio = solucao.getCoordTrabalho(trab);
 
             label_pos = (int)(x_inicio*escala+posicao_zero);
             label_tamanho = (int)(trab.getTamanho()*escala);
@@ -92,7 +89,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //definicao tamanho da tela
 
     tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
-    setMinimumSize(tamanhos_maquina.last()+5000,tamanho_vertical);
+    setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }
@@ -247,10 +244,10 @@ QString Widget::gerarToolTip(cTrabalho trabalho){
     tooltip += "\nMaterial Base: " + trabalho.getMaterialBase();
     tooltip += "\nQtd Peças: " + trabalho.getQtdPecas();
     tooltip += "\nData inicio: ";
-    tooltip += "xx/xx/xx "+QString::number(trabalho.getInicio().time().hour());
+    tooltip += trabalho.getDataInicio().toString("dd/MM/yy ")+QString::number(trabalho.getInicio().time().hour());
     tooltip += ":"+QString::number(trabalho.getInicio().time().minute());
     tooltip += "\nData fim: ";
-    tooltip += "yy/yy/yy " + QString::number(trabalho.getFim().time().hour());
+    tooltip += trabalho.getDataFim().toString("dd/MM/yy ") + QString::number(trabalho.getFim().time().hour());
     tooltip += ":"+QString::number(trabalho.getFim().time().minute());
     //tooltip.append(trabalho.getInicio().toString("hh:mm"));
     return tooltip;

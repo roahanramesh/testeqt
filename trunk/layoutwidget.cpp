@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QLine>
 #include <QPainter>
+#include <QPushButton>
 
 
 layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
