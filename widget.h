@@ -23,6 +23,7 @@ class Widget : public QWidget
 
 public:
     Widget(Solucao solucao = Solucao::SolucaoVazia(),QWidget *parent = 0);
+    int desenharTrabalhos();
     //~Widget();
 
 protected:
