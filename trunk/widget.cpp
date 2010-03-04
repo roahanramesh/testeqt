@@ -20,13 +20,7 @@
 Widget::Widget(Solucao solucao, QWidget *parent)
     : QWidget(parent)//, ui(new Ui::WidgetClass)
 {
-    //qDebug() << "wat";
-    solucao.setTrabalhos(solucao.prepararSolucao(1));
-
-    solucao.getMaiorNomeMaquina();
-    QFontMetrics metric(font());
-    QSize size = metric.size(Qt::TextSingleLine, " ");
-
+    this->solucao = solucao;
     escala = solucao.getEscala();
 
     data_inicio = solucao.getDataInicio();
@@ -39,28 +33,44 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //espaço vertical para escrever data
     y_teto = 60;
 
-    //varia medida da coluna dos nomes das maquinas. valor numérico é a distância mínima
-    posicao_zero = MAX(solucao.getMaiorNomeMaquina(),50);
+    int tamanho_x = desenharTrabalhos();
 
+    QPalette newPalette = palette();
+    newPalette.setColor(QPalette::Window, Qt::white);
+    setPalette(newPalette);
+
+    //definicao tamanho da tela
+    tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
+    //setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
+    setMinimumSize(tamanho_x,tamanho_vertical);
+    //setMinimumSize(50000,400);
+    setWindowTitle(tr("Gráfico de Gantt"));
+    setAcceptDrops(true);
+}
+
+int Widget::desenharTrabalhos(){
+    QFontMetrics metric(font());
+    QSize size = metric.size(Qt::TextSingleLine, " ");
     int y = y_teto;
-    float x_inicio;//, x_fim;
+    posicao_zero = MAX(this->solucao.getMaiorNomeMaquina(),50);
+    float x_inicio;
 
     QList<int> tamanhos_maquina;
     int posicao_ultimo_trabalho = 0;
     int label_pos, label_tamanho;
 
-    QList<QString> nomes_maquinas = solucao.getNomeMaquinas();
+    QList<QString> nomes_maquinas = this->solucao.getNomeMaquinas();
     int iterator_nome_maquinas = 0;
     QString nome_maquina;
 
-    foreach (QList<cTrabalho> line, solucao.getTrabalhos()){
+    foreach (QList<cTrabalho> line, this->solucao.getTrabalhos()){
         QLabel *x_label = new QLabel(nomes_maquinas.at(iterator_nome_maquinas),this);
         iterator_nome_maquinas++;
         x_label->move(LABEL_START,y);
         x_label->setMinimumHeight(size.height()+12);
         x_label->show();
         foreach(cTrabalho trab, line){
-            x_inicio = solucao.getCoordTrabalho(trab);
+            x_inicio = this->solucao.getCoordTrabalho(trab);
 
             label_pos = (int)(x_inicio*escala+posicao_zero);
             label_tamanho = (int)(trab.getTamanho()*escala);
@@ -72,7 +82,6 @@ Widget::Widget(Solucao solucao, QWidget *parent)
             label->setToolTip(label->getTtip());
             label->move(x_inicio*escala+posicao_zero,trab.getTempoSetup()?y+10:y); //coordenada y = y+10 se label for overhead
 
-
             label->setCoordenada(QPoint(x_inicio*escala+posicao_zero , trab.getTempoSetup()?y+10:y));
             label->show();
         }
@@ -83,18 +92,9 @@ Widget::Widget(Solucao solucao, QWidget *parent)
 
         tamanho_vertical = x_label->height() + 2;
     }
-    qSort(tamanhos_maquina);
 
-    QPalette newPalette = palette();
-    newPalette.setColor(QPalette::Window, Qt::white);
-    setPalette(newPalette);
-
-    //definicao tamanho da tela
-
-    tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
-    setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
-    setWindowTitle(tr("Gráfico de Gantt"));
-    setAcceptDrops(true);
+    //ultra gambiarra
+    return tamanhos_maquina.last()+100;
 }
 
 void Widget::paintEvent(QPaintEvent *event){
