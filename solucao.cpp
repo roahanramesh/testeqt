@@ -1,7 +1,6 @@
 #include "solucao.h"
 
 #define MAX(a,b) (((a)<(b))?(b):(a))
-#define MIN(a,b) (((a)>(b))?(b):(a))
 
 Solucao::Solucao(){
     makespan = 1561;
@@ -62,7 +61,7 @@ Solucao Solucao::GerarSolucao(){
     cTrabalho t2_3(QTime(15,0), QTime(18,0),QDate::currentDate(),QDate::currentDate(),"t2_3",cor_trabalho);
     cTrabalho t2_4(QTime(19,0), QTime(22,0),QDate::currentDate(),QDate::currentDate(),"t2_3",cor_trabalho);
 
-    cTrabalho overhead(QTime(0,20),QTime(1,17),QDate::currentDate(),QDate::currentDate(),"Overhead",QColor(0,0,0,255), true);
+    cTrabalho tempo_setup(QTime(0,20),QTime(1,17),QDate::currentDate(),QDate::currentDate(),"tempo_setup",QColor(0,0,0,255), true);
     cTrabalho t3_1(QTime(1,20), QTime(2,0),QDate::currentDate(),QDate::currentDate(),"t3_1",cor_trabalho);
     cTrabalho t3_2(QTime(2,0), QTime(3,0),QDate::currentDate(),QDate::currentDate(),"t3_2",cor_trabalho);
     cTrabalho t3_3(QTime(8,0), QTime(10,0),QDate::currentDate(),QDate::currentDate(),"t3_3",cor_trabalho);
@@ -122,7 +121,7 @@ Solucao Solucao::GerarSolucao(){
     l2.append(t2_4);
 
     QList<cTrabalho> l3;
-    l3.append(overhead);
+    l3.append(tempo_setup);
     l3.append(t3_1);
     l3.append(t3_2);
     l3.append(t3_3);
@@ -172,25 +171,6 @@ QDate Solucao::getDataInicio(){
             menor_data = data;
         }
     }
-//    foreach(QList<cTrabalho> maquina, trabalhos){
-//        foreach(cTrabalho trabalho, maquina){
-//            menor_data = MAX(trabalho.getDataInicio(),menor_data);
-//        }
-//        lista_data.append(menor_data);
-//       // lista_data.append(maquina.first().getDataInicio());
-//    }
-//    foreach(QDate data, lista_data){
-//        //menor_data = MIN(menor_data,data);
-//        if(menor_data>data){
-//            menor_data = data;
-//        }
-//    }
-//    qDebug() << "(solucao.cpp) menor data " << menor_data.toString();
-//    QDate a = QDate(2010,3,3);
-//    QDate b = QDate(2010,3,4);
-//    QDate lol = MIN(b,a);
-//    //QString f = (lol)?"sim":"nao";
-//    qDebug() << "(solucao.cpp) teste " << menor_data.toString();
     return menor_data;
 }
 
@@ -210,15 +190,33 @@ QDate Solucao::getDataFinal(){
     QList<QDate> lista_data;
     QDate maior_data;
     foreach(QList<cTrabalho> maquina, trabalhos){
+        maior_data = maquina.last().getDataFim();
         foreach(cTrabalho trabalho, maquina){
-            maior_data = MAX(trabalho.getDataFim(),maior_data);
+            if(maior_data<trabalho.getDataFim()){
+                maior_data = trabalho.getDataFim();
+            }
         }
         lista_data.append(maior_data);
     }
+    maior_data = lista_data.first();
     foreach(QDate data, lista_data){
-        maior_data = MAX(maior_data,data);
+        if(maior_data<data){
+            maior_data = data;
+        }
     }
     return maior_data;
+//    QList<QDate> lista_data;
+//    QDate maior_data;
+//    foreach(QList<cTrabalho> maquina, trabalhos){
+//        foreach(cTrabalho trabalho, maquina){
+//            maior_data = MAX(trabalho.getDataFim(),maior_data);
+//        }
+//        lista_data.append(maior_data);
+//    }
+//    foreach(QDate data, lista_data){
+//        maior_data = MAX(maior_data,data);
+//    }
+//    return maior_data;
 }
 
 int Solucao::getMaiorNomeMaquina(){
@@ -231,4 +229,36 @@ int Solucao::getMaiorNomeMaquina(){
     //qDebug() << "debug "<< maior;
     //+15 gambiarra pra ficar do tamanho certo
     return maior+15;
+}
+
+QList<QList<cTrabalho> > Solucao::prepararSolucao(int dia){
+    QDate inicio = this->getDataInicio();
+    QDate fim = this->getDataFinal();
+    QList<QList<cTrabalho> > preparada = trabalhos;
+    int dias_solucao = inicio.daysTo(fim);
+//    foreach(QList<cTrabalho> maquina, trabalhos){
+//        foreach(cTrabalho trab, maquina){
+//            qDebug() << "wat";
+//        }
+//    }
+    QList<cTrabalho>::iterator itr;
+    foreach(QList<cTrabalho> maquina, preparada){
+        for(itr=maquina.begin();itr!=maquina.end();itr++){
+            //if((*itr).getDataInicio().daysTo(this->getDataInicio()) != 0){
+                qDebug() << "wat";
+                maquina.erase(itr);
+            //}
+        }
+    }
+    qDebug() << QString::number(dias_solucao);
+    return preparada;
+}
+
+void Solucao::debugarSolucao(){
+    //qDebug() << "FFFUUUUUU";
+    foreach(QList<cTrabalho> maquina, trabalhos){
+        foreach(cTrabalho trab, maquina){
+            qDebug() << trab.getTexto();
+        }
+    }
 }

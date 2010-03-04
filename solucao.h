@@ -47,9 +47,7 @@ class Solucao{
 
     int getMaiorNomeMaquina();
 
-    //static QList<QList<cTrabalho> > GerarSolucao();
     static Solucao GerarSolucao();
-    //static QList<QList<cTrabalho> > SolucaoVazia();
     static Solucao SolucaoVazia();
 
     //retorna a maior duração entre todos os trabalhos, utilizado para definir até onde que se deve desenhar a linha do tempo
@@ -59,7 +57,13 @@ class Solucao{
     QDate getDataFinal(); //retorna a maior data dentre os trabalhos
     int getDiasTrabalho(cTrabalho trabalho); //retorna offset de dias de um trabalho
     float getCoordTrabalho(cTrabalho trabalho); //retorna coordenada x onde o trabalho deve ser desenhado
-    QDateTime getDataTrabalho(cTrabalho trabalho){} //retorna tempo inicial do trabalho a partir da sua coordenada
+
+    QList<QList<cTrabalho> > prepararSolucao(int dia);
+
+    void debugarSolucao();
+
+    //getDataTrabalho necessário pra funcionalidade de rescheduling
+    //QDateTime getDataTrabalho(cTrabalho trabalho){} //retorna tempo inicial do trabalho a partir da sua coordenada
 
     private:
     //variável que define a escala do gráfico

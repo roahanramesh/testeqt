@@ -5,6 +5,7 @@
 #include <QList>
 #include "solucao.h"
 #include "ctrabalho.h"
+#include "mylabel.h"
 #include <QDate>
 
 //namespace Ui

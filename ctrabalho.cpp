@@ -1,14 +1,14 @@
 #include "ctrabalho.h"
 #include <QDebug>
 
-cTrabalho::cTrabalho(QTime inicio, QTime fim, QDate d_inicio, QDate d_fim, QString coisa, QColor cor, bool overhead){
+cTrabalho::cTrabalho(QTime inicio, QTime fim, QDate d_inicio, QDate d_fim, QString coisa, QColor cor, bool tempo_setup){
 //    this->inicio = inicio;
 //    this->fim = fim;
 //    this->d_inicio = d_inicio;
 //    this->d_fim = d_fim;
     this->cor = cor;
     texto = ordem_producao = acabamento = produto = material_base = qtd_pecas = pilha = coisa;
-    this->overhead = overhead;
+    this->tempo_setup = tempo_setup;
     this->t_inicio = QDateTime(d_inicio,inicio);
     this->t_fim = QDateTime(d_fim,fim);
     this->posicao = 0;

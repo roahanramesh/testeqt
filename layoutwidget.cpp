@@ -63,6 +63,10 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     upper_layout->addWidget(get_total_folga,2,2);
     get_total_folga->show();
 
+    QPushButton *b1 = new QPushButton("b1");
+    upper_layout->addWidget(b1,3,2);
+    b1->show();
+
     upper_field->setLayout(upper_layout);
 
 
@@ -76,5 +80,6 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     //setFixedHeight(600);
 
     setLayout(layout);
+    connect(b1,SIGNAL(clicked()),w,SLOT(hide()));
 }
 

@@ -7,10 +7,10 @@ void myLabel::setTamanho(int t){
 
 //myLabel::myLabel(const QString &text, QWidget *parent,int r, int g, int b, int alpha)
 //myLabel::myLabel(cTrabalho trab, const QString &text, QWidget *parent, QColor color, int tamanho)
-myLabel::myLabel(const QString &text,QWidget *parent,QString tooltip, QColor color, float tamanho, bool overhead)
+myLabel::myLabel(const QString &text,QWidget *parent,QString tooltip, QColor color, float tamanho, bool tempo_setup)
     : QLabel(parent){
     this->coordenada = QPoint(0,0);
-    this->overhead = overhead;
+    this->tempo_setup = tempo_setup;
     this->tamanho = tamanho;
     this->tooltip = tooltip;
     //this->trabalho = trab;
@@ -20,8 +20,8 @@ myLabel::myLabel(const QString &text,QWidget *parent,QString tooltip, QColor col
     //QImage image(size.width() + 12, size.height() + 12,
     //             QImage::Format_ARGB32_Premultiplied);
     int height;
-    if(!overhead){
-        height = size.height()+12;        //se trabalho for overhead da maquina, desenhar label menor
+    if(!tempo_setup){
+        height = size.height()+12;        //se trabalho for tempo_setup da maquina, desenhar label menor
     }else{
         height = 6;
     }
@@ -52,14 +52,14 @@ myLabel::myLabel(const QString &text,QWidget *parent,QString tooltip, QColor col
 
 void myLabel::mousePressEvent(QMouseEvent *ev)
 {
-//    if(this->overhead){         //desabilita ação de drag para labels que representarem overhead de maquina
+//    if(this->tempo_setup){         //desabilita ação de drag para labels que representarem tempo_setup de maquina
 //        //return;
 //    }
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
     //passar variavel tamanho como float zoa o drop
-    dataStream << labelText << tooltip << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha() << overhead << coordenada;
+    dataStream << labelText << tooltip << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha() << tempo_setup << coordenada;
 
     QMimeData *mimeData = new QMimeData;
     //pra que serve mimeData?
