@@ -20,6 +20,9 @@
 Widget::Widget(Solucao solucao, QWidget *parent)
     : QWidget(parent)//, ui(new Ui::WidgetClass)
 {
+    //qDebug() << "wat";
+    solucao.setTrabalhos(solucao.prepararSolucao(1));
+
     solucao.getMaiorNomeMaquina();
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, " ");
@@ -62,15 +65,15 @@ Widget::Widget(Solucao solucao, QWidget *parent)
             label_pos = (int)(x_inicio*escala+posicao_zero);
             label_tamanho = (int)(trab.getTamanho()*escala);
 
-            myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getOverhead());
+            myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getTempoSetup());
 
             posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
             label->setTtip(gerarToolTip(trab));
             label->setToolTip(label->getTtip());
-            label->move(x_inicio*escala+posicao_zero,trab.getOverhead()?y+10:y); //coordenada y = y+10 se label for overhead
+            label->move(x_inicio*escala+posicao_zero,trab.getTempoSetup()?y+10:y); //coordenada y = y+10 se label for overhead
 
-            label->setCoordenada(QPoint(x_inicio*escala+posicao_zero , trab.getOverhead()?y+10:y));
 
+            label->setCoordenada(QPoint(x_inicio*escala+posicao_zero , trab.getTempoSetup()?y+10:y));
             label->show();
         }
         tamanhos_maquina.append(posicao_ultimo_trabalho);
@@ -192,11 +195,11 @@ void Widget::dropEvent(QDropEvent *event){
         QString text, tooltip;
         QPoint offset, coordenada;
         int tamanho, r, g, b, alpha;
-        bool overhead;
+        bool tempo_setup;
 
-        dataStream >> text >> tooltip >> offset >> tamanho >> r >> g >> b >> alpha >> overhead >> coordenada;
+        dataStream >> text >> tooltip >> offset >> tamanho >> r >> g >> b >> alpha >> tempo_setup >> coordenada;
 
-        myLabel *label = new myLabel(o_text,this,tooltip, QColor(r,g,b,alpha), tamanho, overhead?true:false);//*escala);
+        myLabel *label = new myLabel(o_text,this,tooltip, QColor(r,g,b,alpha), tamanho, tempo_setup?true:false);//*escala);
         //myLabel *label = new myLabel(o_text, this, QColor(120,200,85,200), event->mimeData()->;
         label->setToolTip(tooltip);
 

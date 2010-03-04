@@ -9,7 +9,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
     Solucao so;
     //QList<QList<cTrabalho> > solu = so.GerarSolucao();
     so = Solucao::GerarSolucao();

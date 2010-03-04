@@ -10,7 +10,7 @@
 class cTrabalho{
     public:
         //cTrabalho(QTime inicio_, QTime fim_, QString coisa);
-        cTrabalho(QTime inicio, QTime fim,QDate d_inicio, QDate d_fim,QString coisa, QColor ncor = QColor(0,0,0,255),bool overhead = false);
+        cTrabalho(QTime inicio, QTime fim,QDate d_inicio, QDate d_fim,QString coisa, QColor ncor = QColor(0,0,0,255),bool tempo_setup = false);
         cTrabalho();
 
         QDateTime getInicio(){return t_inicio;}
@@ -33,27 +33,18 @@ class cTrabalho{
 
         //float getFimFloat();
 
-        bool getOverhead(){return overhead;}
-        void setOverhead(bool overhead){this->overhead=overhead;}
+        bool getTempoSetup(){return tempo_setup;}
+        void setTempoSetup(bool tempo_setup){this->tempo_setup=tempo_setup;}
         float getTamanho();
 
         QColor getCor(){return cor;}
         void setCor(QColor cor){this->cor=cor;}
 
-//        QDate getDataInicio(){return d_inicio;}
         QDate getDataInicio(){return (QDate)t_inicio.date();}
-//        QDate getDataFim(){return d_fim;}
         QDate getDataFim(){return (QDate)t_fim.date();}
-//        void setDataInicio(QDate d_inicio){this->d_inicio=d_inicio;}
-//        void setDataFim(QDate d_fim){this->d_fim=d_fim;}
 
     private:
-        bool overhead;
-//        QTime inicio;
-//        QTime fim;
-//        QDate d_inicio;
-//        QDate d_fim;
-        //int dia = 0;
+        bool tempo_setup;
         float posicao;
         int maquina;
         QDateTime t_inicio;
