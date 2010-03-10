@@ -33,7 +33,7 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //espaço vertical para escrever data
     y_teto = 60;
 
-    int tamanho_x = desenharTrabalhos();
+    desenharTrabalhos(QDate::currentDate().addDays(0));
 
     QPalette newPalette = palette();
     newPalette.setColor(QPalette::Window, Qt::white);
@@ -42,13 +42,24 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     //definicao tamanho da tela
     tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
     //setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
-    setMinimumSize(tamanho_x,tamanho_vertical);
-    //setMinimumSize(50000,400);
+    //setMinimumSize(tamanho_horizontal,tamanho_vertical);
+    //SetMinimumSize(50000,400);
+    setMinimumSize(solucao.getMaiorNomeMaquina()+(24*solucao.getEscala())+100,tamanho_vertical);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }
 
-int Widget::desenharTrabalhos(){
+void Widget::redraw(int data_offset){
+    //qDebug() << "WAT";
+    //this->desenharTrabalhos(QDate::currentDate().addDays(data_offset));
+    desenharTrabalhos(QDate::currentDate().addDays(data_offset+1));
+//    QList<myLabel *> mylist = this->findChildren<myLabel*>();
+//    foreach(myLabel* wut, mylist) wut->deleteLater();
+//    qDebug() << "wat teh fuck: " << QString::number(mylist.size());
+}
+
+void Widget::desenharTrabalhos(QDate data){
+    //desenharTrabalhos(QDate::currentDate().addDays(0));
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, " ");
     int y = y_teto;
@@ -63,6 +74,9 @@ int Widget::desenharTrabalhos(){
     int iterator_nome_maquinas = 0;
     QString nome_maquina;
 
+    //define data a ser desenhada
+    data_atual = data;//QDate::currentDate().addDays(1);
+
     foreach (QList<cTrabalho> line, this->solucao.getTrabalhos()){
         QLabel *x_label = new QLabel(nomes_maquinas.at(iterator_nome_maquinas),this);
         iterator_nome_maquinas++;
@@ -70,20 +84,28 @@ int Widget::desenharTrabalhos(){
         x_label->setMinimumHeight(size.height()+12);
         x_label->show();
         foreach(cTrabalho trab, line){
-            x_inicio = this->solucao.getCoordTrabalho(trab);
+            //if(trab.getDataInicio()
+            //qDebug() << trab.getDataInicio().toString() << " wat " << QDate::currentDate().toString();
 
-            label_pos = (int)(x_inicio*escala+posicao_zero);
-            label_tamanho = (int)(trab.getTamanho()*escala);
+            if(trab.getDataInicio() == data_atual){
+                x_inicio = this->solucao.getCoordTrabalho(trab);
 
-            myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getTempoSetup());
+                label_pos = (int)(x_inicio*escala+posicao_zero);
+                label_tamanho = (int)(trab.getTamanho()*escala);
+                posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
 
-            posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
-            label->setTtip(gerarToolTip(trab));
-            label->setToolTip(label->getTtip());
-            label->move(x_inicio*escala+posicao_zero,trab.getTempoSetup()?y+10:y); //coordenada y = y+10 se label for overhead
+                //if(trab.getDataInicio().daysTo(datahoje) == 0){
+                    myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getTempoSetup());
 
-            label->setCoordenada(QPoint(x_inicio*escala+posicao_zero , trab.getTempoSetup()?y+10:y));
-            label->show();
+                    label->setTtip(gerarToolTip(trab));
+                    label->setToolTip(label->getTtip());
+                    label->move(x_inicio*escala+posicao_zero,trab.getTempoSetup()?y+10:y); //coordenada y = y+10 se label for overhead
+
+                    label->setCoordenada(QPoint(x_inicio*escala+posicao_zero , trab.getTempoSetup()?y+10:y));
+//                    if(trab.getDataInicio().daysTo(datahoje)){
+                    label->show();
+            }
+
         }
         tamanhos_maquina.append(posicao_ultimo_trabalho);
         posicao_ultimo_trabalho = 0;
@@ -92,12 +114,12 @@ int Widget::desenharTrabalhos(){
 
         tamanho_vertical = x_label->height() + 2;
     }
-
-    //ultra gambiarra
-    return tamanhos_maquina.last()+100;
+    //desenharTrabalhos(data);
+    this->tamanho_horizontal = tamanhos_maquina.last()+100;
 }
 
-void Widget::paintEvent(QPaintEvent *event){
+void Widget::desenhaLinhas(){
+    qDebug() << "desenhaLinhas called " << qrand();
     QPen pen_linha(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
     QPen pen_meiahora(Qt::lightGray, 0, Qt::DotLine, Qt::SquareCap, Qt::RoundJoin);
     QPen pen_hora(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
@@ -111,46 +133,109 @@ void Widget::paintEvent(QPaintEvent *event){
     float linha_meiahora = 0;
     float linha_45min = 0;
     float linha_15min = 0;
-
+    //TESTE
+    //dias = 1;
+    dias = 2;
     for(int y=0 ; y<dias ; y++){
 
-    for(int x=24*y; x<24+(y*24); x++){
-        int x_hora = x-(y*24);
-        //if(x==0 || x==12){ //escreve data no topo da linha do tempo
-        if(x_hora == 0 || x_hora == 12){
-            paint.setFont(font_data);
-            pen_bkp = paint.pen();
-            paint.setPen(QPen());
-            paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
-            if(x_hora == 12)
-                dia = dia.addDays(1);
-            paint.setFont(QFont());
-            paint.setPen(pen_bkp);
+        for(int x=24*y; x<24+(y*24); x++){
+            int x_hora = x-(y*24);
+            //if(x==0 || x==12){ //escreve data no topo da linha do tempo
+            if(x_hora == 0 || x_hora == 12){
+                paint.setFont(font_data);
+                pen_bkp = paint.pen();
+                paint.setPen(QPen());
+                paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
+                //paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),data_atual.toString("dd/MM"));
+                if(x_hora == 12)
+                    dia = dia.addDays(1);
+                paint.setFont(QFont());
+                paint.setPen(pen_bkp);
+            }
+            paint.setPen(pen_hora);
+            paint.drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x_hora)+((escala>=25)?":00":""));
+            paint.setPen(pen_linha);
+            paint.drawLine(posicao_zero+x*escala , y_teto-5 , posicao_zero+x*escala , tamanho_vertical);
+            paint.setPen(pen_meiahora);
+
+            linha_meiahora = ((posicao_zero+x*escala)+(posicao_zero+(x+1)*escala))/2;
+            if(escala>=100)
+            paint.drawText(QPoint(linha_meiahora,y_teto-10),":30");
+            paint.drawLine(linha_meiahora,y_teto-5,linha_meiahora,tamanho_vertical);
+
+            linha_45min = (linha_meiahora+(posicao_zero+(x+1)*escala))/2;
+            if(escala>=100)
+            paint.drawText(QPoint(linha_45min,y_teto-10),":45");
+            paint.drawLine(linha_45min,y_teto-5,linha_45min,tamanho_vertical);
+
+            linha_15min = ((posicao_zero+x*escala)+linha_meiahora)/2;
+            if(escala>=100)
+            paint.drawText(QPoint(linha_15min,y_teto-10),":15");
+            paint.drawLine(linha_15min,y_teto-5,linha_15min,tamanho_vertical);
+            //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
         }
-        paint.setPen(pen_hora);
-        paint.drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x_hora)+((escala>=25)?":00":""));
-        paint.setPen(pen_linha);
-        paint.drawLine(posicao_zero+x*escala , y_teto-5 , posicao_zero+x*escala , tamanho_vertical);
-        paint.setPen(pen_meiahora);
-
-        linha_meiahora = ((posicao_zero+x*escala)+(posicao_zero+(x+1)*escala))/2;
-        if(escala>=100)
-        paint.drawText(QPoint(linha_meiahora,y_teto-10),":30");
-        paint.drawLine(linha_meiahora,y_teto-5,linha_meiahora,tamanho_vertical);
-
-        linha_45min = (linha_meiahora+(posicao_zero+(x+1)*escala))/2;
-        if(escala>=100)
-        paint.drawText(QPoint(linha_45min,y_teto-10),":45");
-        paint.drawLine(linha_45min,y_teto-5,linha_45min,tamanho_vertical);
-
-        linha_15min = ((posicao_zero+x*escala)+linha_meiahora)/2;
-        if(escala>=100)
-        paint.drawText(QPoint(linha_15min,y_teto-10),":15");
-        paint.drawLine(linha_15min,y_teto-5,linha_15min,tamanho_vertical);
-        //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
     }
+}
 
-    }
+void Widget::paintEvent(QPaintEvent *event){
+    //qDebug() << "paintEvent called " << qrand();
+    desenhaLinhas();
+//    QPen pen_linha(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+//    QPen pen_meiahora(Qt::lightGray, 0, Qt::DotLine, Qt::SquareCap, Qt::RoundJoin);
+//    QPen pen_hora(Qt::black, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
+//    QPen pen_bkp;
+//    QFont font_data = QFont();
+//    font_data.setPointSize(16);
+//    QPainter paint(this);
+//    QDate dia = this->data_inicio;
+//    QString texto_dia;
+//    int escala = solucao.getEscala();
+//    float linha_meiahora = 0;
+//    float linha_45min = 0;
+//    float linha_15min = 0;
+//    //TESTE
+//    //dias = 1;
+//    dias = 2;
+//    for(int y=0 ; y<dias ; y++){
+//
+//        for(int x=24*y; x<24+(y*24); x++){
+//            int x_hora = x-(y*24);
+//            //if(x==0 || x==12){ //escreve data no topo da linha do tempo
+//            if(x_hora == 0 || x_hora == 12){
+//                paint.setFont(font_data);
+//                pen_bkp = paint.pen();
+//                paint.setPen(QPen());
+//                paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
+//                //paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),data_atual.toString("dd/MM"));
+//                if(x_hora == 12)
+//                    dia = dia.addDays(1);
+//                paint.setFont(QFont());
+//                paint.setPen(pen_bkp);
+//            }
+//            paint.setPen(pen_hora);
+//            paint.drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x_hora)+((escala>=25)?":00":""));
+//            paint.setPen(pen_linha);
+//            paint.drawLine(posicao_zero+x*escala , y_teto-5 , posicao_zero+x*escala , tamanho_vertical);
+//            paint.setPen(pen_meiahora);
+//
+//            linha_meiahora = ((posicao_zero+x*escala)+(posicao_zero+(x+1)*escala))/2;
+//            if(escala>=100)
+//            paint.drawText(QPoint(linha_meiahora,y_teto-10),":30");
+//            paint.drawLine(linha_meiahora,y_teto-5,linha_meiahora,tamanho_vertical);
+//
+//            linha_45min = (linha_meiahora+(posicao_zero+(x+1)*escala))/2;
+//            if(escala>=100)
+//            paint.drawText(QPoint(linha_45min,y_teto-10),":45");
+//            paint.drawLine(linha_45min,y_teto-5,linha_45min,tamanho_vertical);
+//
+//            linha_15min = ((posicao_zero+x*escala)+linha_meiahora)/2;
+//            if(escala>=100)
+//            paint.drawText(QPoint(linha_15min,y_teto-10),":15");
+//            paint.drawLine(linha_15min,y_teto-5,linha_15min,tamanho_vertical);
+//            //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
+//        }
+//    }
+    //desenharTrabalhos(QDate::currentDate());
 }
 
 void Widget::dragEnterEvent(QDragEnterEvent *event){
