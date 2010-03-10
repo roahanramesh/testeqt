@@ -94,6 +94,7 @@ Solucao Solucao::GerarSolucao(){
     cTrabalho t3_1(QTime(1,20), QTime(2,0),QDate::currentDate(),QDate::currentDate(),"t3_1",cor_trabalho);
     cTrabalho t3_2(QTime(2,0), QTime(3,0),QDate::currentDate(),QDate::currentDate(),"t3_2",cor_trabalho);
     cTrabalho t3_3(QTime(8,0), QTime(10,0),QDate::currentDate(),QDate::currentDate(),"t3_3",cor_trabalho);
+    cTrabalho t3_4(QTime(2,0), QTime(3,0),QDate::currentDate().addDays(2),QDate::currentDate().addDays(2),"t3_4",cor_trabalho);
 
     cTrabalho t4_1(QTime(1,18), QTime(2,20),QDate::currentDate().addDays(2),QDate::currentDate().addDays(2),"t4_1",cor_trabalho);
     QList<cTrabalho> l4;
@@ -154,6 +155,7 @@ Solucao Solucao::GerarSolucao(){
     l3.append(t3_1);
     l3.append(t3_2);
     l3.append(t3_3);
+    l3.append(t3_4);
 
     QList<QList<cTrabalho> > nsolucao;
     nsolucao.append(l1);
