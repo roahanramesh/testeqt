@@ -28,7 +28,7 @@ public:
 
 public slots:
     void redraw(int data_offset);
-    void desenhaLinhas();
+//    void desenhaLinhas();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

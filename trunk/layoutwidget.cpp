@@ -64,9 +64,19 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     upper_layout->addWidget(get_total_folga,2,2);
     get_total_folga->show();
 
-    QPushButton *b1 = new QPushButton("b1");
-    upper_layout->addWidget(b1,3,2);
+    QHBoxLayout *button_layout = new QHBoxLayout();
+
+    QPushButton *b1 = new QPushButton("anterior");
+    //upper_layout->addWidget(b1,3,2);
+    button_layout->addWidget(b1);
     b1->show();
+
+    QPushButton *b2 = new QPushButton("próximo");
+    //upper_layout->addWidget(b2,3,2);
+    button_layout->addWidget(b2);
+    b2->show();
+
+    upper_layout->addLayout(button_layout,3,2);
 
     upper_field->setLayout(upper_layout);
 
@@ -83,12 +93,12 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     setLayout(layout);
 
     QSignalMapper *sm = new QSignalMapper();
-    sm->setMapping(b1,1);
+    sm->setMapping(b1,-1);
+    sm->setMapping(b2,1);
     connect(b1,SIGNAL(clicked()),sm,SLOT(map()));
+    connect(b2,SIGNAL(clicked()),sm,SLOT(map()));
+
     connect(sm,SIGNAL(mapped(int)),w,SLOT(redraw(int)));
     //connect(sm,SIGNAL(mapped(int)),w,SLOT(hide()));
-
-    //int wut = 2;
-    //connect(b1,SIGNAL(clicked()),w,SLOT(redraw(wut)));
 }
 
