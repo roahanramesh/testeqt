@@ -7,6 +7,7 @@
 
 class layoutWidget : public QWidget
 {
+    Q_OBJECT
     public:
         layoutWidget(Solucao so = Solucao::SolucaoVazia(), QWidget *parent = 0);
 };

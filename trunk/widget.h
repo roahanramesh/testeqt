@@ -20,11 +20,15 @@
 class Widget : public QWidget
 {
 
-
+    Q_OBJECT
 public:
     Widget(Solucao solucao = Solucao::SolucaoVazia(),QWidget *parent = 0);
-    int desenharTrabalhos();
+    void desenharTrabalhos(QDate data);
     //~Widget();
+
+public slots:
+    void redraw(int data_offset);
+    void desenhaLinhas();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -36,11 +40,13 @@ private:
     QString Widget::gerarToolTip(cTrabalho trabalho);
     Solucao solucao;
     int tamanho_vertical; //definido pelo construtor
+    int tamanho_horizontal;
     int y_teto; //define distância entre topo do widget e o desenho do gráfico. é relativo às barras
     int escala;
     int posicao_zero; //define posição zero para o grafico de gantt
 
     //variáveis utilizadas pra escrever as datas na linha do tempo
+    QDate data_atual;
     QDate data_inicio;
     QDate data_fim;
     int dias;

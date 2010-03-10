@@ -8,6 +8,7 @@
 #include <QLine>
 #include <QPainter>
 #include <QPushButton>
+#include <QSignalMapper>
 
 
 layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
@@ -80,6 +81,14 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     //setFixedHeight(600);
 
     setLayout(layout);
-    connect(b1,SIGNAL(clicked()),w,SLOT(hide()));
+
+    QSignalMapper *sm = new QSignalMapper();
+    sm->setMapping(b1,1);
+    connect(b1,SIGNAL(clicked()),sm,SLOT(map()));
+    connect(sm,SIGNAL(mapped(int)),w,SLOT(redraw(int)));
+    //connect(sm,SIGNAL(mapped(int)),w,SLOT(hide()));
+
+    //int wut = 2;
+    //connect(b1,SIGNAL(clicked()),w,SLOT(redraw(wut)));
 }
 

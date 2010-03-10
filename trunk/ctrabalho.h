@@ -33,7 +33,7 @@ class cTrabalho{
 
         //float getFimFloat();
 
-        bool getTempoSetup(){return tempo_setup;}
+        bool getTempoSetup(){return tempo_setup;} //TRUE se for tempo de setup ao invés de trabalho
         void setTempoSetup(bool tempo_setup){this->tempo_setup=tempo_setup;}
         float getTamanho();
 
