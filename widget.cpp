@@ -62,6 +62,15 @@ void Widget::redraw(int data_offset){
     update();
 }
 
+void Widget::redrawZoom(int newzoom){
+    QList<myLabel *> mylist = this->findChildren<myLabel*>();
+    foreach(myLabel* wut, mylist) wut->deleteLater();
+    solucao.setEscala(solucao.getEscala()+(newzoom*10));
+    desenharTrabalhos(data_atual);
+    update();
+
+}
+
 void Widget::desenharTrabalhos(QDate data){
     //desenharTrabalhos(QDate::currentDate().addDays(0));
     QFontMetrics metric(font());

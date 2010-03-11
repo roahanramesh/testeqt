@@ -3,16 +3,6 @@
 #define MAX(a,b) (((a)<(b))?(b):(a))
 
 Solucao::Solucao(){
-    makespan = 1561;
-    maior_atraso = 24875;
-    num_op_atrasadas = 456515;
-    total_atrasos = 12315;
-    custo_mao_de_obra = 1515;
-    custos_operacionais = 11541;
-    total_setup = 65165;
-    total_ociosidade = 651814;
-    total_folga = 78944;
-
     QList<QList<cTrabalho> > t;
     trabalhos = t;
 
@@ -258,7 +248,6 @@ int Solucao::getMaiorNomeMaquina(){
     foreach(QString nome, nome_maquinas){
         maior = MAX(maior,fmetrics.boundingRect(nome).width());
     }
-    //qDebug() << "debug "<< maior;
     //+15 gambiarra pra ficar do tamanho certo
     return maior+15;
 }
@@ -301,7 +290,6 @@ QList<QList<cTrabalho> > Solucao::prepararSolucao(int dia){
 }
 
 void Solucao::debugarSolucao(){
-    //qDebug() << "FFFUUUUUU";
     foreach(QList<cTrabalho> maquina, trabalhos){
         foreach(cTrabalho trab, maquina){
             qDebug() << trab.getTexto();
