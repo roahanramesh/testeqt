@@ -64,6 +64,10 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     upper_layout->addWidget(get_total_folga,2,2);
     get_total_folga->show();
 
+    Widget *w = new Widget(solucao);
+    scroll->setWidget(w);
+    scroll->setBackgroundRole(QPalette::Light);
+
     QHBoxLayout *button_layout = new QHBoxLayout();
 
     QPushButton *b1 = new QPushButton("anterior");
@@ -79,11 +83,6 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     upper_layout->addLayout(button_layout,3,2);
 
     upper_field->setLayout(upper_layout);
-
-
-    Widget *w = new Widget(solucao);
-    scroll->setWidget(w);
-    scroll->setBackgroundRole(QPalette::Light);
 
     layout->addWidget(upper_field);
     layout->addWidget(scroll);

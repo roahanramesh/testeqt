@@ -55,6 +55,7 @@ void myLabel::mousePressEvent(QMouseEvent *ev)
 //    if(this->tempo_setup){         //desabilita ação de drag para labels que representarem tempo_setup de maquina
 //        //return;
 //    }
+    dragstart = ev->pos();
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
@@ -80,6 +81,19 @@ void myLabel::mousePressEvent(QMouseEvent *ev)
     else
         show();
 }
+
+//void mouseMoveEvent(QMouseEvent *ev){
+//    if (!(ev->buttons() & Qt::LeftButton))
+//         return;
+//    if ((ev->pos()-dragstart).manhattanLength() < QApplication::startDragDistance())
+//        return;
+//    QDrag *drag = new QDrag(this);
+//    QMimeData *mimedata = new QMimedata;
+//    mimedata->setData(mimeType,data);
+//    drag->setMimeData(mimedata);
+//    Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+////    //qDebug() << "mouseMoveEvent called ";
+//}
 
 
 QString myLabel::generateString(int num){

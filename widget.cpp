@@ -51,25 +51,15 @@ Widget::Widget(Solucao solucao, QWidget *parent)
 }
 
 void Widget::redraw(int data_offset){
-    //qDebug() << "WAT";
-    //this->desenharTrabalhos(QDate::currentDate().addDays(data_offset));
+    QList<myLabel *> mylist = this->findChildren<myLabel*>();
+    foreach(myLabel* wut, mylist) wut->deleteLater();
+//    QList<QObject*> mylist = this->children();
+//    foreach(QObject* wut, mylist) wut->deleteLater();
 
-//    QList<myLabel *> mylist = this->findChildren<myLabel*>();
-//    foreach(myLabel* wut, mylist) wut->deleteLater();
-    QList<QObject*> mylist = this->children();
-    foreach(QObject* wut, mylist) wut->deleteLater();
-
-    qDebug() << "redraw: " << QString::number(mylist.size()) << " data atual = " << data_atual.toString();
-    qDebug() << "wat " << QString::number(data_offset);
-//    update();
-
-    //desenharTrabalhos(QDate::currentDate().addDays(data_offset+1));
     data_atual = data_atual.addDays(data_offset);
 
     desenharTrabalhos(data_atual);
     update();
-    //update();
-    //desenhaLinhas();
 }
 
 void Widget::desenharTrabalhos(QDate data){
@@ -163,13 +153,15 @@ void Widget::paintEvent(QPaintEvent *event){
                 paint->setFont(font_data);
                 pen_bkp = paint->pen();
                 paint->setPen(QPen());
-                //paint.drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
-                paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),data_atual.toString("dd/MM"));
+                paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
+                //paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),data_atual.toString("dd/MM"));
                 if(x_hora == 12)
-                    dia = dia.addDays(2);
+                    dia = dia.addDays(1);
                 paint->setFont(QFont());
                 paint->setPen(pen_bkp);
             }
+//            if(x_hora == 12)
+//                    dia = dia.addDays(1);
             paint->setPen(pen_hora);
             paint->drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x_hora)+((escala>=25)?":00":""));
             paint->setPen(pen_linha);
@@ -195,7 +187,7 @@ void Widget::paintEvent(QPaintEvent *event){
     }
     delete paint;
     //desenharTrabalhos(QDate::currentDate());
-    qDebug() << "paintEvent called, y_teto, tamanho vertical: " << qrand() << y_teto << tamanho_vertical;
+    //qDebug() << "paintEvent called, y_teto, tamanho vertical: " << qrand() << y_teto << tamanho_vertical;
 }
 
 void Widget::dragEnterEvent(QDragEnterEvent *event){
