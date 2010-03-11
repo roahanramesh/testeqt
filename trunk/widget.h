@@ -24,6 +24,8 @@ class Widget : public QWidget
 public:
     Widget(Solucao solucao = Solucao::SolucaoVazia(),QWidget *parent = 0);
     void desenharTrabalhos(QDate data);
+
+    QDate getDataAtual(){return data_atual;}
     //~Widget();
 
 public slots:

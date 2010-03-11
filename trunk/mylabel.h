@@ -25,6 +25,7 @@ class myLabel : public QLabel
 
     protected:
     void mousePressEvent(QMouseEvent *ev);
+//    void mouseMoveEvent(QMouseEvent *ev);
 
     private:
     QString labelText;
@@ -36,5 +37,6 @@ class myLabel : public QLabel
     int altura;
     QColor cor;
     QPoint coordenada;
+    QPoint dragstart;
 };
 #endif // MYLABEL_H
