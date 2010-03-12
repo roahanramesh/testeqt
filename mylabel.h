@@ -24,8 +24,10 @@ class myLabel : public QLabel
     QPoint getCoordenada(){return coordenada;}
 
     protected:
-    void mousePressEvent(QMouseEvent *ev);
-//    void mouseMoveEvent(QMouseEvent *ev);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
     private:
     QString labelText;

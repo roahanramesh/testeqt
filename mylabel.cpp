@@ -50,17 +50,18 @@ myLabel::myLabel(const QString &text,QWidget *parent,QString tooltip, QColor col
     labelText = text;
 }
 
-void myLabel::mousePressEvent(QMouseEvent *ev)
+void myLabel::mousePressEvent(QMouseEvent *event)
 {
 //    if(this->tempo_setup){         //desabilita ação de drag para labels que representarem tempo_setup de maquina
 //        //return;
 //    }
-    dragstart = ev->pos();
+    qDebug() << "mousePressEvent called";
+    dragstart = event->pos();
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
     //passar variavel tamanho como float zoa o drop
-    dataStream << labelText << tooltip << QPoint(ev->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha() << tempo_setup << coordenada;
+    dataStream << labelText << tooltip << QPoint(event->pos() - rect().topLeft()) << (int)tamanho << cor.red() << cor.green() << cor.blue() << cor.alpha() << tempo_setup << coordenada;
 
     QMimeData *mimeData = new QMimeData;
     //pra que serve mimeData?
@@ -69,8 +70,8 @@ void myLabel::mousePressEvent(QMouseEvent *ev)
 
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
-    //o que é o hot spot?
-    drag->setHotSpot(ev->pos() - rect().topLeft());
+
+    drag->setHotSpot(event->pos() - rect().topLeft());
     drag->setPixmap(*pixmap());
 
     hide();
@@ -80,6 +81,21 @@ void myLabel::mousePressEvent(QMouseEvent *ev)
         close();
     else
         show();
+}
+
+void myLabel::mouseMoveEvent(QMouseEvent *event){
+//    qsrand(QTime::currentTime().msec());
+//    int rand = qrand()%40;
+    qDebug() << "mouseMoveEvent ";// << rand;
+    //setGeometry(QRect(QPoint(event->pos().x(),dragstart.y()),rect().size()));
+}
+
+void myLabel::mouseDoubleClickEvent(QMouseEvent *event){
+    qDebug() << "double click";
+}
+
+void myLabel::mouseReleaseEvent(QMouseEvent *event){
+    qDebug() << "mouse release";
 }
 
 //void mouseMoveEvent(QMouseEvent *ev){
