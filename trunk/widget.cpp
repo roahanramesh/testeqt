@@ -55,17 +55,31 @@ void Widget::redraw(int data_offset){
     foreach(myLabel* wut, mylist) wut->deleteLater();
 //    QList<QObject*> mylist = this->children();
 //    foreach(QObject* wut, mylist) wut->deleteLater();
-
-    data_atual = data_atual.addDays(data_offset);
+    if(data_offset == 0)
+        data_atual = QDate::currentDate();
+    else
+        data_atual = data_atual.addDays(data_offset);
 
     desenharTrabalhos(data_atual);
     update();
 }
 
-void Widget::redrawZoom(int newzoom){
+void Widget::redrawDate(QDate data){
     QList<myLabel *> mylist = this->findChildren<myLabel*>();
     foreach(myLabel* wut, mylist) wut->deleteLater();
-    solucao.setEscala(solucao.getEscala()+(newzoom*10));
+    data_atual = data;
+    desenharTrabalhos(data_atual);
+    update();
+}
+
+void Widget::redrawZoom(int newzoom){
+//    QList<myLabel *> mylist = this->findChildren<myLabel*>();
+//    foreach(myLabel* wut, mylist) wut->deleteLater();
+    QList<QObject*> mylist = this->children();
+    foreach(QObject* wut, mylist) wut->deleteLater();
+    int nova_escala = this->solucao.getEscala()+(newzoom*5);
+    if(nova_escala >=15)
+        this->solucao.setEscala(nova_escala);
     desenharTrabalhos(data_atual);
     update();
 
@@ -73,6 +87,7 @@ void Widget::redrawZoom(int newzoom){
 
 void Widget::desenharTrabalhos(QDate data){
     //desenharTrabalhos(QDate::currentDate().addDays(0));
+    this->escala = solucao.getEscala();
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, " ");
     int y = y_teto;
@@ -89,7 +104,6 @@ void Widget::desenharTrabalhos(QDate data){
 
     //define data a ser desenhada
     //data_atual = data;//QDate::currentDate().addDays(1);
-
     foreach (QList<cTrabalho> line, this->solucao.getTrabalhos()){
         QLabel *x_label = new QLabel(nomes_maquinas.at(iterator_nome_maquinas),this);
         iterator_nome_maquinas++;
@@ -104,10 +118,14 @@ void Widget::desenharTrabalhos(QDate data){
                 x_inicio = this->solucao.getCoordTrabalho(trab);
 
                 label_pos = (int)(x_inicio*escala+posicao_zero);
+
                 label_tamanho = (int)(trab.getTamanho()*escala);
+//                int testeint = (int)(trab.getInicio().secsTo(trab.getFim())/(3600))*escala;
+
                 posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
 
                 //if(trab.getDataInicio().daysTo(datahoje) == 0){
+
                     myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getTempoSetup());
 
                     label->setTtip(gerarToolTip(trab));
@@ -127,11 +145,11 @@ void Widget::desenharTrabalhos(QDate data){
 
         tamanho_vertical = x_label->height() + 2;
     }
-    //desenharTrabalhos(data);
     this->tamanho_horizontal = tamanhos_maquina.last()+100;
 }
 
 void Widget::paintEvent(QPaintEvent *event){
+    qDebug() << "paint event =D " << QString::number(solucao.getEscala());
     //alguma coisa muda valor de tamanho_vertical, necessario resetar seu valor
     tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
 

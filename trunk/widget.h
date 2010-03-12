@@ -31,6 +31,7 @@ public:
 public slots:
     void redraw(int data_offset);
     void redrawZoom(int newzoom);
+    void redrawDate(QDate data);
 //    void desenhaLinhas();
 
 protected:
