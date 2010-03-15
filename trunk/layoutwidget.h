@@ -7,6 +7,7 @@
 #include "solucao.h"
 #include <QDateEdit>
 #include <QPushButton>
+#include <QSpinBox>
 
 class layoutWidget : public QWidget
 {
@@ -24,6 +25,8 @@ class layoutWidget : public QWidget
         QPushButton *date_next;
         QPushButton *zoom_plus;
         QPushButton *zoom_minus;
+        QSpinBox *interval_begin;
+        QSpinBox *interval_end;
 };
 
 #endif // LAYOUTWIDGET_H

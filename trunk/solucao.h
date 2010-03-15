@@ -38,8 +38,6 @@ class Solucao{
     int getDiasTrabalho(cTrabalho trabalho); //retorna offset de dias de um trabalho
     float getCoordTrabalho(cTrabalho trabalho); //retorna coordenada x onde o trabalho deve ser desenhado
 
-    QList<QList<cTrabalho> > prepararSolucao(int dia = 1);
-
     void debugarSolucao();
 
     //getDataTrabalho necessário pra funcionalidade de rescheduling

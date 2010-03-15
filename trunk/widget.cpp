@@ -27,6 +27,10 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     data_atual = data_inicio;
     data_fim = solucao.getDataFinal();
     this->dias = 1;
+
+    this->intervalo_inicio = 6;
+    this->intervalo_fim = 18;
+
     for(int x=0 ; x<data_inicio.daysTo(data_fim) ; x++){
         dias++;
     }
@@ -84,7 +88,24 @@ void Widget::redrawZoom(int newzoom){
         this->solucao.setEscala(nova_escala);
     desenharTrabalhos(data_atual);
     update();
+}
 
+void Widget::redrawIntervalBegin(int value){
+    //qDebug() << "redrawIntervalBegin " << QString::number(value);
+    QList<QObject*> mylist = this->children();
+    foreach(QObject* wut, mylist) wut->deleteLater();
+    intervalo_inicio = value;
+    desenharTrabalhos(data_atual);
+    update();
+}
+
+void Widget::redrawIntervalEnd(int value){
+    //qDebug() << "redrawIntervalEnd " << QString::number(value);
+    QList<QObject*> mylist = this->children();
+    foreach(QObject* wut, mylist) wut->deleteLater();
+    intervalo_fim = value;
+    desenharTrabalhos(data_atual);
+    update();
 }
 
 void Widget::desenharTrabalhos(QDate data){
@@ -118,6 +139,8 @@ void Widget::desenharTrabalhos(QDate data){
 
             if(trab.getDataInicio() == data_atual){
                 x_inicio = this->solucao.getCoordTrabalho(trab);
+                x_inicio -= intervalo_inicio;//x_inicio-(intervalo_fim-intervalo_inicio);
+                //qDebug() << QString::number(x_inicio*escala);
 
                 label_pos = (int)(x_inicio*escala+posicao_zero);
 
@@ -127,7 +150,7 @@ void Widget::desenharTrabalhos(QDate data){
                 posicao_ultimo_trabalho = MAX(label_pos+label_tamanho,posicao_ultimo_trabalho); //utilizado para estabelecer o tamanho horizontal do widget
 
                 //if(trab.getDataInicio().daysTo(datahoje) == 0){
-
+                if(x_inicio*escala+posicao_zero>=posicao_zero){
                     myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getTempoSetup());
 
                     label->setTtip(gerarToolTip(trab));
@@ -137,6 +160,7 @@ void Widget::desenharTrabalhos(QDate data){
                     label->setCoordenada(QPoint(x_inicio*escala+posicao_zero , trab.getTempoSetup()?y+10:y));
 //                    if(trab.getDataInicio().daysTo(datahoje)){
                     label->show();
+                }
             }
 
         }
@@ -152,6 +176,7 @@ void Widget::desenharTrabalhos(QDate data){
 
 void Widget::paintEvent(QPaintEvent *event){
     //qDebug() << "paint event =D " << QString::number(solucao.getEscala());
+
     //alguma coisa muda valor de tamanho_vertical, necessario resetar seu valor
     tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
 
@@ -162,58 +187,63 @@ void Widget::paintEvent(QPaintEvent *event){
     QFont font_data = QFont();
     font_data.setPointSize(16);
     QPainter *paint = new QPainter(this);
-    //QPainter paint(this->viewpo());
-    //QDate dia = this->data_inicio;
+
+
     QDate dia = this->data_atual;
     QString texto_dia;
     int escala = solucao.getEscala();
     float linha_meiahora = 0;
     float linha_45min = 0;
     float linha_15min = 0;
-    //TESTE
-    //dias = 1;
-    dias = 2;
-    for(int y=0 ; y<dias ; y++){
 
-        for(int x=24*y; x<24+(y*24); x++){
-            int x_hora = x-(y*24);
-            //if(x==0 || x==12){ //escreve data no topo da linha do tempo
-            if(x_hora == 0 || x_hora == 12){
-                paint->setFont(font_data);
-                pen_bkp = paint->pen();
-                paint->setPen(QPen());
-                paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
-                //paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),data_atual.toString("dd/MM"));
-                if(x_hora == 12)
-                    dia = dia.addDays(1);
-                paint->setFont(QFont());
-                paint->setPen(pen_bkp);
-            }
+
+    dias = 2;
+    //for(int y=0 ; y<dias ; y++){
+
+        //for(int x=24*y; x<24+(y*24); x++){
+        //for(int x=0; x<24; x++){
+    int x_hora = intervalo_inicio;
+    for(int x = 0; x<=intervalo_fim-intervalo_inicio ; x++){
+        //int x_hora = x;
+        //int x_hora = intervalo_inicio;
+        //escreve data no topo da linha do tempo
+        if(x_hora == 0 || x_hora == 12){
+            paint->setFont(font_data);
+            pen_bkp = paint->pen();
+            paint->setPen(QPen());
+            paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
+            //paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),data_atual.toString("dd/MM"));
+            if(x_hora == 12)
+                dia = dia.addDays(1);
+            paint->setFont(QFont());
+            paint->setPen(pen_bkp);
+        }
 //            if(x_hora == 12)
 //                    dia = dia.addDays(1);
-            paint->setPen(pen_hora);
-            paint->drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x_hora)+((escala>=25)?":00":""));
-            paint->setPen(pen_linha);
-            paint->drawLine(posicao_zero+x*escala , y_teto-5 , posicao_zero+x*escala , tamanho_vertical);
-            paint->setPen(pen_meiahora);
+        paint->setPen(pen_hora);
+        paint->drawText(QPoint(posicao_zero+x*escala,y_teto-10),QString::number(x_hora)+((escala>=25)?":00":""));
+        paint->setPen(pen_linha);
+        paint->drawLine(posicao_zero+x*escala , y_teto-5 , posicao_zero+x*escala , tamanho_vertical);
+        paint->setPen(pen_meiahora);
 
-            linha_meiahora = ((posicao_zero+x*escala)+(posicao_zero+(x+1)*escala))/2;
-            if(escala>=100)
-            paint->drawText(QPoint(linha_meiahora,y_teto-10),":30");
-            paint->drawLine(linha_meiahora,y_teto-5,linha_meiahora,tamanho_vertical);
+        linha_meiahora = ((posicao_zero+x*escala)+(posicao_zero+(x+1)*escala))/2;
+        if(escala>=100)
+        paint->drawText(QPoint(linha_meiahora,y_teto-10),":30");
+        paint->drawLine(linha_meiahora,y_teto-5,linha_meiahora,tamanho_vertical);
 
-            linha_45min = (linha_meiahora+(posicao_zero+(x+1)*escala))/2;
-            if(escala>=100)
-            paint->drawText(QPoint(linha_45min,y_teto-10),":45");
-            paint->drawLine(linha_45min,y_teto-5,linha_45min,tamanho_vertical);
+        linha_45min = (linha_meiahora+(posicao_zero+(x+1)*escala))/2;
+        if(escala>=100)
+        paint->drawText(QPoint(linha_45min,y_teto-10),":45");
+        paint->drawLine(linha_45min,y_teto-5,linha_45min,tamanho_vertical);
 
-            linha_15min = ((posicao_zero+x*escala)+linha_meiahora)/2;
-            if(escala>=100)
-            paint->drawText(QPoint(linha_15min,y_teto-10),":15");
-            paint->drawLine(linha_15min,y_teto-5,linha_15min,tamanho_vertical);
-            //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
-        }
+        linha_15min = ((posicao_zero+x*escala)+linha_meiahora)/2;
+        if(escala>=100)
+        paint->drawText(QPoint(linha_15min,y_teto-10),":15");
+        paint->drawLine(linha_15min,y_teto-5,linha_15min,tamanho_vertical);
+        //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
+        x_hora++;
     }
+    //}
     delete paint;
     //desenharTrabalhos(QDate::currentDate());
     //qDebug() << "paintEvent called, y_teto, tamanho vertical: " << qrand() << y_teto << tamanho_vertical;

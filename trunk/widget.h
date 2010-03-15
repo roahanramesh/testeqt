@@ -24,6 +24,8 @@ class Widget : public QWidget
 public:
     Widget(Solucao solucao = Solucao::SolucaoVazia(),QWidget *parent = 0);
     void desenharTrabalhos(QDate data);
+    int getIntervaloInicio(){return intervalo_inicio;}
+    int getIntervaloFim(){return intervalo_fim;}
 
     QDate getDataAtual(){return data_atual;}
     //~Widget();
@@ -32,6 +34,8 @@ public slots:
     void redraw(int data_offset);
     void redrawZoom(int newzoom);
     void redrawDate(QDate data);
+    void redrawIntervalBegin(int value);
+    void redrawIntervalEnd(int value);
 //    void desenhaLinhas();
 
 protected:
@@ -54,6 +58,8 @@ private:
     QDate data_inicio;
     QDate data_fim;
     int dias;
+    int intervalo_inicio;
+    int intervalo_fim;
 
 //private:
     //Ui::WidgetClass *ui;
