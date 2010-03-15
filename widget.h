@@ -50,7 +50,7 @@ private:
     int posicao_zero; //define posição zero para o grafico de gantt
 
     //variáveis utilizadas pra escrever as datas na linha do tempo
-    QDate data_atual;
+    QDate data_atual; //data atual do programa, utilizado como referência pra mostrar para o usuário
     QDate data_inicio;
     QDate data_fim;
     int dias;

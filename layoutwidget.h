@@ -6,18 +6,25 @@
 #include "widget.h"
 #include "solucao.h"
 #include <QDateEdit>
+#include "customdateedit.h"
 
 class layoutWidget : public QWidget
 {
     Q_OBJECT
     public:
         layoutWidget(Solucao so = Solucao::SolucaoVazia(), QWidget *parent = 0);
+    public slots:
+        //void updateDateEdit(QString date){d_edit->setDate(QDate::fromString(date));}
+        void updateDateEdit(int num);
+    private:
+        QDateEdit *d_edit;
+        //CustomDateEdit *d_edit;
+        Widget *w;
+        QPushButton *set_hoje;
+        QPushButton *date_previous;
+        QPushButton *date_next;
+        QPushButton *zoom_plus;
+        QPushButton *zoom_minus;
 };
 
-class CustomDateEdit : public QDateEdit
-{
-    Q_OBJECT
-    public slots:
-        void setNewDate(QString newdate){this->setDate(QDate::fromString(newdate));qDebug()<<"WAT";}
-};
 #endif // LAYOUTWIDGET_H
