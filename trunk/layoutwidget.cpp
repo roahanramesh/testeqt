@@ -14,7 +14,7 @@
 #include <QGroupBox>
 
 
-layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
+layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(parent){
     QScrollArea *scroll = new QScrollArea();
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -22,7 +22,7 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     //QGridLayout *navegacao = new QGridLayout();
     QHBoxLayout *navegacao = new QHBoxLayout();
     
-    w = new Widget(solucao);
+    w = new Widget(scheduling);
     scroll->setWidget(w);
     scroll->setBackgroundRole(QPalette::Light);
 
@@ -137,6 +137,9 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     connect(set_hoje,SIGNAL(clicked()),sm_date,SLOT(map()));
     connect(sm_date,SIGNAL(mapped(int)),w,SLOT(redraw(int)));
 
+    //botao 'hoje' atualiza d_edit
+    connect(set_hoje,SIGNAL(clicked()),this,SLOT(updateDateEditToday()));
+
     QSignalMapper *update_calendardate = new QSignalMapper();
     update_calendardate->setMapping(date_previous,-1);
     update_calendardate->setMapping(date_next,1);
@@ -174,4 +177,7 @@ void layoutWidget::updateDateEdit(int num){
     //qDebug() << "updateDateEdit called";
     //d_edit->setDate(w->getDataAtual().addDays(num));
     d_edit->setDate(w->getDataAtual());
+}
+void layoutWidget::updateDateEditToday(){
+    d_edit->setDate(QDate::currentDate());
 }

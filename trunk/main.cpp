@@ -9,9 +9,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Solucao so;
+    Scheduling so;
     //QList<QList<cTrabalho> > solu = so.GerarSolucao();
-    so = Solucao::GerarSolucao();
+    so = Scheduling::GerarScheduling();
 
     layoutWidget w(so);
     //Widget w;

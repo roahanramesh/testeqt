@@ -1,13 +1,13 @@
 #include "mylabel.h"
 #include <QtGui>
 
-void myLabel::setTamanho(int t){
+void DragLabel::setTamanho(int t){
     this->tamanho = t;
 }
 
-//myLabel::myLabel(const QString &text, QWidget *parent,int r, int g, int b, int alpha)
-//myLabel::myLabel(cTrabalho trab, const QString &text, QWidget *parent, QColor color, int tamanho)
-myLabel::myLabel(const QString &text,QWidget *parent,QString tooltip, QColor color, float tamanho, bool tempo_setup)
+//DragLabel::DragLabel(const QString &text, QWidget *parent,int r, int g, int b, int alpha)
+//DragLabel::DragLabel(Task trab, const QString &text, QWidget *parent, QColor color, int tamanho)
+DragLabel::DragLabel(const QString &text,QWidget *parent,QString tooltip, QColor color, float tamanho, bool tempo_setup)
     : QLabel(parent){
     this->coordenada = QPoint(0,0);
     this->tempo_setup = tempo_setup;
@@ -50,7 +50,7 @@ myLabel::myLabel(const QString &text,QWidget *parent,QString tooltip, QColor col
     labelText = text;
 }
 
-void myLabel::mousePressEvent(QMouseEvent *event)
+void DragLabel::mousePressEvent(QMouseEvent *event)
 {
 //    if(this->tempo_setup){         //desabilita ação de drag para labels que representarem tempo_setup de maquina
 //        //return;
@@ -83,18 +83,18 @@ void myLabel::mousePressEvent(QMouseEvent *event)
         show();
 }
 
-void myLabel::mouseMoveEvent(QMouseEvent *event){
+void DragLabel::mouseMoveEvent(QMouseEvent *event){
 //    qsrand(QTime::currentTime().msec());
 //    int rand = qrand()%40;
     qDebug() << "mouseMoveEvent ";// << rand;
     //setGeometry(QRect(QPoint(event->pos().x(),dragstart.y()),rect().size()));
 }
 
-void myLabel::mouseDoubleClickEvent(QMouseEvent *event){
+void DragLabel::mouseDoubleClickEvent(QMouseEvent *event){
     qDebug() << "double click";
 }
 
-void myLabel::mouseReleaseEvent(QMouseEvent *event){
+void DragLabel::mouseReleaseEvent(QMouseEvent *event){
     qDebug() << "mouse release";
 }
 
@@ -112,7 +112,7 @@ void myLabel::mouseReleaseEvent(QMouseEvent *event){
 //}
 
 
-QString myLabel::generateString(int num){
+QString DragLabel::generateString(int num){
     QString str;
      for(int x=0; x<num; x++){
          str.append(" ");
