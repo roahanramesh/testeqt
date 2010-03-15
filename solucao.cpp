@@ -68,25 +68,25 @@ Solucao Solucao::GerarSolucao(){
     int alpha = 255;
     QColor cor_trabalho = QColor(qrand()%255,qrand()%255,qrand()%255,alpha);
 
-    cTrabalho t1_1(QTime(1,15), QTime(1,30),QDate::currentDate(),QDate::currentDate(),"t1_1",cor_trabalho);
-    cTrabalho t1_2(QTime(2,0), QTime(3,0),QDate::currentDate(),QDate::currentDate(),"t1_2",cor_trabalho);
-    cTrabalho t1_3(QTime(4,0), QTime(5,0),QDate::currentDate(),QDate::currentDate(),"t1_3",cor_trabalho);
-    cTrabalho t1_4(QTime(6,0), QTime(7,0),QDate::currentDate(),QDate::currentDate(),"t1_4",cor_trabalho);
-    cTrabalho t1_5(QTime(8,0), QTime(9,0),QDate::currentDate(),QDate::currentDate(),"t1_5",cor_trabalho);
+    cTrabalho t1_1(QTime(8,15), QTime(8,42),QDate::currentDate(),QDate::currentDate(),"t1_1",cor_trabalho);
+    cTrabalho t1_2(QTime(9,0), QTime(9,50),QDate::currentDate(),QDate::currentDate(),"t1_2",cor_trabalho);
+    cTrabalho t1_3(QTime(10,0), QTime(11,25),QDate::currentDate(),QDate::currentDate(),"t1_3",cor_trabalho);
+    cTrabalho t1_4(QTime(13,0), QTime(15,0),QDate::currentDate(),QDate::currentDate(),"t1_4",cor_trabalho);
+    cTrabalho t1_5(QTime(15,20), QTime(17,55),QDate::currentDate(),QDate::currentDate(),"t1_5",cor_trabalho);
 //
-    cTrabalho t2_0(QTime(0,10), QTime(3,20),QDate::currentDate(),QDate::currentDate(),"t2_0",cor_trabalho);
-    cTrabalho t2_1(QTime(6,0), QTime(12,0),QDate::currentDate(),QDate::currentDate(),"t2_1",cor_trabalho);
-    cTrabalho t2_2(QTime(12,0), QTime(15,0),QDate::currentDate(),QDate::currentDate(),"t2_2",cor_trabalho);
-    cTrabalho t2_3(QTime(15,0), QTime(18,0),QDate::currentDate(),QDate::currentDate(),"t2_3",cor_trabalho);
-    cTrabalho t2_4(QTime(19,0), QTime(22,0),QDate::currentDate(),QDate::currentDate(),"t2_3",cor_trabalho);
+    cTrabalho t2_0(QTime(6,0), QTime(8,20),QDate::currentDate(),QDate::currentDate(),"t2_0",cor_trabalho);
+    cTrabalho t2_1(QTime(8,30), QTime(9,20),QDate::currentDate(),QDate::currentDate(),"t2_1",cor_trabalho);
+    cTrabalho t2_2(QTime(10,0), QTime(12,0),QDate::currentDate(),QDate::currentDate(),"t2_2",cor_trabalho);
+    cTrabalho t2_3(QTime(13,20), QTime(14,0),QDate::currentDate(),QDate::currentDate(),"t2_3",cor_trabalho);
+    cTrabalho t2_4(QTime(14,7), QTime(18,0),QDate::currentDate(),QDate::currentDate(),"t2_3",cor_trabalho);
 
-    cTrabalho tempo_setup(QTime(0,20),QTime(1,17),QDate::currentDate(),QDate::currentDate(),"tempo_setup",QColor(0,0,0,255), true);
-    cTrabalho t3_1(QTime(1,20), QTime(2,0),QDate::currentDate(),QDate::currentDate(),"t3_1",cor_trabalho);
-    cTrabalho t3_2(QTime(2,0), QTime(3,0),QDate::currentDate(),QDate::currentDate(),"t3_2",cor_trabalho);
-    cTrabalho t3_3(QTime(8,0), QTime(10,0),QDate::currentDate(),QDate::currentDate(),"t3_3",cor_trabalho);
-    cTrabalho t3_4(QTime(2,0), QTime(3,0),QDate::currentDate().addDays(2),QDate::currentDate().addDays(2),"t3_4",cor_trabalho);
+    cTrabalho tempo_setup(QTime(7,0),QTime(8,30),QDate::currentDate(),QDate::currentDate(),"tempo_setup",QColor(0,0,0,255), true);
+    cTrabalho t3_1(QTime(8,30), QTime(9,0),QDate::currentDate(),QDate::currentDate(),"t3_1",cor_trabalho);
+    cTrabalho t3_2(QTime(9,10), QTime(9,20),QDate::currentDate(),QDate::currentDate(),"t3_2",cor_trabalho);
+    cTrabalho t3_3(QTime(9,55), QTime(10,20),QDate::currentDate(),QDate::currentDate(),"t3_3",cor_trabalho);
+    cTrabalho t3_4(QTime(11,0), QTime(13,0),QDate::currentDate().addDays(2),QDate::currentDate().addDays(2),"t3_4",cor_trabalho);
 
-    cTrabalho t4_1(QTime(1,18), QTime(2,20),QDate::currentDate().addDays(2),QDate::currentDate().addDays(2),"t4_1",cor_trabalho);
+    cTrabalho t4_1(QTime(12,0), QTime(12,50),QDate::currentDate().addDays(2),QDate::currentDate().addDays(2),"t4_1",cor_trabalho);
     QList<cTrabalho> l4;
     l4.append(t4_1);
 //
@@ -227,18 +227,6 @@ QDate Solucao::getDataFinal(){
         }
     }
     return maior_data;
-//    QList<QDate> lista_data;
-//    QDate maior_data;
-//    foreach(QList<cTrabalho> maquina, trabalhos){
-//        foreach(cTrabalho trabalho, maquina){
-//            maior_data = MAX(trabalho.getDataFim(),maior_data);
-//        }
-//        lista_data.append(maior_data);
-//    }
-//    foreach(QDate data, lista_data){
-//        maior_data = MAX(maior_data,data);
-//    }
-//    return maior_data;
 }
 
 int Solucao::getMaiorNomeMaquina(){
@@ -250,43 +238,6 @@ int Solucao::getMaiorNomeMaquina(){
     }
     //+15 gambiarra pra ficar do tamanho certo
     return maior+15;
-}
-
-QList<QList<cTrabalho> > Solucao::prepararSolucao(int dia){
-//    QDate inicio = this->getDataInicio();
-//    QDate fim = this->getDataFinal();
-    QList<QList<cTrabalho> > trabalhos_prep = trabalhos;
-//
-//    foreach(QList<cTrabalho> maquina, trabalhos_prep){
-//        for(int x=0 ; x<maquina.size() ; x++){
-//            if(maquina.at(x).getDataInicio().daysTo(QDate::currentDate()) == 1){
-//                maquina.removeAt(x);
-//            }
-//        }
-//    }
-//    int dias_solucao = inicio.daysTo(fim);
-////    foreach(QList<cTrabalho> maquina, trabalhos){
-////        foreach(cTrabalho trab, maquina){
-////            qDebug() << "wat";
-////        }
-////    }
-//    QList<cTrabalho>::iterator itr;
-//    foreach(QList<cTrabalho> maquina, preparada){
-//        for(itr=maquina.begin();itr!=maquina.end();itr++){
-//            //if((*itr).getDataInicio().daysTo(this->getDataInicio()) != 0){
-//                qDebug() << "wat";
-//                maquina.erase(itr);
-//            //}
-//        }
-//    }
-//    qDebug() << QString::number(dias_solucao);
-//    for(int x=0 ; x<preparada.size() ; x++){
-//        for(int y=0 ; y<preparada.at(x).size() ; y++){
-//            if(preparada.at(x).at(y).getDataInicio().daysTo(QDate::currentDate()) == 0)
-//                preparada.at(x).removeAt(y);
-//        }
-//    }
-    return trabalhos_prep;
 }
 
 void Solucao::debugarSolucao(){
