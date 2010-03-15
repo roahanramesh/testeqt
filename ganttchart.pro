@@ -13,6 +13,5 @@ HEADERS += widget.h \
     mylabel.h \
     layoutwidget.h \
     solucao.h \
-    ctrabalho.h \
-    customdateedit.h
+    ctrabalho.h
 FORMS += widget.ui

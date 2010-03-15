@@ -6,7 +6,7 @@
 #include "widget.h"
 #include "solucao.h"
 #include <QDateEdit>
-#include "customdateedit.h"
+#include <QPushButton>
 
 class layoutWidget : public QWidget
 {
@@ -18,7 +18,6 @@ class layoutWidget : public QWidget
         void updateDateEdit(int num);
     private:
         QDateEdit *d_edit;
-        //CustomDateEdit *d_edit;
         Widget *w;
         QPushButton *set_hoje;
         QPushButton *date_previous;
