@@ -5,7 +5,7 @@
 //#include <QPalette>
 //#include "ui_widget.h"
 #include "solucao.h"
-#include "ctrabalho.h"
+#include "task.h"
 #include <iostream>
 #include <QDebug>
 #include <QPen>
@@ -17,15 +17,15 @@
 
 #define MAX(a,b) (((a)<(b))?(b):(a))
 
-Widget::Widget(Solucao solucao, QWidget *parent)
+Widget::Widget(Scheduling scheduling, QWidget *parent)
     : QWidget(parent)//, ui(new Ui::WidgetClass)
 {
-    this->solucao = solucao;
-    escala = solucao.getEscala();
+    this->scheduling = scheduling;
+    escala = scheduling.getEscala();
 
-    data_inicio = solucao.getDataInicio();
+    data_inicio = scheduling.getDataInicio();
     data_atual = data_inicio;
-    data_fim = solucao.getDataFinal();
+    data_fim = scheduling.getDataFinal();
     this->dias = 1;
 
     this->intervalo_inicio = 6;
@@ -45,18 +45,18 @@ Widget::Widget(Solucao solucao, QWidget *parent)
     setPalette(newPalette);
 
     //definicao tamanho da tela
-    tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
+    tamanho_vertical = MAX(400,scheduling.getTrabalhos().size()*70);
     //setMinimumSize(tamanhos_maquina.last()+100,tamanho_vertical);
     //setMinimumSize(tamanho_horizontal,tamanho_vertical);
     //SetMinimumSize(50000,400);
-    setMinimumSize(solucao.getMaiorNomeMaquina()+(24*solucao.getEscala())+100,tamanho_vertical);
+    setMinimumSize(scheduling.getMaiorNomeMaquina()+(24*scheduling.getEscala())+100,tamanho_vertical);
     setWindowTitle(tr("Gráfico de Gantt"));
     setAcceptDrops(true);
 }
 
 void Widget::redraw(int data_offset){
-    QList<myLabel *> mylist = this->findChildren<myLabel*>();
-    foreach(myLabel* wut, mylist) wut->deleteLater();
+    QList<DragLabel *> mylist = this->findChildren<DragLabel*>();
+    foreach(DragLabel* wut, mylist) wut->deleteLater();
 //    QList<QObject*> mylist = this->children();
 //    foreach(QObject* wut, mylist) wut->deleteLater();
     if(data_offset == 0){
@@ -71,21 +71,21 @@ void Widget::redraw(int data_offset){
 }
 
 void Widget::redrawDate(QDate data){
-    QList<myLabel *> mylist = this->findChildren<myLabel*>();
-    foreach(myLabel* wut, mylist) wut->deleteLater();
+    QList<DragLabel *> mylist = this->findChildren<DragLabel*>();
+    foreach(DragLabel* wut, mylist) wut->deleteLater();
     data_atual = data;
     desenharTrabalhos(data_atual);
     update();
 }
 
 void Widget::redrawZoom(int newzoom){
-//    QList<myLabel *> mylist = this->findChildren<myLabel*>();
-//    foreach(myLabel* wut, mylist) wut->deleteLater();
+//    QList<DragLabel *> mylist = this->findChildren<DragLabel*>();
+//    foreach(DragLabel* wut, mylist) wut->deleteLater();
     QList<QObject*> mylist = this->children();
     foreach(QObject* wut, mylist) wut->deleteLater();
-    int nova_escala = this->solucao.getEscala()+(newzoom*5);
+    int nova_escala = this->scheduling.getEscala()+(newzoom*5);
     if(nova_escala >=15)
-        this->solucao.setEscala(nova_escala);
+        this->scheduling.setEscala(nova_escala);
     desenharTrabalhos(data_atual);
     update();
 }
@@ -110,35 +110,35 @@ void Widget::redrawIntervalEnd(int value){
 
 void Widget::desenharTrabalhos(QDate data){
     //desenharTrabalhos(QDate::currentDate().addDays(0));
-    this->escala = solucao.getEscala();
+    this->escala = scheduling.getEscala();
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, " ");
     int y = y_teto;
-    posicao_zero = MAX(this->solucao.getMaiorNomeMaquina(),50);
+    posicao_zero = MAX(this->scheduling.getMaiorNomeMaquina(),50);
     float x_inicio;
 
     QList<int> tamanhos_maquina;
     int posicao_ultimo_trabalho = 0;
     int label_pos, label_tamanho;
 
-    QList<QString> nomes_maquinas = this->solucao.getNomeMaquinas();
+    QList<QString> nomes_maquinas = this->scheduling.getNomeMaquinas();
     int iterator_nome_maquinas = 0;
     QString nome_maquina;
 
     //define data a ser desenhada
     //data_atual = data;//QDate::currentDate().addDays(1);
-    foreach (QList<cTrabalho> line, this->solucao.getTrabalhos()){
+    foreach (QList<Task> line, this->scheduling.getTrabalhos()){
         QLabel *x_label = new QLabel(nomes_maquinas.at(iterator_nome_maquinas),this);
         iterator_nome_maquinas++;
         x_label->move(LABEL_START,y);
         x_label->setMinimumHeight(size.height()+12);
         x_label->show();
-        foreach(cTrabalho trab, line){
+        foreach(Task trab, line){
             //if(trab.getDataInicio()
             //qDebug() << trab.getDataInicio().toString() << " WAT " << QDate::currentDate().toString();
 
             if(trab.getDataInicio() == data_atual){
-                x_inicio = this->solucao.getCoordTrabalho(trab);
+                x_inicio = this->scheduling.getCoordTrabalho(trab);
                 x_inicio -= intervalo_inicio;//x_inicio-(intervalo_fim-intervalo_inicio);
                 //qDebug() << QString::number(x_inicio*escala);
 
@@ -151,7 +151,7 @@ void Widget::desenharTrabalhos(QDate data){
 
                 //if(trab.getDataInicio().daysTo(datahoje) == 0){
                 if(x_inicio*escala+posicao_zero>=posicao_zero){
-                    myLabel *label = new myLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getTempoSetup());
+                    DragLabel *label = new DragLabel(trab.getTexto(),this,gerarToolTip(trab),trab.getCor(),label_tamanho,trab.getTempoSetup());
 
                     label->setTtip(gerarToolTip(trab));
                     label->setToolTip(label->getTtip());
@@ -175,10 +175,10 @@ void Widget::desenharTrabalhos(QDate data){
 }
 
 void Widget::paintEvent(QPaintEvent *event){
-    //qDebug() << "paint event =D " << QString::number(solucao.getEscala());
+    //qDebug() << "paint event =D " << QString::number(scheduling.getEscala());
 
     //alguma coisa muda valor de tamanho_vertical, necessario resetar seu valor
-    tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
+    tamanho_vertical = MAX(400,scheduling.getTrabalhos().size()*70);
 
     QPen pen_linha(Qt::lightGray, 0, Qt::SolidLine, Qt::SquareCap, Qt::RoundJoin);
     QPen pen_meiahora(Qt::lightGray, 0, Qt::DotLine, Qt::SquareCap, Qt::RoundJoin);
@@ -191,7 +191,7 @@ void Widget::paintEvent(QPaintEvent *event){
 
     QDate dia = this->data_atual;
     QString texto_dia;
-    int escala = solucao.getEscala();
+    int escala = scheduling.getEscala();
     float linha_meiahora = 0;
     float linha_45min = 0;
     float linha_15min = 0;
@@ -295,8 +295,8 @@ void Widget::dropEvent(QDropEvent *event){
 
         dataStream >> text >> tooltip >> offset >> tamanho >> r >> g >> b >> alpha >> tempo_setup >> coordenada;
 
-        myLabel *label = new myLabel(o_text,this,tooltip, QColor(r,g,b,alpha), tamanho, tempo_setup?true:false);//*escala);
-        //myLabel *label = new myLabel(o_text, this, QColor(120,200,85,200), event->mimeData()->;
+        DragLabel *label = new DragLabel(o_text,this,tooltip, QColor(r,g,b,alpha), tamanho, tempo_setup?true:false);//*escala);
+        //DragLabel *label = new DragLabel(o_text, this, QColor(120,200,85,200), event->mimeData()->;
         label->setToolTip(tooltip);
 
         /*restringe drops à coordenada y de origem, mantendo o label sempre no mesmo nível*/
@@ -320,7 +320,7 @@ void Widget::dropEvent(QDropEvent *event){
         QPoint position = event->pos();
 
         foreach (QString piece, pieces) {
-            myLabel *label = new myLabel(piece, this);
+            DragLabel *label = new DragLabel(piece, this);
             label->move(position);
             label->show();
 
@@ -333,7 +333,7 @@ void Widget::dropEvent(QDropEvent *event){
     }
 }
 
-QString Widget::gerarToolTip(cTrabalho trabalho){
+QString Widget::gerarToolTip(Task trabalho){
     //return QString("tamanho : " + QString::number(tam) + "\nmais informações");
     QString tooltip;
     tooltip = trabalho.getTexto() + "\nOrdem de produção: " + trabalho.getOrdemProducao();

@@ -4,14 +4,14 @@
 #include <QTime>
 #include <QString>
 #include <QList>
-#include "ctrabalho.h"
+#include "task.h"
 #include <QDebug>
 #include <QFontMetrics>
 #include <QDate>
 
-class Solucao{
+class Scheduling{
     public:
-    Solucao();
+    Scheduling();
 
     int get_max_x_size(){return max_x_size;}
     void set_max_x_size(int max_x_size){this->max_x_size=max_x_size;}
@@ -21,27 +21,27 @@ class Solucao{
     QList<QString> getNomeMaquinas(){return nome_maquinas;}
     void setNomeMaquinas(QList<QString> nome_maquinas){this->nome_maquinas=nome_maquinas;}
 
-    QList<QList<cTrabalho> > getTrabalhos(){return trabalhos;}
-    void setTrabalhos(QList<QList<cTrabalho> > trabalhos){this->trabalhos=trabalhos;}
+    QList<QList<Task> > getTrabalhos(){return trabalhos;}
+    void setTrabalhos(QList<QList<Task> > trabalhos){this->trabalhos=trabalhos;}
 
     int getMaiorNomeMaquina();
 
-    static Solucao GerarSolucao();
-    static Solucao SolucaoVazia();
-    static Solucao GerarSolucao2();
+    static Scheduling GerarScheduling();
+    static Scheduling SchedulingVazia();
+//    static Scheduling GerarScheduling2();
 
     //retorna a maior duração entre todos os trabalhos, utilizado para definir até onde que se deve desenhar a linha do tempo
     int getDiasDuracao();
 
     QDate getDataInicio(); //retorna a menor data dentre os trabalhos
     QDate getDataFinal(); //retorna a maior data dentre os trabalhos
-    int getDiasTrabalho(cTrabalho trabalho); //retorna offset de dias de um trabalho
-    float getCoordTrabalho(cTrabalho trabalho); //retorna coordenada x onde o trabalho deve ser desenhado
+    int getDiasTrabalho(Task trabalho); //retorna offset de dias de um trabalho
+    float getCoordTrabalho(Task trabalho); //retorna coordenada x onde o trabalho deve ser desenhado
 
-    void debugarSolucao();
+    void debugarScheduling();
 
     //getDataTrabalho necessário pra funcionalidade de rescheduling
-    //QDateTime getDataTrabalho(cTrabalho trabalho){} //retorna tempo inicial do trabalho a partir da sua coordenada
+    //QDateTime getDataTrabalho(Task trabalho){} //retorna tempo inicial do trabalho a partir da sua coordenada
 
     //QList<dataSolucao> getListaSolucao(){return lista_solucao;}
     //void setListaSolucao(QList<dataSolucao> lista_solucao){this->lista_solucao = lista_solucao;}
@@ -52,7 +52,7 @@ class Solucao{
     //variável que define a escala do gráfico
     int escala;
 
-    QList<QList<cTrabalho> > trabalhos;
+    QList<QList<Task> > trabalhos;
     QList<QString> nome_maquinas;
 
     //QList<celulaTrabalho> lista_solucao;
@@ -64,7 +64,7 @@ class Solucao{
 
 struct dataCelula{
     QDate data;
-    QList<cTrabalho> trabalhos;
+    QList<Task> trabalhos;
 };
 
 struct celulaTrabalho{

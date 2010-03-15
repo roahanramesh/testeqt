@@ -13,10 +13,11 @@ class layoutWidget : public QWidget
 {
     Q_OBJECT
     public:
-        layoutWidget(Solucao so = Solucao::SolucaoVazia(), QWidget *parent = 0);
+        layoutWidget(Scheduling so = Scheduling::SchedulingVazia(), QWidget *parent = 0);
     public slots:
         //void updateDateEdit(QString date){d_edit->setDate(QDate::fromString(date));}
         void updateDateEdit(int num);
+        void updateDateEditToday();
     private:
         QDateEdit *d_edit;
         Widget *w;

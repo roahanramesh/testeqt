@@ -8,10 +8,10 @@ SOURCES += main.cpp \
     mylabel.cpp \
     layoutwidget.cpp \
     solucao.cpp \
-    ctrabalho.cpp
+    task.cpp
 HEADERS += widget.h \
     mylabel.h \
     layoutwidget.h \
     solucao.h \
-    ctrabalho.h
+    task.h
 FORMS += widget.ui

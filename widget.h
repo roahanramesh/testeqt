@@ -4,7 +4,7 @@
 #include <QtGui/QWidget>
 #include <QList>
 #include "solucao.h"
-#include "ctrabalho.h"
+#include "task.h"
 #include "mylabel.h"
 #include <QDate>
 
@@ -22,7 +22,7 @@ class Widget : public QWidget
 
     Q_OBJECT
 public:
-    Widget(Solucao solucao = Solucao::SolucaoVazia(),QWidget *parent = 0);
+    Widget(Scheduling scheduling = Scheduling::SchedulingVazia(),QWidget *parent = 0);
     void desenharTrabalhos(QDate data);
     int getIntervaloInicio(){return intervalo_inicio;}
     int getIntervaloFim(){return intervalo_fim;}
@@ -45,8 +45,8 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 private:
-    QString Widget::gerarToolTip(cTrabalho trabalho);
-    Solucao solucao;
+    QString Widget::gerarToolTip(Task trabalho);
+    Scheduling scheduling;
     int tamanho_vertical; //definido pelo construtor
     int tamanho_horizontal;
     int y_teto; //define distância entre topo do widget e o desenho do gráfico. é relativo às barras
