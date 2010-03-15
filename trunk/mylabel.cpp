@@ -55,7 +55,7 @@ void myLabel::mousePressEvent(QMouseEvent *event)
 //    if(this->tempo_setup){         //desabilita ação de drag para labels que representarem tempo_setup de maquina
 //        //return;
 //    }
-    qDebug() << "mousePressEvent called";
+//    qDebug() << "mousePressEvent called";
     dragstart = event->pos();
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);

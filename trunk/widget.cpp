@@ -55,10 +55,12 @@ void Widget::redraw(int data_offset){
     foreach(myLabel* wut, mylist) wut->deleteLater();
 //    QList<QObject*> mylist = this->children();
 //    foreach(QObject* wut, mylist) wut->deleteLater();
-    if(data_offset == 0)
+    if(data_offset == 0){
         data_atual = QDate::currentDate();
-    else
+    } else {
+    //qDebug() << data_atual.toString();
         data_atual = data_atual.addDays(data_offset);
+    }
 
     desenharTrabalhos(data_atual);
     update();
@@ -112,7 +114,7 @@ void Widget::desenharTrabalhos(QDate data){
         x_label->show();
         foreach(cTrabalho trab, line){
             //if(trab.getDataInicio()
-            //qDebug() << trab.getDataInicio().toString() << " wat " << QDate::currentDate().toString();
+            //qDebug() << trab.getDataInicio().toString() << " WAT " << QDate::currentDate().toString();
 
             if(trab.getDataInicio() == data_atual){
                 x_inicio = this->solucao.getCoordTrabalho(trab);
@@ -149,7 +151,7 @@ void Widget::desenharTrabalhos(QDate data){
 }
 
 void Widget::paintEvent(QPaintEvent *event){
-    qDebug() << "paint event =D " << QString::number(solucao.getEscala());
+    //qDebug() << "paint event =D " << QString::number(solucao.getEscala());
     //alguma coisa muda valor de tamanho_vertical, necessario resetar seu valor
     tamanho_vertical = MAX(400,solucao.getTrabalhos().size()*70);
 
