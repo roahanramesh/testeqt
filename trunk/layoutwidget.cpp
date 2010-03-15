@@ -79,12 +79,13 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     connect(set_hoje,SIGNAL(clicked()),sm_date,SLOT(map()));
     connect(sm_date,SIGNAL(mapped(int)),w,SLOT(redraw(int)));
 
-//    QSignalMapper *update_calendardate = new QSignalMapper();
-//    update_calendardate->setMapping(date_previous,-1);
-//    update_calendardate->setMapping(date_next,1);
-//    connect(date_previous,SIGNAL(clicked()),update_calendardate,SLOT(map()));
-//    connect(date_next,SIGNAL(clicked()),update_calendardate,SLOT(map()));
-    //connect(update_calendardate,SIGNAL(mapped(int)),this,SLOT(updateDateEdit(int)));
+    QSignalMapper *update_calendardate = new QSignalMapper();
+    update_calendardate->setMapping(date_previous,-1);
+    update_calendardate->setMapping(date_next,1);
+    connect(date_previous,SIGNAL(clicked()),update_calendardate,SLOT(map()));
+    connect(date_next,SIGNAL(clicked()),update_calendardate,SLOT(map()));
+    connect(update_calendardate,SIGNAL(mapped(int)),this,SLOT(updateDateEdit(int)));
+    //connect(update_calendardate,SIGNAL(mapped(QString)),this,SLOT(updateDateEdit(QString)));
     //connect(sm_date,SIGNAL(mapped(int)),this,SLOT(updateDateEdit(int)));
 
     QSignalMapper *sm_zoom = new QSignalMapper();
@@ -94,18 +95,13 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
     connect(zoom_minus,SIGNAL(clicked()),sm_zoom,SLOT(map()));
     connect(sm_zoom,SIGNAL(mapped(int)),w,SLOT(redrawZoom(int)));
 
-    QSignalMapper *sm_date_edit_update = new QSignalMapper();
+//    QSignalMapper *sm_date_edit_update = new QSignalMapper();
     /*
       * ARRUMAR OS BUGS DAQUI
       */
-//    sm_date_edit_update->setMapping(date_previous,w->getDataAtual().addDays(-1).toString());
-//    sm_date_edit_update->setMapping(date_next,w->getDataAtual().addDays(1).toString());
-//    connect(date_previous,SIGNAL(clicked()),sm_date_edit_update,SLOT(map()));
+//    sm_date_edit_update->setMapping(date_next,w->getDataAtual().toString());
 //    connect(date_next,SIGNAL(clicked()),sm_date_edit_update,SLOT(map()));
-//    connect(sm_date_edit_update,SIGNAL(mapped(QString)),this,SLOT(updateDateEdit(QString)));
-    sm_date_edit_update->setMapping(date_next,w->getDataAtual().toString());
-    connect(date_next,SIGNAL(clicked()),sm_date_edit_update,SLOT(map()));
-    connect(sm_date_edit_update,SIGNAL(mapped(QString)),this,SLOT(updateDateEdit(QString)));
+//    connect(sm_date_edit_update,SIGNAL(mapped(int)),this,SLOT(updateDateEdit(int)));
 
     //connect(date_next,SIGNAL(clicked()),d_edit,SLOT());
 
@@ -117,5 +113,7 @@ layoutWidget::layoutWidget(Solucao solucao, QWidget *parent) : QWidget(parent){
 }
 
 void layoutWidget::updateDateEdit(int num){
-    d_edit->setDate(w->getDataAtual().addDays(num));
+    //qDebug() << "updateDateEdit called";
+    //d_edit->setDate(w->getDataAtual().addDays(num));
+    d_edit->setDate(w->getDataAtual());
 }
