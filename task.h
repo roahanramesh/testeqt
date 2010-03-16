@@ -14,7 +14,9 @@ class Task{
         Task();
 
         QDateTime getInicio(){return t_inicio;}
+        void setInicio(QDateTime t_inicio){this->t_inicio=t_inicio;}
         QDateTime getFim(){return t_fim;}
+        void setFim(QDateTime t_fim){this->t_fim=t_fim;}
 
         QString getOrdemProducao(){return ordem_producao;}
         void setOrdemProducao(QString op){ordem_producao = op;}
@@ -36,6 +38,8 @@ class Task{
         bool getTempoSetup(){return tempo_setup;} //TRUE se for tempo de setup ao invés de trabalho
         void setTempoSetup(bool tempo_setup){this->tempo_setup=tempo_setup;}
         float getTamanho();
+        float getPosicao(){return posicao;}
+        void setPosicao(float posicao){this->posicao=posicao;}
 
         QColor getCor(){return cor;}
         void setCor(QColor cor){this->cor=cor;}
@@ -46,11 +50,63 @@ class Task{
     private:
         bool tempo_setup;
         float posicao;
-        int maquina;
+        //int maquina;
         QDateTime t_inicio;
         QDateTime t_fim;
         QColor cor;
         QString texto, ordem_producao, produto, acabamento, material_base, qtd_pecas, pilha;
 };
+
+//QDataStream &operator<<(QDataStream &stream, Task &task){
+//    stream << task.getTempoSetup();
+//    stream << task.getPosicao();
+//    stream << task.getDataInicio();
+//    stream << task.getDataFim();
+//    stream << task.getCor();
+//    stream << task.getTexto();
+//    stream << task.getOrdemProducao();
+//    stream << task.getProduto();
+//    stream << task.getAcabamento();
+//    stream << task.getMaterialBase();
+//    stream << task.getQtdPecas();
+//    stream << task.getPilha();
+//    return stream;
+//    //stream << task.maquina
+//}
+//
+//QDataStream &operator>>(QDataStream &stream, Task &task){
+//    bool tempo_setup;
+//    stream >> tempo_setup;
+//    task.setTempoSetup(tempo_setup);
+//    float posicao;
+//    stream >> posicao;
+//    task.setPosicao(posicao);
+//    QDateTime data;
+//    stream >> data;
+//    task.setInicio(data);
+//    stream >> data;
+//    task.setFim(data);
+//    QColor cor;
+//    stream >> cor;
+//    task.setCor(cor);
+//    QString aux;
+//    stream >> aux;
+//    task.setText(aux);
+//    stream >> aux;
+//    task.setOrdemProducao(aux);
+//    stream >> aux;
+//    task.setProduto(aux);
+//    stream >> aux;
+//    task.setAcabamento(aux);
+//    stream >> aux;
+//    task.setMaterialBase(aux);
+//    stream >> aux;
+//    task.setQtdPecas(aux);
+//    stream >> aux;
+//    task.setPilha(aux);
+//    return stream;
+//    //return task;
+////QString texto, ordem_producao, produto, acabamento, material_base, qtd_pecas, pilha;
+//}
 
 #endif // TASK_H

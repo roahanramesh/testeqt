@@ -34,34 +34,23 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
 
 
     set_hoje = new QPushButton("hoje");
-    //navegacao->addWidget(set_hoje,0,0);
-    //navegacao->addWidget(set_hoje);
     date_layout->addWidget(set_hoje);
+    //set_hoje->resize(50,25);
     set_hoje->show();
 
+    qDebug() << set_hoje->size();
+
     date_previous = new QPushButton("anterior");
-    //navegacao->addWidget(date_previous,3,2);
-    //button_layout->addWidget(date_previous);
-    //navegacao->addWidget(date_previous,0,1);
-    //navegacao->addWidget(date_previous);
     date_layout->addWidget(date_previous);
     date_previous->show();
 
-    //CustomDateEdit *d_edit = new CustomDateEdit();
-    //d_edit = new CustomDateEdit();
     d_edit = new QDateEdit();
-    //navegacao->addWidget(d_edit,0,2);
-    //navegacao->addWidget(d_edit);
     date_layout->addWidget(d_edit);
     d_edit->setDate(w->getDataAtual());
     d_edit->setCalendarPopup(true);
     d_edit->show();
 
     date_next = new QPushButton("próximo");
-    //navegacao->addWidget(date_next,3,2);
-    //button_layout->addWidget(date_next);
-    //navegacao->addWidget(date_next,0,3);
-    //navegacao->addWidget(date_next);
     date_layout->addWidget(date_next);
     date_next->show();
 
