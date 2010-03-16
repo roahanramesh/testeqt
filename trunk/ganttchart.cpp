@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QPen>
 #include <QFont>
+#include <QTime>
 
 //coordenada x onde se inicia o desenho do grafico
 //#define GANTT_START 100
@@ -300,6 +301,18 @@ void GanttChart::dropEvent(QDropEvent *event){
         QPoint pos = event->pos() - offset;
         pos.setY(coordenada.y());
         if(pos.x()<posicao_zero){ pos.setX(posicao_zero); }
+
+        /*
+          * SNIPPET PRA ACHAR A HORA DO DROP
+          */
+        //qDebug() << "hora: " << ((float)(pos.x()-posicao_zero)/escala)+intervalo_inicio;  // <==== formula pra achar a hora da posição do drop
+        float hora_float = ((float)(pos.x()-posicao_zero)/escala)+intervalo_inicio;
+        int hora_int = (int)hora_float;
+        float minutos = hora_float - hora_int;
+        QTime novotempo = QTime(hora_int,minutos*60);
+        //qDebug() << hora_float << hora_int << minutos*60;
+        qDebug() << novotempo;
+
         label->move(pos);
         label->setCoordenada(pos);
         //label->move(event->pos() - offset);

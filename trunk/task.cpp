@@ -12,7 +12,7 @@ Task::Task(QTime inicio, QTime fim, QDate d_inicio, QDate d_fim, QString coisa, 
     this->t_inicio = QDateTime(d_inicio,inicio);
     this->t_fim = QDateTime(d_fim,fim);
     this->posicao = 0;
-    this->maquina = 0;
+    //this->maquina = 0;
 }
 
 float Task::getTamanho(){
