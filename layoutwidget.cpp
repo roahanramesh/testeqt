@@ -22,7 +22,7 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     //QGridLayout *navegacao = new QGridLayout();
     QHBoxLayout *navegacao = new QHBoxLayout();
     
-    w = new Widget(scheduling);
+    w = new GanttChart(scheduling);
     scroll->setWidget(w);
     scroll->setBackgroundRole(QPalette::Light);
 
