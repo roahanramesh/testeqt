@@ -3,8 +3,8 @@
 #define LAYOUTWIDGET_H
 
 #include <QWidget>
-#include "widget.h"
-#include "solucao.h"
+#include "ganttchart.h"
+#include "scheduling.h"
 #include <QDateEdit>
 #include <QPushButton>
 #include <QSpinBox>
@@ -20,7 +20,7 @@ class layoutWidget : public QWidget
         void updateDateEditToday();
     private:
         QDateEdit *d_edit;
-        Widget *w;
+        GanttChart *w;
         QPushButton *set_hoje;
         QPushButton *date_previous;
         QPushButton *date_next;

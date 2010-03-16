@@ -1,8 +1,8 @@
 #include <QtGui/QApplication>
 #include "layoutwidget.h"
 #include <QScrollArea>
-#include "widget.h"
-#include "solucao.h"
+#include "ganttchart.h"
+#include "scheduling.h"
 
 //http://doc.trolltech.com/4.6/draganddrop-fridgemagnets.html
 

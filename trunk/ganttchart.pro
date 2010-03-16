@@ -4,14 +4,14 @@
 TARGET = ganttchart
 TEMPLATE = app
 SOURCES += main.cpp \
-    widget.cpp \
-    mylabel.cpp \
     layoutwidget.cpp \
-    solucao.cpp \
-    task.cpp
-HEADERS += widget.h \
-    mylabel.h \
-    layoutwidget.h \
-    solucao.h \
-    task.h
-FORMS += widget.ui
+    task.cpp \
+    scheduling.cpp \
+    draglabel.cpp \
+    ganttchart.cpp
+HEADERS += layoutwidget.h \
+    task.h \
+    scheduling.h \
+    draglabel.h \
+    ganttchart.h
+FORMS += 
