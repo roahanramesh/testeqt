@@ -18,7 +18,9 @@ class layoutWidget : public QWidget
         //void updateDateEdit(QString date){d_edit->setDate(QDate::fromString(date));}
         void updateDateEdit(int num);
         void updateDateEditToday();
+        void updateIntervalRange();
     private:
+        Scheduling scheduling;
         QDateEdit *d_edit;
         GanttChart *w;
         QPushButton *set_hoje;
