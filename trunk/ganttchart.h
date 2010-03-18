@@ -22,10 +22,14 @@ class GanttChart : public QWidget
 
     Q_OBJECT
 public:
-    GanttChart(Scheduling scheduling = Scheduling::SchedulingVazia(),QWidget *parent = 0);
+    GanttChart(Scheduling *scheduling,QWidget *parent = 0);
     void desenharTasks(QDate data);
     int getIntervaloInicio(){return intervalo_inicio;}
+    void setIntervaloInicio(int num){this->intervalo_inicio=num;}
     int getIntervaloFim(){return intervalo_fim;}
+    void setIntervaloFim(int num){this->intervalo_fim=num;}
+
+//    GanttChart get
 
     QDate getDataAtual(){return data_atual;}
     //~GanttChart();
@@ -36,6 +40,8 @@ public slots:
     void redrawDate(QDate data);
     void redrawIntervalBegin(int value);
     void redrawIntervalEnd(int value);
+
+//    void resetSize();
 //    void desenhaLinhas();
 
 protected:
@@ -45,9 +51,10 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 private:
+    void resetSize();
     QString GanttChart::gerarToolTip(Task trabalho);
-    Scheduling scheduling;
-    int tamanho_vertical; //definido pelo construtor
+    Scheduling *scheduling;
+    int tamanho_vertical; //definido pelo construtor, normalmente não deve variar durante execução
     int tamanho_horizontal;
     int y_teto; //define distância entre topo do widget e o desenho do gráfico. é relativo às barras
     int escala;
@@ -57,7 +64,7 @@ private:
     QDate data_atual; //data atual do programa, utilizado como referência pra mostrar para o usuário
     QDate data_inicio;
     QDate data_fim;
-    int dias;
+    //int dias;
     int intervalo_inicio;
     int intervalo_fim;
 

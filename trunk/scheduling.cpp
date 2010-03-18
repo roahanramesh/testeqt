@@ -72,7 +72,7 @@ Scheduling Scheduling::GerarScheduling(){
     Task t1_2(QTime(9,0), QTime(9,50),QDate::currentDate(),QDate::currentDate(),"t1_2",cor_task);
     Task t1_3(QTime(10,0), QTime(11,25),QDate::currentDate(),QDate::currentDate(),"t1_3",cor_task);
     Task t1_4(QTime(13,0), QTime(15,0),QDate::currentDate(),QDate::currentDate(),"t1_4",cor_task);
-    Task t1_5(QTime(15,20), QTime(17,55),QDate::currentDate(),QDate::currentDate(),"t1_5",cor_task);
+    Task t1_5(QTime(15,20), QTime(21,0),QDate::currentDate(),QDate::currentDate(),"t1_5",cor_task);
 //
     Task t2_0(QTime(6,0), QTime(8,20),QDate::currentDate(),QDate::currentDate(),"t2_0",cor_task);
     Task t2_1(QTime(8,30), QTime(9,20),QDate::currentDate(),QDate::currentDate(),"t2_1",cor_task);
@@ -166,13 +166,13 @@ Scheduling Scheduling::GerarScheduling(){
     return scheduling;
 }
 
-int Scheduling::getDiasDuracao(){
-    int maior = 0;
-    foreach(QList<Task> celula_trabalho, tasks){
-        maior = MAX(celula_trabalho.first().getDataInicio().daysTo(celula_trabalho.last().getDataFim()),maior);
-    }
-    return maior;
-}
+//int Scheduling::getDiasDuracao(){
+//    int maior = 0;
+//    foreach(QList<Task> celula_trabalho, tasks){
+//        maior = MAX(celula_trabalho.first().getDataInicio().daysTo(celula_trabalho.last().getDataFim()),maior);
+//    }
+//    return maior;
+//}
 
 QDate Scheduling::getDataInicio(){
     QList<QDate> lista_data;
@@ -193,6 +193,37 @@ QDate Scheduling::getDataInicio(){
         }
     }
     return menor_data;
+}
+
+QTime Scheduling::getHoraInicio(QDate dia){
+    QList<QTime> lista_hora;
+    QTime menor_hora = QTime(23,59,59);//QTime(24,0);
+    //qDebug() << "wat" << menor_hora;
+    foreach(QList<Task> celula_trabalho, tasks){
+        foreach(Task task, celula_trabalho){
+            //qDebug() << task.getTexto() << dia;
+            if(task.getDataInicio() == dia)
+                //qDebug() << "WUT";
+                if(menor_hora > task.getInicio().time())
+                    menor_hora = task.getInicio().time();
+        }
+    }
+    return menor_hora;
+}
+
+QTime Scheduling::getHoraFinal(QDate dia){
+    QList<QTime> lista_hora;
+    QTime maior_hora = QTime(0,0,0);
+    foreach(QList<Task> celula_trabalho, tasks){
+        foreach(Task task, celula_trabalho){
+            if(task.getDataFim() == dia)
+                if(maior_hora < task.getFim().time())
+                    maior_hora = task.getFim().time();
+        }
+    }
+    //qDebug() << (QTime(0,0,0) < QTime(23,0,0));
+    //qDebug() << "gethorafinal " << maior_hora;
+    return maior_hora;
 }
 
 int Scheduling::getDiasTask(Task task){
@@ -240,10 +271,21 @@ int Scheduling::getMaiorNomeCelulaTrabalho(){
     return maior+15;
 }
 
-void Scheduling::debugarScheduling(){
-    foreach(QList<Task> celula_trabalho, tasks){
-        foreach(Task task, celula_trabalho){
-            qDebug() << task.getTexto();
+bool Scheduling::isDiaVazio(QDate dia){
+    bool vazio = true;
+    foreach(QList<Task> tasklist, tasks){
+        foreach(Task task, tasklist){
+            if(task.getDataInicio() == dia)
+                vazio = false;
         }
     }
+    return vazio;
 }
+
+//void Scheduling::debugarScheduling(){
+//    foreach(QList<Task> celula_trabalho, tasks){
+//        foreach(Task task, celula_trabalho){
+//            qDebug() << task.getTexto();
+//        }
+//    }
+//}

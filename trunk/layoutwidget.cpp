@@ -21,8 +21,10 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     QWidget *upper_field = new QWidget();
     //QGridLayout *navegacao = new QGridLayout();
     QHBoxLayout *navegacao = new QHBoxLayout();
+    navegacao->addStretch(1);
     
-    w = new GanttChart(scheduling);
+    this->scheduling = scheduling;
+    w = new GanttChart(&(this->scheduling));
     scroll->setWidget(w);
     scroll->setBackgroundRole(QPalette::Light);
 
@@ -32,13 +34,18 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     QGroupBox *date = new QGroupBox("data");
     QHBoxLayout *date_layout = new QHBoxLayout();
 
+//    QPushButton *setsize = new QPushButton("WAT");
+//    date_layout->addWidget(setsize);
+//    setsize->show();
+//
+//    connect(setsize,SIGNAL(clicked()),w,SLOT(resetSize()));
 
     set_hoje = new QPushButton("hoje");
     date_layout->addWidget(set_hoje);
     //set_hoje->resize(50,25);
     set_hoje->show();
 
-    qDebug() << set_hoje->size();
+    //qDebug() << set_hoje->size();
 
     date_previous = new QPushButton("anterior");
     date_layout->addWidget(date_previous);
@@ -86,8 +93,11 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     //navegacao->addWidget(interval_begin,0,5);
     //navegacao->addWidget(interval_begin);
     interval_layout->addWidget(interval_begin);
-    interval_begin->setRange(0,24);
-    interval_begin->setValue(w->getIntervaloInicio());
+    //interval_begin->setRange(0,24);
+    interval_begin->setRange(0,scheduling.getHoraInicio(w->getDataAtual()).hour());
+    //interval_begin->setValue(w->getIntervaloInicio());
+    interval_begin->setValue(scheduling.getHoraInicio(w->getDataAtual()).hour());
+    w->setIntervaloInicio(scheduling.getHoraInicio(w->getDataAtual()).hour());
     interval_begin->show();
 
     interval_layout->addWidget(new QLabel("fim"));
@@ -96,8 +106,11 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     //navegacao->addWidget(interval_end,0,6);
     //navegacao->addWidget(interval_end);
     interval_layout->addWidget(interval_end);
-    interval_end->setRange(0,24);
-    interval_end->setValue(w->getIntervaloFim());
+    //interval_end->setRange(0,24);
+    interval_end->setRange(scheduling.getHoraFinal(w->getDataAtual()).hour(),24);
+    //interval_end->setValue(w->getIntervaloFim());
+    interval_end->setValue(scheduling.getHoraFinal(w->getDataAtual()).hour());
+    w->setIntervaloFim(scheduling.getHoraFinal(w->getDataAtual()).hour());
     interval_end->show();
 
     interval->setLayout(interval_layout);
@@ -125,9 +138,14 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     connect(date_next,SIGNAL(clicked()),sm_date,SLOT(map()));
     connect(set_hoje,SIGNAL(clicked()),sm_date,SLOT(map()));
     connect(sm_date,SIGNAL(mapped(int)),w,SLOT(redraw(int)));
+    //atualiza faixa de valores permitidos nos spinboxes de ajuste do intervalo exibido
+    connect(date_previous,SIGNAL(clicked()),this,SLOT(updateIntervalRange()));
+    connect(date_next,SIGNAL(clicked()),this,SLOT(updateIntervalRange()));
 
     //botao 'hoje' atualiza d_edit
     connect(set_hoje,SIGNAL(clicked()),this,SLOT(updateDateEditToday()));
+    //botao 'hoje' atualiza intervalo dos spinboxes
+    connect(set_hoje,SIGNAL(clicked()),this,SLOT(updateIntervalRange()));
 
     QSignalMapper *update_calendardate = new QSignalMapper();
     update_calendardate->setMapping(date_previous,-1);
@@ -145,21 +163,22 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     connect(zoom_minus,SIGNAL(clicked()),sm_zoom,SLOT(map()));
     connect(sm_zoom,SIGNAL(mapped(int)),w,SLOT(redrawZoom(int)));
 
-//    QSignalMapper *sm_date_edit_update = new QSignalMapper();
-    /*
-      * ARRUMAR OS BUGS DAQUI
-      */
-//    sm_date_edit_update->setMapping(date_next,w->getDataAtual().toString());
-//    connect(date_next,SIGNAL(clicked()),sm_date_edit_update,SLOT(map()));
-//    connect(sm_date_edit_update,SIGNAL(mapped(int)),this,SLOT(updateDateEdit(int)));
-
-    //connect(date_next,SIGNAL(clicked()),d_edit,SLOT());
-
     //selecionar data pelo popup do calendário muda data exibida
     connect(d_edit,SIGNAL(dateChanged(QDate)),w,SLOT(redrawDate(QDate)));
+    connect(d_edit,SIGNAL(dateChanged(QDate)),this,SLOT(updateIntervalRange()));
 
     //connect(date_next,SIGNAL(clicked()),d_edit,SLOT(setDate(QDate::currentDate())));
     //connect(sm,SIGNAL(mapped(int)),w,SLOT(hide()));
+}
+
+void layoutWidget::updateIntervalRange(){
+    //interval_begin->setRange(0,hora.hour());
+    interval_begin->setRange(0,scheduling.getHoraInicio(w->getDataAtual()).hour());
+    interval_begin->setValue(scheduling.getHoraInicio(w->getDataAtual()).hour());
+    interval_end->setRange(scheduling.getHoraFinal(w->getDataAtual()).hour(),24);
+    interval_end->setValue(scheduling.getHoraFinal(w->getDataAtual()).hour());
+//    w->setIntervaloFim(scheduling.getHoraFinal(w->getDataAtual()).hour());
+//    w->setIntervaloInicio(scheduling.getHoraInicio(w->getDataAtual()).hour());
 }
 
 void layoutWidget::updateDateEdit(int num){
