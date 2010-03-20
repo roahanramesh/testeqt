@@ -61,60 +61,82 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >AIDASTART=D:\Tool\Common\AIDA2\.system_tools\services\aidastart.exe</value>
-    <value type="QString" >AIDASTARTOPT=/X</value>
-    <value type="QString" >ALLUSERSPROFILE=C:\ProgramData</value>
-    <value type="QString" >APPDATA=C:\Users\Lie\AppData\Roaming</value>
-    <value type="QString" >CLASSPATH=.;C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString" >COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString" >COMPUTERNAME=WS80</value>
-    <value type="QString" >COMSPEC=C:\Windows\system32\cmd.exe</value>
-    <value type="QString" >CYGWIN=tty</value>
-    <value type="QString" >DFSTRACINGON=FALSE</value>
-    <value type="QString" >FALCON_BIN_PATH=C:\Program Files\Falcon\bin</value>
-    <value type="QString" >FALCON_INC_PATH=C:\Program Files\Falcon\include</value>
-    <value type="QString" >FALCON_LIB_PATH=C:\Program Files\Falcon\lib</value>
-    <value type="QString" >FALCON_LOAD_PATH=.;C:\Program Files\Falcon\bin</value>
-    <value type="QString" >FP_NO_HOST_CHECK=NO</value>
-    <value type="QString" >HOMEDRIVE=C:</value>
-    <value type="QString" >HOMEPATH=\Users\Lie</value>
-    <value type="QString" >JMF_HOME=D:\Tool\Common\AIDA2\Java\jmf2.1.1a</value>
-    <value type="QString" >LOCALAPPDATA=C:\Users\Lie\AppData\Local</value>
-    <value type="QString" >LOGONSERVER=\\WS80</value>
-    <value type="QString" >NUMBER_OF_PROCESSORS=2</value>
-    <value type="QString" >OS=Windows_NT</value>
-    <value type="QString" >PATH=C:\Qt\2009.03\mingw\bin;C:\Qt\2009.03\qt\bin;C:\Python26\Lib\site-packages\PyQt4;C:\Python26\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Program Files\Intel\DMIX;C:\Program Files\Common Files\Roxio Shared\10.0\DLLShared\;C:\Program Files\TortoiseSVN\bin;C:\Users\Mateus\ctags57;C:\Program Files\Vim\vim72;C:\Program Files\Falcon\bin;C:\Program Files\Java\jdk1.6.0_11\bin;C:\Program Files\Pinnacle\Shared Files\;C:\Program Files\Git\cmd;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\TortoiseGit\bin;;</value>
-    <value type="QString" >PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.py;.pyw</value>
-    <value type="QString" >PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString" >PROCESSOR_IDENTIFIER=x86 Family 6 Model 15 Stepping 13, GenuineIntel</value>
-    <value type="QString" >PROCESSOR_LEVEL=6</value>
-    <value type="QString" >PROCESSOR_REVISION=0f0d</value>
-    <value type="QString" >PROGRAMDATA=C:\ProgramData</value>
-    <value type="QString" >PROGRAMFILES=C:\Program Files</value>
-    <value type="QString" >PUBLIC=C:\Users\Public</value>
-    <value type="QString" >QTDIR=C:/Qt/2009.03/qt</value>
-    <value type="QString" >QTJAVA=C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString" >SESSIONNAME=Console</value>
-    <value type="QString" >SYSTEMDRIVE=C:</value>
-    <value type="QString" >SYSTEMROOT=C:\Windows</value>
-    <value type="QString" >TEMP=C:\Users\Lie\AppData\Local\Temp</value>
-    <value type="QString" >TMP=C:\Users\Lie\AppData\Local\Temp</value>
-    <value type="QString" >TRACE_FORMAT_SEARCH_PATH=\\NTREL202.ntdev.corp.microsoft.com\4F18C3A5-CA09-4DBD-B6FC-219FDD4C6BE0\TraceFormat</value>
-    <value type="QString" >USERDOMAIN=WS80</value>
-    <value type="QString" >USERNAME=Lie</value>
-    <value type="QString" >USERPROFILE=C:\Users\Lie</value>
-    <value type="QString" >VISUALSVN_SERVER=C:\Program Files\VisualSVN Server\</value>
-    <value type="QString" >WINDIR=C:\Windows</value>
+    <value type="QString" >CPLUS_INCLUDE_PATH=/usr/lib/qt/include</value>
+    <value type="QString" >DESKTOP_STARTUP_ID=</value>
+    <value type="QString" >DISPLAY=:0.0</value>
+    <value type="QString" >GDK_USE_XFT=1</value>
+    <value type="QString" >G_BROKEN_FILENAMES=1</value>
+    <value type="QString" >HOME=/home/lwlun</value>
+    <value type="QString" >HOSTNAME=skynet.cyberdyne</value>
+    <value type="QString" >HUSHLOGIN=FALSE</value>
+    <value type="QString" >HZ=100</value>
+    <value type="QString" >INPUTRC=/etc/inputrc</value>
+    <value type="QString" >JAVA_HOME=/usr/lib/java</value>
+    <value type="QString" >KDEDIRS=/usr</value>
+    <value type="QString" >LANG=en_US</value>
+    <value type="QString" >LC_COLLATE=C</value>
+    <value type="QString" >LD_PRELOAD=/usr/lib/libv4l/v4l1compat.so /usr/lib/libv4l/v4l2convert.so</value>
+    <value type="QString" >LESS=-M</value>
+    <value type="QString" >LESSOPEN=|lesspipe.sh %s</value>
+    <value type="QString" >LOGNAME=lwlun</value>
+    <value type="QString" >LS_COLORS=no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.bat=01;32:*.BAT=01;32:*.btm=01;32:*.BTM=01;32:*.cmd=01;32:*.CMD=01;32:*.com=01;32:*.COM=01;32:*.dll=01;32:*.DLL=01;32:*.exe=01;32:*.EXE=01;32:*.7z=01;31:*.ace=01;31:*.arj=01;31:*.bz2=01;31:*.cpio=01;31:*.deb=01;31:*.dz=01;31:*.gz=01;31:*.jar=01;31:*.lzh=01;31:*.lzma=01;31:*.rar=01;31:*.RAR=01;31:*.rpm=01;31:*.rz=01;31:*.tar=01;31:*.taz=01;31:*.tb2=01;31:*.tbz2=01;31:*.tbz=01;31:*.tgz=01;31:*.tlz=01;31:*.trz=01;31:*.txz=01;31:*.tz=01;31:*.tz2=01;31:*.xz=01;31:*.z=01;31:*.Z=01;31:*.zip=01;31:*.ZIP=01;31:*.zoo=01;31:*.aac=00;35:*.anx=01;35:*.asf=01;35:*.ASF=01;35:*.au=00;35:*.axa=00;35:*.axv=01;35:*.avi=01;35:*.AVI=01;35:*.bmp=01;35:*.BMP=01;35:*.flac=01;35:*.FLAC=01;35:*.gif=01;35:*.GIF=01;35:*.jpg=01;35:*.JPG=01;35:*.jpeg=01;35:*.JPEG=01;35:*.m2a=01;35:*.M2A=01;35:*.m2v=01;35:*.M2V=01;35:*.m4a=01;35:*.M4A=01;35:*.m4p=01;35:*.M4P=01;35:*.m4v=01;35:*.M4V=01;35:*.mid=00;35:*.midi=00;35:*.mka=00;35:*.mov=01;35:*.MOV=01;35:*.mp3=01;35:*.MP3=01;35:*.mp4=01;35:*.mp4v=01;35:*.mpc=01;35:*.MPC=01;35:*.mpeg=01;35:*.MPEG=01;35:*.mpg=01;35:*.MPG=01;35:*.nuv=01;35:*.oga=00;35:*.ogv=01;35:*.ogx=01;35:*.ogg=01;35:*.OGG=01;35:*.pbm=01;35:*.pgm=01;35:*.png=01;35:*.PNG=01;35:*.ppm=01;35:*.qt=01;35:*.ra=00;35:*.ram=01;35:*.RAM=01;35:*.rm=01;35:*.RM=01;35:*.spx=00;35:*.svg=01;35:*.svgz=01;35:*.tga=01;35:*.TGA=01;35:*.tif=01;35:*.TIF=01;35:*.tiff=01;35:*.TIFF=01;35:*.vob=01;35:*.wav=01;35:*.WAV=01;35:*.wma=01;35:*.WMA=01;35:*.wmv=01;35:*.WMV=01;35:*.xbm=01;35:*.xcf=01;35:*.xpm=01;35:*.xspf=00;35:*.xwd=01;35:*.XWD=01;35:</value>
+    <value type="QString" >LS_OPTIONS= -F -b -T 0 --color=auto </value>
+    <value type="QString" >MAIL=/var/spool/mail/lwlun</value>
+    <value type="QString" >MANPATH=/usr/local/man:/usr/man:/usr/lib/java/man:/usr/share/texmf/man</value>
+    <value type="QString" >MINICOM=-c on</value>
+    <value type="QString" >OLDPWD=/media/data/projetos/qt/kde_svn</value>
+    <value type="QString" >PATH=/usr/lib/qt/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/lib/java/bin:/usr/lib/kde4/libexec:/usr/lib/qt/bin:/usr/share/texmf/bin:.</value>
+    <value type="QString" >PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig</value>
+    <value type="QString" >PWD=/media/data/projetos/qt/kde_svn/trunk</value>
+    <value type="QString" >QT4DIR=/usr/lib/qt</value>
+    <value type="QString" >QTDIR=/usr</value>
+    <value type="QString" >SHELL=/bin/bash</value>
+    <value type="QString" >SHLVL=6</value>
+    <value type="QString" >STY=5103.pts-0.skynet</value>
+    <value type="QString" >SVN_EDITOR=/usr/bin/vim</value>
+    <value type="QString" >T1LIB_CONFIG=/usr/share/t1lib/t1lib.config</value>
+    <value type="QString" >TERM=screen</value>
+    <value type="QString" >TERMCAP=SC|screen|VT 100/ANSI X3.64 virtual terminal:\
+	:DO=\E[%dB:LE=\E[%dD:RI=\E[%dC:UP=\E[%dA:bs:bt=\E[Z:\
+	:cd=\E[J:ce=\E[K:cl=\E[H\E[J:cm=\E[%i%d;%dH:ct=\E[3g:\
+	:do=^J:nd=\E[C:pt:rc=\E8:rs=\Ec:sc=\E7:st=\EH:up=\EM:\
+	:le=^H:bl=^G:cr=^M:it#8:ho=\E[H:nw=\EE:ta=^I:is=\E)0:\
+	:li#21:co#133:am:xn:xv:LP:sr=\EM:al=\E[L:AL=\E[%dL:\
+	:cs=\E[%i%d;%dr:dl=\E[M:DL=\E[%dM:dc=\E[P:DC=\E[%dP:\
+	:im=\E[4h:ei=\E[4l:mi:IC=\E[%d@:ks=\E[?1h\E=:\
+	:ke=\E[?1l\E>:vi=\E[?25l:ve=\E[34h\E[?25h:vs=\E[34l:\
+	:ti=\E[?1049h:te=\E[?1049l:us=\E[4m:ue=\E[24m:so=\E[3m:\
+	:se=\E[23m:mb=\E[5m:md=\E[1m:mr=\E[7m:me=\E[m:ms:\
+	:Co#8:pa#64:AF=\E[3%dm:AB=\E[4%dm:op=\E[39;49m:AX:\
+	:vb=\Eg:G0:as=\E(0:ae=\E(B:\
+	:ac=\140\140aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~..--++,,hhII00:\
+	:po=\E[5i:pf=\E[4i:Z0=\E[?3h:Z1=\E[?3l:k0=\E[10~:\
+	:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:k5=\E[15~:k6=\E[17~:\
+	:k7=\E[18~:k8=\E[19~:k9=\E[20~:k;=\E[21~:F1=\E[23~:\
+	:F2=\E[24~:F3=\E[1;2P:F4=\E[1;2Q:F5=\E[1;2R:F6=\E[1;2S:\
+	:F7=\E[15;2~:F8=\E[17;2~:F9=\E[18;2~:FA=\E[19;2~:kb=^H:\
+	:K2=\EOE:kB=\E[Z:kF=\E[1;2B:kR=\E[1;2A:*4=\E[3;2~:\
+	:*7=\E[1;2F:#2=\E[1;2H:#3=\E[2;2~:#4=\E[1;2D:%c=\E[6;2~:\
+	:%e=\E[5;2~:%i=\E[1;2C:kh=\E[1~:@1=\E[1~:kH=\E[4~:\
+	:@7=\E[4~:kN=\E[6~:kP=\E[5~:kI=\E[2~:kD=\E[3~:ku=\EOA:\
+	:kd=\EOB:kr=\EOC:kl=\EOD:km:</value>
+    <value type="QString" >USER=lwlun</value>
+    <value type="QString" >WINDOW=2</value>
+    <value type="QString" >WINDOWPATH=7</value>
+    <value type="QString" >XAUTHORITY=/home/lwlun/.Xauthority</value>
+    <value type="QString" >XDG_CONFIG_DIRS=/etc/xdg:/etc/kde/xdg:/etc/xfce/xdg</value>
+    <value type="QString" >_=/usr/bin/qtcreator</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
-    <value type="QString" >C:/Users/Lie/Desktop/ganttchart/ganttchart.pro</value>
+    <value type="QString" >/media/data/projetos/qt/kde_svn/trunk/ganttchart.pro</value>
     <value type="QString" >-spec</value>
-    <value type="QString" >win32-g++</value>
+    <value type="QString" >/usr/lib/qt/mkspecs/linux-g++</value>
     <value type="QString" >-r</value>
+    <value type="QString" >CONFIG+=debug</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString" >C:/Qt/2009.03/qt/bin/qmake.exe</value>
+   <value key="abstractProcess.command" type="QString" >/usr/bin/qmake</value>
    <value key="abstractProcess.enabled" type="bool" >false</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >C:/Users/Lie/Desktop/ganttchart</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >/media/data/projetos/qt/kde_svn/trunk</value>
    <value key="buildConfiguration" type="int" >2</value>
   </valuemap>
  </data>
@@ -123,57 +145,78 @@
   <valuemap type="QVariantMap" >
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
-    <value type="QString" >AIDASTART=D:\Tool\Common\AIDA2\.system_tools\services\aidastart.exe</value>
-    <value type="QString" >AIDASTARTOPT=/X</value>
-    <value type="QString" >ALLUSERSPROFILE=C:\ProgramData</value>
-    <value type="QString" >APPDATA=C:\Users\Lie\AppData\Roaming</value>
-    <value type="QString" >CLASSPATH=.;C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString" >COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString" >COMPUTERNAME=WS80</value>
-    <value type="QString" >COMSPEC=C:\Windows\system32\cmd.exe</value>
-    <value type="QString" >CYGWIN=tty</value>
-    <value type="QString" >DFSTRACINGON=FALSE</value>
-    <value type="QString" >FALCON_BIN_PATH=C:\Program Files\Falcon\bin</value>
-    <value type="QString" >FALCON_INC_PATH=C:\Program Files\Falcon\include</value>
-    <value type="QString" >FALCON_LIB_PATH=C:\Program Files\Falcon\lib</value>
-    <value type="QString" >FALCON_LOAD_PATH=.;C:\Program Files\Falcon\bin</value>
-    <value type="QString" >FP_NO_HOST_CHECK=NO</value>
-    <value type="QString" >HOMEDRIVE=C:</value>
-    <value type="QString" >HOMEPATH=\Users\Lie</value>
-    <value type="QString" >JMF_HOME=D:\Tool\Common\AIDA2\Java\jmf2.1.1a</value>
-    <value type="QString" >LOCALAPPDATA=C:\Users\Lie\AppData\Local</value>
-    <value type="QString" >LOGONSERVER=\\WS80</value>
-    <value type="QString" >NUMBER_OF_PROCESSORS=2</value>
-    <value type="QString" >OS=Windows_NT</value>
-    <value type="QString" >PATH=C:\Qt\2009.03\mingw\bin;C:\Qt\2009.03\qt\bin;C:\Python26\Lib\site-packages\PyQt4;C:\Python26\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Program Files\Intel\DMIX;C:\Program Files\Common Files\Roxio Shared\10.0\DLLShared\;C:\Program Files\TortoiseSVN\bin;C:\Users\Mateus\ctags57;C:\Program Files\Vim\vim72;C:\Program Files\Falcon\bin;C:\Program Files\Java\jdk1.6.0_11\bin;C:\Program Files\Pinnacle\Shared Files\;C:\Program Files\Git\cmd;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\TortoiseGit\bin;;</value>
-    <value type="QString" >PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.py;.pyw</value>
-    <value type="QString" >PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString" >PROCESSOR_IDENTIFIER=x86 Family 6 Model 15 Stepping 13, GenuineIntel</value>
-    <value type="QString" >PROCESSOR_LEVEL=6</value>
-    <value type="QString" >PROCESSOR_REVISION=0f0d</value>
-    <value type="QString" >PROGRAMDATA=C:\ProgramData</value>
-    <value type="QString" >PROGRAMFILES=C:\Program Files</value>
-    <value type="QString" >PUBLIC=C:\Users\Public</value>
-    <value type="QString" >QTDIR=C:/Qt/2009.03/qt</value>
-    <value type="QString" >QTJAVA=C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString" >SESSIONNAME=Console</value>
-    <value type="QString" >SYSTEMDRIVE=C:</value>
-    <value type="QString" >SYSTEMROOT=C:\Windows</value>
-    <value type="QString" >TEMP=C:\Users\Lie\AppData\Local\Temp</value>
-    <value type="QString" >TMP=C:\Users\Lie\AppData\Local\Temp</value>
-    <value type="QString" >TRACE_FORMAT_SEARCH_PATH=\\NTREL202.ntdev.corp.microsoft.com\4F18C3A5-CA09-4DBD-B6FC-219FDD4C6BE0\TraceFormat</value>
-    <value type="QString" >USERDOMAIN=WS80</value>
-    <value type="QString" >USERNAME=Lie</value>
-    <value type="QString" >USERPROFILE=C:\Users\Lie</value>
-    <value type="QString" >VISUALSVN_SERVER=C:\Program Files\VisualSVN Server\</value>
-    <value type="QString" >WINDIR=C:\Windows</value>
+    <value type="QString" >CPLUS_INCLUDE_PATH=/usr/lib/qt/include</value>
+    <value type="QString" >DESKTOP_STARTUP_ID=</value>
+    <value type="QString" >DISPLAY=:0.0</value>
+    <value type="QString" >GDK_USE_XFT=1</value>
+    <value type="QString" >G_BROKEN_FILENAMES=1</value>
+    <value type="QString" >HOME=/home/lwlun</value>
+    <value type="QString" >HOSTNAME=skynet.cyberdyne</value>
+    <value type="QString" >HUSHLOGIN=FALSE</value>
+    <value type="QString" >HZ=100</value>
+    <value type="QString" >INPUTRC=/etc/inputrc</value>
+    <value type="QString" >JAVA_HOME=/usr/lib/java</value>
+    <value type="QString" >KDEDIRS=/usr</value>
+    <value type="QString" >LANG=en_US</value>
+    <value type="QString" >LC_COLLATE=C</value>
+    <value type="QString" >LD_PRELOAD=/usr/lib/libv4l/v4l1compat.so /usr/lib/libv4l/v4l2convert.so</value>
+    <value type="QString" >LESS=-M</value>
+    <value type="QString" >LESSOPEN=|lesspipe.sh %s</value>
+    <value type="QString" >LOGNAME=lwlun</value>
+    <value type="QString" >LS_COLORS=no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.bat=01;32:*.BAT=01;32:*.btm=01;32:*.BTM=01;32:*.cmd=01;32:*.CMD=01;32:*.com=01;32:*.COM=01;32:*.dll=01;32:*.DLL=01;32:*.exe=01;32:*.EXE=01;32:*.7z=01;31:*.ace=01;31:*.arj=01;31:*.bz2=01;31:*.cpio=01;31:*.deb=01;31:*.dz=01;31:*.gz=01;31:*.jar=01;31:*.lzh=01;31:*.lzma=01;31:*.rar=01;31:*.RAR=01;31:*.rpm=01;31:*.rz=01;31:*.tar=01;31:*.taz=01;31:*.tb2=01;31:*.tbz2=01;31:*.tbz=01;31:*.tgz=01;31:*.tlz=01;31:*.trz=01;31:*.txz=01;31:*.tz=01;31:*.tz2=01;31:*.xz=01;31:*.z=01;31:*.Z=01;31:*.zip=01;31:*.ZIP=01;31:*.zoo=01;31:*.aac=00;35:*.anx=01;35:*.asf=01;35:*.ASF=01;35:*.au=00;35:*.axa=00;35:*.axv=01;35:*.avi=01;35:*.AVI=01;35:*.bmp=01;35:*.BMP=01;35:*.flac=01;35:*.FLAC=01;35:*.gif=01;35:*.GIF=01;35:*.jpg=01;35:*.JPG=01;35:*.jpeg=01;35:*.JPEG=01;35:*.m2a=01;35:*.M2A=01;35:*.m2v=01;35:*.M2V=01;35:*.m4a=01;35:*.M4A=01;35:*.m4p=01;35:*.M4P=01;35:*.m4v=01;35:*.M4V=01;35:*.mid=00;35:*.midi=00;35:*.mka=00;35:*.mov=01;35:*.MOV=01;35:*.mp3=01;35:*.MP3=01;35:*.mp4=01;35:*.mp4v=01;35:*.mpc=01;35:*.MPC=01;35:*.mpeg=01;35:*.MPEG=01;35:*.mpg=01;35:*.MPG=01;35:*.nuv=01;35:*.oga=00;35:*.ogv=01;35:*.ogx=01;35:*.ogg=01;35:*.OGG=01;35:*.pbm=01;35:*.pgm=01;35:*.png=01;35:*.PNG=01;35:*.ppm=01;35:*.qt=01;35:*.ra=00;35:*.ram=01;35:*.RAM=01;35:*.rm=01;35:*.RM=01;35:*.spx=00;35:*.svg=01;35:*.svgz=01;35:*.tga=01;35:*.TGA=01;35:*.tif=01;35:*.TIF=01;35:*.tiff=01;35:*.TIFF=01;35:*.vob=01;35:*.wav=01;35:*.WAV=01;35:*.wma=01;35:*.WMA=01;35:*.wmv=01;35:*.WMV=01;35:*.xbm=01;35:*.xcf=01;35:*.xpm=01;35:*.xspf=00;35:*.xwd=01;35:*.XWD=01;35:</value>
+    <value type="QString" >LS_OPTIONS= -F -b -T 0 --color=auto </value>
+    <value type="QString" >MAIL=/var/spool/mail/lwlun</value>
+    <value type="QString" >MANPATH=/usr/local/man:/usr/man:/usr/lib/java/man:/usr/share/texmf/man</value>
+    <value type="QString" >MINICOM=-c on</value>
+    <value type="QString" >OLDPWD=/media/data/projetos/qt/kde_svn</value>
+    <value type="QString" >PATH=/usr/lib/qt/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/lib/java/bin:/usr/lib/kde4/libexec:/usr/lib/qt/bin:/usr/share/texmf/bin:.</value>
+    <value type="QString" >PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig</value>
+    <value type="QString" >PWD=/media/data/projetos/qt/kde_svn/trunk</value>
+    <value type="QString" >QT4DIR=/usr/lib/qt</value>
+    <value type="QString" >QTDIR=/usr</value>
+    <value type="QString" >SHELL=/bin/bash</value>
+    <value type="QString" >SHLVL=6</value>
+    <value type="QString" >STY=5103.pts-0.skynet</value>
+    <value type="QString" >SVN_EDITOR=/usr/bin/vim</value>
+    <value type="QString" >T1LIB_CONFIG=/usr/share/t1lib/t1lib.config</value>
+    <value type="QString" >TERM=screen</value>
+    <value type="QString" >TERMCAP=SC|screen|VT 100/ANSI X3.64 virtual terminal:\
+	:DO=\E[%dB:LE=\E[%dD:RI=\E[%dC:UP=\E[%dA:bs:bt=\E[Z:\
+	:cd=\E[J:ce=\E[K:cl=\E[H\E[J:cm=\E[%i%d;%dH:ct=\E[3g:\
+	:do=^J:nd=\E[C:pt:rc=\E8:rs=\Ec:sc=\E7:st=\EH:up=\EM:\
+	:le=^H:bl=^G:cr=^M:it#8:ho=\E[H:nw=\EE:ta=^I:is=\E)0:\
+	:li#21:co#133:am:xn:xv:LP:sr=\EM:al=\E[L:AL=\E[%dL:\
+	:cs=\E[%i%d;%dr:dl=\E[M:DL=\E[%dM:dc=\E[P:DC=\E[%dP:\
+	:im=\E[4h:ei=\E[4l:mi:IC=\E[%d@:ks=\E[?1h\E=:\
+	:ke=\E[?1l\E>:vi=\E[?25l:ve=\E[34h\E[?25h:vs=\E[34l:\
+	:ti=\E[?1049h:te=\E[?1049l:us=\E[4m:ue=\E[24m:so=\E[3m:\
+	:se=\E[23m:mb=\E[5m:md=\E[1m:mr=\E[7m:me=\E[m:ms:\
+	:Co#8:pa#64:AF=\E[3%dm:AB=\E[4%dm:op=\E[39;49m:AX:\
+	:vb=\Eg:G0:as=\E(0:ae=\E(B:\
+	:ac=\140\140aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~..--++,,hhII00:\
+	:po=\E[5i:pf=\E[4i:Z0=\E[?3h:Z1=\E[?3l:k0=\E[10~:\
+	:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:k5=\E[15~:k6=\E[17~:\
+	:k7=\E[18~:k8=\E[19~:k9=\E[20~:k;=\E[21~:F1=\E[23~:\
+	:F2=\E[24~:F3=\E[1;2P:F4=\E[1;2Q:F5=\E[1;2R:F6=\E[1;2S:\
+	:F7=\E[15;2~:F8=\E[17;2~:F9=\E[18;2~:FA=\E[19;2~:kb=^H:\
+	:K2=\EOE:kB=\E[Z:kF=\E[1;2B:kR=\E[1;2A:*4=\E[3;2~:\
+	:*7=\E[1;2F:#2=\E[1;2H:#3=\E[2;2~:#4=\E[1;2D:%c=\E[6;2~:\
+	:%e=\E[5;2~:%i=\E[1;2C:kh=\E[1~:@1=\E[1~:kH=\E[4~:\
+	:@7=\E[4~:kN=\E[6~:kP=\E[5~:kI=\E[2~:kD=\E[3~:ku=\EOA:\
+	:kd=\EOB:kr=\EOC:kl=\EOD:km:</value>
+    <value type="QString" >USER=lwlun</value>
+    <value type="QString" >WINDOW=2</value>
+    <value type="QString" >WINDOWPATH=7</value>
+    <value type="QString" >XAUTHORITY=/home/lwlun/.Xauthority</value>
+    <value type="QString" >XDG_CONFIG_DIRS=/etc/xdg:/etc/kde/xdg:/etc/xfce/xdg</value>
+    <value type="QString" >_=/usr/bin/qtcreator</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
     <value type="QString" >-w</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString" >C:/Qt/2009.03/mingw/bin/mingw32-make.exe</value>
+   <value key="abstractProcess.command" type="QString" >/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool" >true</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >C:/Users/Lie/Desktop/ganttchart</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >/media/data/projetos/qt/kde_svn/trunk</value>
   </valuemap>
  </data>
  <data>
