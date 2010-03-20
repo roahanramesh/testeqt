@@ -52,7 +52,7 @@ protected:
 
 private:
     void resetSize();
-    QString GanttChart::gerarToolTip(Task trabalho);
+    QString gerarToolTip(Task trabalho);
     Scheduling *scheduling;
     int tamanho_vertical; //definido pelo construtor, normalmente não deve variar durante execução
     int tamanho_horizontal;
