@@ -8,8 +8,17 @@
 #include <QDateTime>
 
 //class Task{
+
+//! Class representing a task
+/*!
+  The Task class has information about a particular class within the scheduling. It is associated to a workcell and a date/time.
+  */
 class Task{
     public:
+    //! Class constructor
+    /*!
+      Takes several arguments to construct a complete Task object.
+      */
         Task(QTime inicio, QTime fim,QDate d_inicio, QDate d_fim,QString coisa, QColor ncor = QColor(0,0,0,255),bool tempo_setup = false);
         Task();
 

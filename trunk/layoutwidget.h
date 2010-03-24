@@ -4,7 +4,7 @@
 
 #include <QWidget>
 #include "ganttchart.h"
-#include "scheduling.h"
+#include "ganttscheduling.h"
 #include <QDateEdit>
 #include <QPushButton>
 #include <QSpinBox>
@@ -13,14 +13,15 @@ class layoutWidget : public QWidget
 {
     Q_OBJECT
     public:
-        layoutWidget(Scheduling so = Scheduling::SchedulingVazia(), QWidget *parent = 0);
+        layoutWidget(GanttScheduling so = GanttScheduling::GanttSchedulingVazia(), QWidget *parent = 0);
     public slots:
         //void updateDateEdit(QString date){d_edit->setDate(QDate::fromString(date));}
         void updateDateEdit(int num);
         void updateDateEditToday();
         void updateIntervalRange();
+        void randomNum(int a=8, int b=22);
     private:
-        Scheduling scheduling;
+        GanttScheduling scheduling;
         QDateEdit *d_edit;
         GanttChart *w;
         QPushButton *set_hoje;

@@ -4,7 +4,7 @@
 #include "draglabel.h"
 //#include <QPalette>
 //#include "ui_ganttchart.h"
-#include "scheduling.h"
+#include "ganttscheduling.h"
 #include "task.h"
 #include <iostream>
 #include <QDebug>
@@ -18,7 +18,7 @@
 
 #define MAX(a,b) (((a)<(b))?(b):(a))
 
-GanttChart::GanttChart(Scheduling *scheduling, QWidget *parent)
+GanttChart::GanttChart(GanttScheduling *scheduling, QWidget *parent)
     : QWidget(parent)//, ui(new Ui::WidgetClass)
 {
     this->scheduling = scheduling;
@@ -29,8 +29,8 @@ GanttChart::GanttChart(Scheduling *scheduling, QWidget *parent)
     data_fim = scheduling->getDataFinal();
 //    this->dias = 1;
 
-    this->intervalo_inicio = 6;
-    this->intervalo_fim = 18;
+    this->intervalo_inicio = scheduling->getHoraInicio(QDate::currentDate()).hour();
+    this->intervalo_fim = scheduling->getHoraFinal(QDate::currentDate()).hour();
 
 //    for(int x=0 ; x<data_inicio.daysTo(data_fim) ; x++){
 //        dias++;
@@ -46,7 +46,7 @@ GanttChart::GanttChart(Scheduling *scheduling, QWidget *parent)
     setPalette(newPalette);
     //resetSize();
     //definicao tamanho da tela
-    tamanho_vertical = MAX(400,scheduling->getTasks().size()*70);
+    tamanho_vertical = MAX(800,scheduling->getTasks().size()*70);
     //setMinimumSize(lista_tamanhos_cel_trabalho.last()+100,tamanho_vertical);
     //setMinimumSize(tamanho_horizontal,tamanho_vertical);
     //SetMinimumSize(50000,400);
@@ -130,7 +130,7 @@ void GanttChart::redrawIntervalEnd(int value){
 
 void GanttChart::desenharTasks(QDate data){
     //desenharTasks(QDate::currentDate().addDays(0));
-    qDebug() << scheduling->isDiaVazio(data);
+    //qDebug() << scheduling->isDiaVazio(data);
     this->escala = scheduling->getEscala();
     QFontMetrics metric(font());
     QSize size = metric.size(Qt::TextSingleLine, " ");
@@ -226,7 +226,7 @@ void GanttChart::paintEvent(QPaintEvent *event){
 //        x_hora = 0;
     //qDebug() << intervalo_inicio << intervalo_fim;
     if(scheduling->isDiaVazio(data_atual)){
-        qDebug() << scheduling->isDiaVazio(data_atual);
+        //qDebug() << scheduling->isDiaVazio(data_atual);
         intervalo_inicio = 0;
         intervalo_fim = 24;
         this->setFixedSize(posicao_zero+(24*escala),400);
@@ -234,18 +234,20 @@ void GanttChart::paintEvent(QPaintEvent *event){
     for(int x = 0; x<=(intervalo_fim==23?(intervalo_fim-intervalo_inicio)+1:(intervalo_fim-intervalo_inicio)) ; x++){
         //int x_hora = x;
         //int x_hora = intervalo_inicio;
+
         //escreve data no topo da linha do tempo
-        if(x_hora == 0 || x_hora == 12){
-            paint->setFont(font_data);
-            pen_bkp = paint->pen();
-            paint->setPen(QPen());
-            paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
-            //paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),data_atual.toString("dd/MM"));
-            if(x_hora == 12)
-                dia = dia.addDays(1);
-            paint->setFont(QFont());
-            paint->setPen(pen_bkp);
-        }
+//        if(x_hora == 0 || x_hora == 12){
+//            paint->setFont(font_data);
+//            pen_bkp = paint->pen();
+//            paint->setPen(QPen());
+//            paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),dia.toString("dd/MM"));
+//            //paint->drawText(QPoint(posicao_zero+x*escala,y_teto-30),data_atual.toString("dd/MM"));
+//            if(x_hora == 12)
+//                dia = dia.addDays(1);
+//            paint->setFont(QFont());
+//            paint->setPen(pen_bkp);
+//        }
+
 //            if(x_hora == 12)
 //                    dia = dia.addDays(1);
         paint->setPen(pen_hora);

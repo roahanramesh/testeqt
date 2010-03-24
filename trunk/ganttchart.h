@@ -3,7 +3,7 @@
 
 #include <QtGui/QWidget>
 #include <QList>
-#include "scheduling.h"
+#include "ganttscheduling.h"
 #include "task.h"
 #include "draglabel.h"
 #include <QDate>
@@ -22,7 +22,7 @@ class GanttChart : public QWidget
 
     Q_OBJECT
 public:
-    GanttChart(Scheduling *scheduling,QWidget *parent = 0);
+    GanttChart(GanttScheduling *scheduling,QWidget *parent = 0);
     void desenharTasks(QDate data);
     int getIntervaloInicio(){return intervalo_inicio;}
     void setIntervaloInicio(int num){this->intervalo_inicio=num;}
@@ -53,7 +53,7 @@ protected:
 private:
     void resetSize();
     QString gerarToolTip(Task trabalho);
-    Scheduling *scheduling;
+    GanttScheduling *scheduling;
     int tamanho_vertical; //definido pelo construtor, normalmente não deve variar durante execução
     int tamanho_horizontal;
     int y_teto; //define distância entre topo do widget e o desenho do gráfico. é relativo às barras

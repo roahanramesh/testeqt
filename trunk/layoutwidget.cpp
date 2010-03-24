@@ -14,7 +14,7 @@
 #include <QGroupBox>
 
 
-layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(parent){
+layoutWidget::layoutWidget(GanttScheduling scheduling, QWidget *parent) : QWidget(parent){
     QScrollArea *scroll = new QScrollArea();
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -34,32 +34,33 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     QGroupBox *date = new QGroupBox("data");
     QHBoxLayout *date_layout = new QHBoxLayout();
 
-//    QPushButton *setsize = new QPushButton("WAT");
-//    date_layout->addWidget(setsize);
-//    setsize->show();
-//
-//    connect(setsize,SIGNAL(clicked()),w,SLOT(resetSize()));
+    QPushButton *setsize = new QPushButton("random");
+    date_layout->addWidget(setsize);
+    setsize->setAutoRepeat(true);
+    //setsize->show();
+
+    connect(setsize,SIGNAL(clicked()),this,SLOT(randomNum()));
 
     set_hoje = new QPushButton("hoje");
     date_layout->addWidget(set_hoje);
     //set_hoje->resize(50,25);
-    set_hoje->show();
+    //set_hoje->show();
 
     //qDebug() << set_hoje->size();
 
     date_previous = new QPushButton("anterior");
     date_layout->addWidget(date_previous);
-    date_previous->show();
+    //date_previous->show();
 
     d_edit = new QDateEdit();
     date_layout->addWidget(d_edit);
     d_edit->setDate(w->getDataAtual());
     d_edit->setCalendarPopup(true);
-    d_edit->show();
+    //d_edit->show();
 
     date_next = new QPushButton("próximo");
     date_layout->addWidget(date_next);
-    date_next->show();
+    //date_next->show();
 
     date->setLayout(date_layout);
     navegacao->addWidget(date);
@@ -72,14 +73,14 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     //navegacao->addWidget(zoom_minus);
     zoom_layout->addWidget(zoom_minus);
     zoom_minus->setAutoRepeat(true);
-    zoom_minus->show();
+    //zoom_minus->show();
 
     zoom_plus = new QPushButton("+");
     //navegacao->addWidget(zoom_plus,0,5);
     //navegacao->addWidget(zoom_plus);
     zoom_layout->addWidget(zoom_plus);
     zoom_plus->setAutoRepeat(true);
-    zoom_plus->show();
+    //zoom_plus->show();
 
     zoom->setLayout(zoom_layout);
     navegacao->addWidget(zoom);
@@ -98,7 +99,7 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     //interval_begin->setValue(w->getIntervaloInicio());
     interval_begin->setValue(scheduling.getHoraInicio(w->getDataAtual()).hour());
     w->setIntervaloInicio(scheduling.getHoraInicio(w->getDataAtual()).hour());
-    interval_begin->show();
+    //interval_begin->show();
 
     interval_layout->addWidget(new QLabel("fim"));
 
@@ -111,7 +112,7 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
     //interval_end->setValue(w->getIntervaloFim());
     interval_end->setValue(scheduling.getHoraFinal(w->getDataAtual()).hour());
     w->setIntervaloFim(scheduling.getHoraFinal(w->getDataAtual()).hour());
-    interval_end->show();
+    //interval_end->show();
 
     interval->setLayout(interval_layout);
     navegacao->addWidget(interval);
@@ -169,6 +170,14 @@ layoutWidget::layoutWidget(Scheduling scheduling, QWidget *parent) : QWidget(par
 
     //connect(date_next,SIGNAL(clicked()),d_edit,SLOT(setDate(QDate::currentDate())));
     //connect(sm,SIGNAL(mapped(int)),w,SLOT(hide()));
+//    setFixedSize(800,600);
+//    showMaximized();
+}
+
+void layoutWidget::randomNum(int a, int b){
+    qsrand(QTime::currentTime().msec());
+    qDebug() << a+qrand()%(b-a);
+//    qDebug() << "lol " << 2345%10 << 2345/10;
 }
 
 void layoutWidget::updateIntervalRange(){
