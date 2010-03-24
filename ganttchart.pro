@@ -6,12 +6,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     layoutwidget.cpp \
     task.cpp \
-    scheduling.cpp \
     draglabel.cpp \
-    ganttchart.cpp
+    ganttchart.cpp \
+    ganttscheduling.cpp
 HEADERS += layoutwidget.h \
     task.h \
-    scheduling.h \
     draglabel.h \
-    ganttchart.h
+    ganttchart.h \
+    ganttscheduling.h
 FORMS += 

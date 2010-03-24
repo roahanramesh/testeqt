@@ -2,16 +2,16 @@
 #include "layoutwidget.h"
 #include <QScrollArea>
 #include "ganttchart.h"
-#include "scheduling.h"
+#include "ganttscheduling.h"
 
 //http://doc.trolltech.com/4.6/draganddrop-fridgemagnets.html
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Scheduling so;
+    GanttScheduling so;
     //QList<QList<cTrabalho> > solu = so.GerarSolucao();
-    so = Scheduling::GerarScheduling();
+    so = GanttScheduling::GerarGanttScheduling();
 
     layoutWidget w(so);
     //Widget w;
