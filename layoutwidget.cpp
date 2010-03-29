@@ -181,11 +181,13 @@ void layoutWidget::randomNum(int a, int b){
 }
 
 void layoutWidget::updateIntervalRange(){
-    //interval_begin->setRange(0,hora.hour());
-    interval_begin->setRange(0,scheduling.getHoraInicio(w->getDataAtual()).hour());
-    interval_begin->setValue(scheduling.getHoraInicio(w->getDataAtual()).hour());
-    interval_end->setRange(scheduling.getHoraFinal(w->getDataAtual()).hour(),24);
-    interval_end->setValue(scheduling.getHoraFinal(w->getDataAtual()).hour());
+    //interval_begin->setRange(0,hora.hour());;
+    int begin = scheduling.getHoraInicio(w->getDataAtual()).hour();
+    interval_begin->setRange(0,begin>8?begin:8);
+    interval_begin->setValue(begin>8?begin:8);
+    int end = scheduling.getHoraFinal(w->getDataAtual()).hour();
+    interval_end->setRange(end,18>end?18:end);
+    interval_end->setValue(18>end?18:end);
 //    w->setIntervaloFim(scheduling.getHoraFinal(w->getDataAtual()).hour());
 //    w->setIntervaloInicio(scheduling.getHoraInicio(w->getDataAtual()).hour());
 }

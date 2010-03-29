@@ -29,8 +29,8 @@ GanttChart::GanttChart(GanttScheduling *scheduling, QWidget *parent)
     data_fim = scheduling->getDataFinal();
 //    this->dias = 1;
 
-    this->intervalo_inicio = scheduling->getHoraInicio(QDate::currentDate()).hour();
-    this->intervalo_fim = scheduling->getHoraFinal(QDate::currentDate()).hour();
+    this->intervalo_inicio = 8;//scheduling->getHoraInicio(QDate::currentDate()).hour();
+    this->intervalo_fim = 18;//scheduling->getHoraFinal(QDate::currentDate()).hour();
 
 //    for(int x=0 ; x<data_inicio.daysTo(data_fim) ; x++){
 //        dias++;
@@ -103,7 +103,7 @@ void GanttChart::redrawZoom(int newzoom){
 //    foreach(DragLabel* wut, mylist) wut->deleteLater();
     QList<QObject*> mylist = this->children();
     foreach(QObject* wut, mylist) wut->deleteLater();
-    int nova_escala = this->scheduling->getEscala()+(newzoom*5);
+    int nova_escala = this->scheduling->getEscala()+(newzoom*5); //5 é razão de incremento, isto é, escala cresce de 5 em 5
     if(nova_escala >=15)
         this->scheduling->setEscala(nova_escala);
     desenharTasks(data_atual);
@@ -114,7 +114,7 @@ void GanttChart::redrawIntervalBegin(int value){
     //qDebug() << "redrawIntervalBegin " << QString::number(value);
     QList<QObject*> mylist = this->children();
     foreach(QObject* wut, mylist) wut->deleteLater();
-    intervalo_inicio = value;
+    intervalo_inicio = value<8?value:8;
     desenharTasks(data_atual);
     update();
 }
@@ -123,7 +123,7 @@ void GanttChart::redrawIntervalEnd(int value){
     //qDebug() << "redrawIntervalEnd " << QString::number(value);
     QList<QObject*> mylist = this->children();
     foreach(QObject* wut, mylist) wut->deleteLater();
-    intervalo_fim = value;
+    intervalo_fim = value>18?value:18;
     desenharTasks(data_atual);
     update();
 }
@@ -157,8 +157,8 @@ void GanttChart::desenharTasks(QDate data){
         foreach(Task task, celula_trabalho){
             if(task.getDataInicio() == data_atual){
                 x_inicio = this->scheduling->getCoordTask(task);
-                x_inicio -= intervalo_inicio;//x_inicio-(intervalo_fim-intervalo_inicio);
-                //qDebug() << QString::number(x_inicio*escala);
+                //x_inicio -= intervalo_inicio; <--
+                x_inicio -= 8;
 
                 label_pos = (int)(x_inicio*escala+posicao_zero);
 
@@ -194,8 +194,6 @@ void GanttChart::desenharTasks(QDate data){
 }
 
 void GanttChart::paintEvent(QPaintEvent *event){
-    //qDebug() << "paint event =D " << QString::number(scheduling->getEscala());
-
     //alguma coisa muda valor de tamanho_vertical, necessario resetar seu valor
     tamanho_vertical = MAX(400,scheduling->getTasks().size()*70);
 
@@ -215,22 +213,13 @@ void GanttChart::paintEvent(QPaintEvent *event){
     float linha_15min = 0;
 
 
-//    dias = 2;
-    //for(int y=0 ; y<dias ; y++){
-
-        //for(int x=24*y; x<24+(y*24); x++){
-        //for(int x=0; x<24; x++){
     int x_hora = intervalo_inicio;
-    //int fim_laco = ;
-//    if(intervalo_fim-intervalo_inicio < 0)
-//        x_hora = 0;
-    //qDebug() << intervalo_inicio << intervalo_fim;
-    if(scheduling->isDiaVazio(data_atual)){
-        //qDebug() << scheduling->isDiaVazio(data_atual);
-        intervalo_inicio = 0;
-        intervalo_fim = 24;
-        this->setFixedSize(posicao_zero+(24*escala),400);
-    }
+    //if(scheduling->isDiaVazio(data_atual)){
+//    if(true){
+        intervalo_inicio = 8;
+        intervalo_fim = 18;
+        this->setFixedSize(posicao_zero+(24*escala)+100,400);
+//    }
     for(int x = 0; x<=(intervalo_fim==23?(intervalo_fim-intervalo_inicio)+1:(intervalo_fim-intervalo_inicio)) ; x++){
         //int x_hora = x;
         //int x_hora = intervalo_inicio;
@@ -270,15 +259,9 @@ void GanttChart::paintEvent(QPaintEvent *event){
         if(escala>=100)
         paint->drawText(QPoint(linha_15min,y_teto-10),":15");
         paint->drawLine(linha_15min,y_teto-5,linha_15min,tamanho_vertical);
-        //paint.drawLine(GANTT_START+(x+1/2)*escala,15,GANTT_START+(x+1/2)*escala,tamanho_vertical);
         x_hora++;
     }
-    //}
     delete paint;
-//    qsrand(QTime::currentTime().msec());
-//    this->setFixedSize(qrand()%500,qrand()%500);
-    //desenharTasks(QDate::currentDate());
-    //qDebug() << "paintEvent called, y_teto, tamanho vertical: " << qrand() << y_teto << tamanho_vertical;
 }
 
 void GanttChart::dragEnterEvent(QDragEnterEvent *event){
