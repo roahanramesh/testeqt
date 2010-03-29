@@ -16,10 +16,11 @@ class layoutWidget : public QWidget
         layoutWidget(GanttScheduling so = GanttScheduling::GanttSchedulingVazia(), QWidget *parent = 0);
     public slots:
         //void updateDateEdit(QString date){d_edit->setDate(QDate::fromString(date));}
-        void updateDateEdit(int num);
+        void updateDateEdit(QDate date);
         void updateDateEditToday();
         void updateIntervalRange();
         void randomNum(int a=8, int b=22);
+//        static bool teste(QDate t);
     private:
         GanttScheduling scheduling;
         QDateEdit *d_edit;
@@ -29,8 +30,8 @@ class layoutWidget : public QWidget
         QPushButton *date_next;
         QPushButton *zoom_plus;
         QPushButton *zoom_minus;
-        QSpinBox *interval_begin;
-        QSpinBox *interval_end;
+//        QSpinBox *spinbox_begin;
+//        QSpinBox *spinbox_end;
 };
 
 #endif // LAYOUTWIDGET_H

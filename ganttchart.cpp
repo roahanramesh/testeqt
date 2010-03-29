@@ -29,8 +29,8 @@ GanttChart::GanttChart(GanttScheduling *scheduling, QWidget *parent)
     data_fim = scheduling->getDataFinal();
 //    this->dias = 1;
 
-    this->intervalo_inicio = 8;//scheduling->getHoraInicio(QDate::currentDate()).hour();
-    this->intervalo_fim = 18;//scheduling->getHoraFinal(QDate::currentDate()).hour();
+    this->intervalo_inicio = scheduling->getHoraInicio(QDate::currentDate()).hour();
+    this->intervalo_fim = scheduling->getHoraFinal(QDate::currentDate()).hour();
 
 //    for(int x=0 ; x<data_inicio.daysTo(data_fim) ; x++){
 //        dias++;
@@ -61,16 +61,21 @@ GanttChart::GanttChart(GanttScheduling *scheduling, QWidget *parent)
 void GanttChart::redraw(int data_offset){
     QList<DragLabel *> mylist = this->findChildren<DragLabel*>();
     foreach(DragLabel* wut, mylist) wut->deleteLater();
-//    QList<QObject*> mylist = this->children();
-//    foreach(QObject* wut, mylist) wut->deleteLater();
+
+    QDate nova_data = data_atual.addDays(data_offset);
     if(data_offset == 0){
         data_atual = QDate::currentDate();
     } else {
-    //qDebug() << data_atual.toString();
-        data_atual = data_atual.addDays(data_offset);
+        data_atual = nova_data;
     }
-    desenharTasks(data_atual);
-    //resetSize();
+
+    int nhora_inicio = scheduling->getHoraInicio(data_atual).hour();
+    this->intervalo_inicio = nhora_inicio<8?nhora_inicio:8;
+
+    int nhora_fim = scheduling->getHoraFinal(data_atual).hour();
+    this->intervalo_fim = nhora_fim>18?nhora_fim:18;
+
+    desenharTasks(nova_data);
     update();
 }
 
@@ -158,7 +163,7 @@ void GanttChart::desenharTasks(QDate data){
             if(task.getDataInicio() == data_atual){
                 x_inicio = this->scheduling->getCoordTask(task);
                 //x_inicio -= intervalo_inicio; <--
-                x_inicio -= 8;
+                x_inicio -= intervalo_inicio;
 
                 label_pos = (int)(x_inicio*escala+posicao_zero);
 
@@ -214,12 +219,10 @@ void GanttChart::paintEvent(QPaintEvent *event){
 
 
     int x_hora = intervalo_inicio;
-    //if(scheduling->isDiaVazio(data_atual)){
-//    if(true){
-        intervalo_inicio = 8;
-        intervalo_fim = 18;
-        this->setFixedSize(posicao_zero+(24*escala)+100,400);
-//    }
+    if(scheduling->isDiaVazio(data_atual)){
+        this->setFixedSize(posicao_zero+(10*escala)+100,400);
+    }
+//    qDebug() << "paintEvent intervalo inicio " << this->intervalo_inicio << "intervalo fim " << this->intervalo_fim;
     for(int x = 0; x<=(intervalo_fim==23?(intervalo_fim-intervalo_inicio)+1:(intervalo_fim-intervalo_inicio)) ; x++){
         //int x_hora = x;
         //int x_hora = intervalo_inicio;
