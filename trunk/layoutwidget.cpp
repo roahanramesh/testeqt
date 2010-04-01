@@ -32,12 +32,12 @@ layoutWidget::layoutWidget(GanttScheduling scheduling, QWidget *parent) : QWidge
     QHBoxLayout *date_layout = new QHBoxLayout();
     QHBoxLayout *zoom_layout = new QHBoxLayout();
 
-    QPushButton *setsize = new QPushButton("random");
-    date_layout->addWidget(setsize);
-    setsize->setAutoRepeat(true);
+//    QPushButton *setsize = new QPushButton("random");
+//    date_layout->addWidget(setsize);
+//    setsize->setAutoRepeat(true);
     //setsize->show();
 
-    connect(setsize,SIGNAL(clicked()),this,SLOT(randomNum()));
+//    connect(setsize,SIGNAL(clicked()),this,SLOT(randomNum()));
 
     set_hoje = new QPushButton("hoje");
     date_layout->addWidget(set_hoje);
@@ -75,51 +75,37 @@ layoutWidget::layoutWidget(GanttScheduling scheduling, QWidget *parent) : QWidge
     zoom->setLayout(zoom_layout);
     navegacao->addWidget(zoom);
 
-//    QGroupBox *interval = new QGroupBox("intervalo (horas)");
-//    QHBoxLayout *interval_layout = new QHBoxLayout();
+    QGroupBox *interval = new QGroupBox("intervalo (horas)");
+    QHBoxLayout *interval_layout = new QHBoxLayout();
 
-//    interval_layout->addWidget(new QLabel("início"));
+    interval_layout->addWidget(new QLabel("início"));
 
-//    spinbox_begin = new QSpinBox();
-    //navegacao->addWidget(spinbox_begin,0,5);
-    //navegacao->addWidget(spinbox_begin);
-//    interval_layout->addWidget(spinbox_begin);
-    //spinbox_begin->setRange(0,24);
-//    spinbox_begin->setRange(0,scheduling.getHoraInicio(w->getDataAtual()).hour());
-    //spinbox_begin->setValue(w->getIntervaloInicio());
-//    spinbox_begin->setValue(scheduling.getHoraInicio(w->getDataAtual()).hour());
-//    w->setIntervaloInicio(scheduling.getHoraInicio(w->getDataAtual()).hour());
-    //spinbox_begin->show();
+    spinbox_begin = new QSpinBox();
+//    navegacao->addWidget(spinbox_begin);
+    interval_layout->addWidget(spinbox_begin);
+    spinbox_begin->setRange(0,scheduling.getHoraInicio(w->getDataAtual()).hour());
+    spinbox_begin->setValue(scheduling.getHoraInicio(w->getDataAtual()).hour());
 
-//    interval_layout->addWidget(new QLabel("fim"));
+    interval_layout->addWidget(new QLabel("fim"));
 
-//    spinbox_end = new QSpinBox();
-    //navegacao->addWidget(spinbox_end,0,6);
-    //navegacao->addWidget(spinbox_end);
-//    interval_layout->addWidget(spinbox_end);
-    //spinbox_end->setRange(0,24);
-//    spinbox_end->setRange(scheduling.getHoraFinal(w->getDataAtual()).hour(),24);
-    //spinbox_end->setValue(w->getIntervaloFim());
-//    spinbox_end->setValue(scheduling.getHoraFinal(w->getDataAtual()).hour());
-//    w->setIntervaloFim(scheduling.getHoraFinal(w->getDataAtual()).hour());
-//    spinbox_end->show();
+    spinbox_end = new QSpinBox();
+//    navegacao->addWidget(spinbox_end);
+    interval_layout->addWidget(spinbox_end);
+    spinbox_end->setRange(scheduling.getHoraFinal(w->getDataAtual()).hour(),24);
+    spinbox_end->setValue(scheduling.getHoraFinal(w->getDataAtual()).hour());
 
-//    interval->setLayout(interval_layout);
-//    navegacao->addWidget(interval);
-
-    //navegacao->addLayout(button_layout,3,2);
+    interval->setLayout(interval_layout);
+    navegacao->addWidget(interval);
 
     upper_field->setLayout(navegacao);
 
     layout->addWidget(upper_field);
     layout->addWidget(scroll);
-    //setFixedWidth(800);
-    //setFixedHeight(600);
 
     setLayout(layout);
 
-//    connect(spinbox_begin,SIGNAL(valueChanged(int)),w,SLOT(redrawIntervalBegin(int)));
-//    connect(spinbox_end,SIGNAL(valueChanged(int)),w,SLOT(redrawIntervalEnd(int)));
+    connect(spinbox_begin,SIGNAL(valueChanged(int)),w,SLOT(redrawIntervalBegin(int)));
+    connect(spinbox_end,SIGNAL(valueChanged(int)),w,SLOT(redrawIntervalEnd(int)));
 
     QSignalMapper *sm_date = new QSignalMapper();
     sm_date->setMapping(date_previous,-1);
@@ -144,8 +130,10 @@ layoutWidget::layoutWidget(GanttScheduling scheduling, QWidget *parent) : QWidge
 //    update_calendardate->setMapping(date_next,1);
 //    connect(date_previous,SIGNAL(clicked()),update_calendardate,SLOT(map()));
     connect(date_previous,SIGNAL(clicked()),this,SLOT(updateDateEdit()));
+//    connect(date_previous,SIGNAL(clicked()),this,SLOT(updateSpinBox()));
 //    connect(date_next,SIGNAL(clicked()),update_calendardate,SLOT(map()));
     connect(date_next,SIGNAL(clicked()),this,SLOT(updateDateEdit()));
+//    connect(date_next,SIGNAL(clicked()),this,SLOT(updateSpinBox()));
 //    connect(update_calendardate,SIGNAL(mapped(int)),this,SLOT(updateDateEdit(int)));
     //connect(update_calendardate,SIGNAL(mapped(QString)),this,SLOT(updateDateEdit(QString)));
     //connect(sm_date,SIGNAL(mapped(int)),this,SLOT(updateDateEdit(int)));
@@ -159,9 +147,9 @@ layoutWidget::layoutWidget(GanttScheduling scheduling, QWidget *parent) : QWidge
 
     //selecionar data pelo popup do calendário muda data exibida
     connect(d_edit,SIGNAL(dateChanged(QDate)),w,SLOT(redrawDate(QDate)));
-    connect(d_edit,SIGNAL(dateChanged(QDate)),this,SLOT(updateIntervalRange()));
+//    connect(d_edit,SIGNAL(dateChanged(QDate)),this,SLOT(updateSpinBox()));
 
-    //connect(date_next,SIGNAL(clicked()),d_edit,SLOT(setDate(QDate::currentDate())));
+//    connect(date_next,SIGNAL(clicked()),d_edit,SLOT(setDate(QDate::currentDate())));
     //connect(sm,SIGNAL(mapped(int)),w,SLOT(hide()));
 //    setFixedSize(800,600);
 //    showMaximized();
@@ -175,9 +163,17 @@ void layoutWidget::randomNum(int a, int b){
 //    qDebug() << "lol " << 2345%10 << 2345/10;
 }
 
-void layoutWidget::updateIntervalRange(){
+void layoutWidget::updateSpinBox(){
+    updateIntervalRange(w->getIntervaloInicio(),w->getIntervaloFim());
+}
+
+void layoutWidget::updateIntervalRange(int begin, int end){
+    spinbox_begin->setRange(0,begin);
+    spinbox_begin->setValue(begin);
+    spinbox_end->setRange(end,24);
+    spinbox_end->setValue(end);
     //spinbox_begin->setRange(0,hora.hour());;
-    int begin = scheduling.getHoraInicio(w->getDataAtual()).hour();
+//    int begin = scheduling.getHoraInicio(w->getDataAtual()).hour();
 //    spinbox_begin->setRange(0,begin>8?begin:8);
 //    spinbox_begin->setValue(begin>8?begin:8);
 //    int end = scheduling.getHoraFinal(w->getDataAtual()).hour();
@@ -187,23 +183,12 @@ void layoutWidget::updateIntervalRange(){
 //    w->setIntervaloInicio(scheduling.getHoraInicio(w->getDataAtual()).hour());
 }
 
-void layoutWidget::updateDateEdit(QDate date){
+void layoutWidget::updateDateEdit(){
     //qDebug() << "updateDateEdit called";
     //d_edit->setDate(w->getDataAtual().addDays(num));
-    d_edit->setDate(date);
-}
-void layoutWidget::updateDateEditToday(){
-    d_edit->setDate(QDate::currentDate());
+    d_edit->setDate(w->getDataAtual());
 }
 
-bool teste(QDate t){
-    QString str = t.toString();
-    if(t == QDate::fromString(str)){
-        qDebug() << "yes !";
-        return true;
-    }else{
-        qDebug() << "fuck no ";
-        return false;
-//    return true;
-    }
+void layoutWidget::updateDateEditToday(){
+    d_edit->setDate(QDate::currentDate());
 }
