@@ -54,10 +54,10 @@ private:
     void resetSize();
     QString gerarToolTip(Task trabalho);
     GanttScheduling *scheduling;
-    int tamanho_vertical; //definido pelo construtor, normalmente não deve variar durante execução
+    int tamanho_vertical;
     int tamanho_horizontal;
     int y_teto; //define distância entre topo do widget e o desenho do gráfico. é relativo às barras
-    int escala;
+
     int posicao_zero; //define posição zero para o grafico de gantt
 
     //variáveis utilizadas pra escrever as datas na linha do tempo
@@ -67,6 +67,7 @@ private:
     //int dias;
     int intervalo_inicio;
     int intervalo_fim;
+    int escala;
 
 //private:
     //Ui::WidgetClass *ui;
