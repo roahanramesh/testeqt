@@ -1,0 +1,1 @@
+Projeto pra aprender Qt
